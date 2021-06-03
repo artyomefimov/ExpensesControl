@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Учет расходов</string>
+    <string name="current_expenses">Текущие расходы</string>
+    <string name="enter_field_hint">Введите сумму</string>
+    <string name="comment_field_hint">Введите комментарий</string>
+    <string name="money_left_label_text">Осталось в текущем месяце</string>
+    <string name="apply_expense">Подтвердить</string>
+</resources>

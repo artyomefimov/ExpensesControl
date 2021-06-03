@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ExpensesControl</string>
+    <string name="current_expenses">Current expenses</string>
+    <string name="enter_field_hint">Enter expense</string>
+    <string name="comment_field_hint">Enter comment</string>
+    <string name="money_left_label_text">Left this month</string>
+    <string name="apply_expense">Apply expense</string>
+</resources>
