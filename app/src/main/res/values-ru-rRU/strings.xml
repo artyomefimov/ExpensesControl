@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Учет расходов</string>
-    <string name="current_expenses">Текущие расходы</string>
+    <string name="current_expenses_fragment">Текущие расходы</string>
     <string name="enter_field_hint">Введите сумму</string>
     <string name="comment_field_hint">Введите комментарий</string>
     <string name="money_left_label_text">Осталось в текущем месяце</string>
-    <string name="apply_expense">Подтвердить</string>
+    <string name="apply_text">Подтвердить</string>
+    <string name="enter_income_hint">Планируемый доход</string>
+    <string name="enter_income_explanation">Введите сумму ожидаемого дохода за ближайший месяц. Эту сумму вы вводите в начале каждого месяца, и относительно нее будет рассчитана рекомендуемая величина ежедневных трат</string>
+    <string name="enter_income_fragment">Ввод дохода</string>
+    <string name="available_money_placeholder">%1$s ₽</string>
 </resources>

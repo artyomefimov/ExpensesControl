@@ -1,20 +1,24 @@
 package com.artyomefimov.expensescontrol.presentation.view.expenses
 
-import android.animation.AnimatorInflater
 import android.os.Bundle
 import android.view.*
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.artyomefimov.expensescontrol.R
 import com.artyomefimov.expensescontrol.databinding.FragmentEnterExpenseBinding
+import com.artyomefimov.expensescontrol.presentation.ext.observeEvent
+import com.artyomefimov.expensescontrol.presentation.ext.safeObserve
+import com.artyomefimov.expensescontrol.presentation.model.AvailableSumInfo
+import com.artyomefimov.expensescontrol.presentation.viewmodel.EnterExpenseViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class EnterExpenseFragment : Fragment(R.layout.fragment_enter_expense) {
+class EnterExpenseFragment : Fragment() {
 
     private lateinit var binding: FragmentEnterExpenseBinding
-
-    private var sum = 100.0
+    private val viewModel: EnterExpenseViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,16 +36,34 @@ class EnterExpenseFragment : Fragment(R.layout.fragment_enter_expense) {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.apply_expense_item) {
-            val expense = binding.enterSumLayout.editText?.text?.toString()?.toDouble() ?: 0.0
-            sum -= expense
-            val set = AnimationUtils.loadAnimation(requireContext(), R.anim.shake_and_explode)
-            binding.moneyLeftTextView.text = sum.toString()
-            binding.moneyLeftTextView.startAnimation(set)
+            viewModel.addExpense(
+                stringSum = binding.enterSumEditText.text?.toString(),
+                comment = binding.commentEditText.text?.toString()
+            )
         }
         return true
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.moneyLeftTextView.text = "$sum ₽"
+        viewModel.availableDailySumState().safeObserve(this, ::updateAvailableSum)
+        viewModel.navigateToEnterIncomeScreen().observeEvent(this) {
+            navigateToEnterIncomeFragment()
+        }
+    }
+
+    private fun updateAvailableSum(info: AvailableSumInfo) {
+        binding.moneyLeftTextView.text = info.availableSum
+        if (info.isInitial.not()) {
+            val updateSumAnimation = AnimationUtils.loadAnimation(
+                requireContext(),
+                R.anim.shake_and_explode
+            )
+            binding.moneyLeftTextView.startAnimation(updateSumAnimation)
+        }
+        binding.enterSumEditText.text?.clear()
+    }
+
+    private fun navigateToEnterIncomeFragment() {
+        findNavController().navigate(R.id.enter_income_dest)
     }
 }

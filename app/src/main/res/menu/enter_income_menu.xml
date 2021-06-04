@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/apply_expense_item"
+        android:id="@+id/apply_income_item"
         android:icon="@drawable/ic_apply"
         android:title="@string/apply_text"
         app:showAsAction="always" />

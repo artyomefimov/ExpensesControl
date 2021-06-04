@@ -12,6 +12,10 @@ buildscript {
     ext.date_time_version = '0.2.1'
     ext.hilt_version = '2.35'
 
+    ext.junit_version = '4.13.2'
+    ext.mockk_version = '1.11.0'
+    ext.kotlin_test_version = '1.5.0'
+
     repositories {
         google()
         mavenCentral()

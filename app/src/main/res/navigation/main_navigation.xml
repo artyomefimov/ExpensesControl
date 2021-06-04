@@ -8,7 +8,13 @@
     <fragment
         android:id="@+id/expenses_dest"
         android:name="com.artyomefimov.expensescontrol.presentation.view.expenses.EnterExpenseFragment"
-        android:label="@string/current_expenses"
-        tools:layout="@layout/fragment_enter_expense"/>
+        android:label="@string/current_expenses_fragment"
+        tools:layout="@layout/fragment_enter_expense" />
+
+    <fragment
+        android:id="@+id/enter_income_dest"
+        android:name="com.artyomefimov.expensescontrol.presentation.view.expenses.EnterIncomeFragment"
+        android:label="@string/enter_income_fragment"
+        tools:layout="@layout/fragment_enter_income" />
 
 </navigation>
