@@ -3,6 +3,7 @@ package com.artyomefimov.expensescontrol.presentation.view.expenses
 import android.os.Bundle
 import android.view.*
 import android.view.animation.AnimationUtils
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -13,6 +14,7 @@ import com.artyomefimov.expensescontrol.presentation.ext.observeEvent
 import com.artyomefimov.expensescontrol.presentation.ext.safeObserve
 import com.artyomefimov.expensescontrol.presentation.model.AvailableSumInfo
 import com.artyomefimov.expensescontrol.presentation.viewmodel.EnterExpenseViewModel
+import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -39,7 +41,8 @@ class EnterExpenseFragment : Fragment() {
         if (item.itemId == R.id.apply_expense_item) {
             viewModel.addExpense(
                 stringSum = binding.enterSumEditText.text?.toString(),
-                comment = binding.commentEditText.text?.toString()
+                comment = binding.commentEditText.text?.toString(),
+                category = binding.categoriesGroup.getSelectedCategory()
             )
         }
         return true
@@ -73,5 +76,6 @@ class EnterExpenseFragment : Fragment() {
         binding.enterSumEditText.text?.clear()
         binding.commentEditText.text?.clear()
         activity?.hideKeyboard()
+        binding.categoriesGroup.clearCheck()
     }
 }

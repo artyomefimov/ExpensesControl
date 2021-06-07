@@ -11,6 +11,7 @@ buildscript {
     ext.view_binding_delegate_version = '1.4.6'
     ext.date_time_version = '0.2.1'
     ext.hilt_version = '2.35'
+    ext.room_version = '2.3.0'
 
     ext.junit_version = '4.13.2'
     ext.mockk_version = '1.11.0'

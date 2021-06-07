@@ -30,11 +30,13 @@ class DailyExpenseInteractorImpl @Inject constructor(
     override fun addExpense(
         stringSum: String,
         comment: String,
+        category: String,
     ) {
         val expense = Expense(
             sum = BigDecimal(stringSum),
             comment = comment,
             timestamp = clock.now(),
+            category = category,
         )
         val newSum = incomeRepository.getIncomeValue().subtract(expense.sum)
         incomeRepository.updateIncome(newSum)

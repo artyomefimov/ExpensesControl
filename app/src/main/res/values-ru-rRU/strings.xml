@@ -10,4 +10,14 @@
     <string name="enter_income_explanation">Введите сумму ожидаемого дохода за ближайший месяц. Эту сумму вы вводите в начале каждого месяца, и относительно нее будет рассчитана рекомендуемая величина ежедневных трат</string>
     <string name="enter_income_fragment">Ввод дохода</string>
     <string name="available_money_placeholder">%1$s ₽ на сегодня</string>
+    <string name="category_supermarkets">Супермаркеты</string>
+    <string name="category_fun">Развлечения</string>
+    <string name="category_transfers">Переводы</string>
+    <string name="category_fast_food">Фаст фуд</string>
+    <string name="category_transport">Транспорт</string>
+    <string name="category_house">Дом</string>
+    <string name="category_clothes">Одежда и обувь</string>
+    <string name="category_sports">Спорт</string>
+    <string name="category_mandatory_payments">Обязательные</string>
+    <string name="category_other">Другое</string>
 </resources>

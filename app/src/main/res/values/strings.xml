@@ -11,4 +11,15 @@
     <string name="apply_text">Apply</string>
     <string name="enter_income_hint">Planned income</string>
     <string name="enter_income_explanation">Enter your planned income for the next month. You enter this sum in the beginning of every month for calculating recommended daily expenses.</string>
+
+    <string name="category_supermarkets">Supermarkets</string>
+    <string name="category_fun">Fun</string>
+    <string name="category_transfers">Transfers</string>
+    <string name="category_fast_food">Fast food</string>
+    <string name="category_transport">Transport</string>
+    <string name="category_house">House</string>
+    <string name="category_clothes">Clothes</string>
+    <string name="category_sports">Sports</string>
+    <string name="category_mandatory_payments">Mandatory</string>
+    <string name="category_other">Other</string>
 </resources>

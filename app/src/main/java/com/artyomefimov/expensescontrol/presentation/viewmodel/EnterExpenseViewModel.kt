@@ -34,6 +34,7 @@ class EnterExpenseViewModel @Inject constructor(
     fun addExpense(
         stringSum: String?,
         comment: String?,
+        category: String,
     ) {
         if (stringSum.isNullOrEmpty()) {
             return
@@ -42,6 +43,7 @@ class EnterExpenseViewModel @Inject constructor(
         dailyExpenseInteractor.addExpense(
             stringSum = stringSum,
             comment = comment.orEmpty(),
+            category = category,
         )
         updateAvailableSum(isInitial = false)
     }

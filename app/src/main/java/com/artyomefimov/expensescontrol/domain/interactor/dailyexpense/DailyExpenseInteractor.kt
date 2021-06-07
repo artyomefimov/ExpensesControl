@@ -19,11 +19,13 @@ interface DailyExpenseInteractor {
     /**
      * Добавляет новую трату за текущий день
      *
-     * @param stringSum     сумма траты в виде строки
-     * @param comment комментарий к трате
+     * @param stringSum сумма траты в виде строки
+     * @param comment   комментарий к трате
+     * @param category  категория траты
      */
     fun addExpense(
         stringSum: String,
         comment: String,
+        category: String,
     )
 }
