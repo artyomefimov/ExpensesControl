@@ -8,12 +8,12 @@ import java.math.BigDecimal
  *
  * @param sum       сумма траты
  * @param comment   комментарий к трате
- * @param timestamp время, когда была зафиксирована трата
  * @param category  категория траты
+ * @param timestamp время, когда была зафиксирована трата
  */
 data class Expense(
     val sum: BigDecimal,
     val comment: String,
-    val timestamp: Instant,
     val category: String,
+    val timestamp: Instant,
 )

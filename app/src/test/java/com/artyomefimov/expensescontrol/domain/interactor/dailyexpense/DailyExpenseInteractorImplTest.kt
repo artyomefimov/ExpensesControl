@@ -1,6 +1,7 @@
 package com.artyomefimov.expensescontrol.domain.interactor.dailyexpense
 
-import com.artyomefimov.expensescontrol.domain.interactor.repo.IncomeRepository
+import com.artyomefimov.expensescontrol.domain.repo.ExpenseRepository
+import com.artyomefimov.expensescontrol.domain.repo.IncomeRepository
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.datetime.Clock
@@ -17,14 +18,15 @@ class DailyExpenseInteractorImplTest {
         const val availableDays = 11
     }
 
-    private val repository = mockk<IncomeRepository>()
+    private val incomeRepository = mockk<IncomeRepository>()
+    private val expenseRepository = mockk<ExpenseRepository>()
     private val clock = mockk<Clock>()
-    private val interactor = DailyExpenseInteractorImpl(repository, clock)
+    private val interactor = DailyExpenseInteractorImpl(incomeRepository, expenseRepository, clock)
 
     @Test
     fun `getAvailableDailySum returns zero if monthly income is zero`() {
         every { clock.now() } returns currentDate
-        every { repository.getIncomeValue() } returns BigDecimal.ZERO
+        every { incomeRepository.getIncomeValue() } returns BigDecimal.ZERO
 
         val result = interactor.getAvailableDailySum()
 
@@ -36,7 +38,7 @@ class DailyExpenseInteractorImplTest {
         val expected = 1000
         val incomeValue = (availableDays * expected).toString()
         every { clock.now() } returns currentDate
-        every { repository.getIncomeValue() } returns BigDecimal(incomeValue)
+        every { incomeRepository.getIncomeValue() } returns BigDecimal(incomeValue)
 
         val result = interactor.getAvailableDailySum()
 

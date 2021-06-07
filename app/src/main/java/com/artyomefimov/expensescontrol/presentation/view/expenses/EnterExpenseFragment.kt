@@ -9,10 +9,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.artyomefimov.expensescontrol.R
 import com.artyomefimov.expensescontrol.databinding.FragmentEnterExpenseBinding
+import com.artyomefimov.expensescontrol.domain.model.Expense
 import com.artyomefimov.expensescontrol.presentation.ext.hideKeyboard
 import com.artyomefimov.expensescontrol.presentation.ext.observeEvent
 import com.artyomefimov.expensescontrol.presentation.ext.safeObserve
 import com.artyomefimov.expensescontrol.presentation.model.AvailableSumInfo
+import com.artyomefimov.expensescontrol.presentation.view.expenses.recyclerview.ExpensesAdapter
 import com.artyomefimov.expensescontrol.presentation.viewmodel.EnterExpenseViewModel
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,6 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class EnterExpenseFragment : Fragment() {
 
     private lateinit var binding: FragmentEnterExpenseBinding
+    private lateinit var adapter: ExpensesAdapter
     private val viewModel: EnterExpenseViewModel by viewModels()
 
     override fun onCreateView(
@@ -49,7 +52,14 @@ class EnterExpenseFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        adapter = ExpensesAdapter()
+        binding.expensesRecyclerView.adapter = adapter
+        observeViewModel()
+    }
+
+    private fun observeViewModel() {
         viewModel.availableDailySumState().safeObserve(this, ::updateAvailableSum)
+        viewModel.currentMonthExpensesState().safeObserve(this, ::updateExpenses)
         viewModel.navigateToEnterIncomeScreen().observeEvent(this) {
             navigateToEnterIncomeFragment()
         }
@@ -66,6 +76,11 @@ class EnterExpenseFragment : Fragment() {
             binding.availableDailyTextView.startAnimation(updateSumAnimation)
         }
         clear()
+    }
+
+    private fun updateExpenses(items: List<Expense>) {
+        adapter.items = items
+        adapter.notifyDataSetChanged()
     }
 
     private fun navigateToEnterIncomeFragment() {

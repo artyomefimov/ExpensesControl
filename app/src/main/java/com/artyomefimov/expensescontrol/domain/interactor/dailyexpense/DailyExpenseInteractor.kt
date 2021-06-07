@@ -1,5 +1,7 @@
 package com.artyomefimov.expensescontrol.domain.interactor.dailyexpense
 
+import com.artyomefimov.expensescontrol.domain.model.Expense
+import kotlinx.coroutines.flow.Flow
 import java.math.BigDecimal
 import java.math.BigInteger
 
@@ -7,6 +9,8 @@ import java.math.BigInteger
  * Содержит бизнес-логику для внесения новых трат и рассчета доступной суммы
  */
 interface DailyExpenseInteractor {
+
+    fun getAllExpensesForCurrentMonth(): Flow<List<Expense>>
 
     /**
      * Получает доступную сумму для трат для текущего дня
@@ -23,7 +27,7 @@ interface DailyExpenseInteractor {
      * @param comment   комментарий к трате
      * @param category  категория траты
      */
-    fun addExpense(
+    suspend fun addExpense(
         stringSum: String,
         comment: String,
         category: String,

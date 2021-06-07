@@ -2,11 +2,16 @@ package com.artyomefimov.expensescontrol.di
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.room.Room
+import com.artyomefimov.expensescontrol.data.db.DB_NAME
+import com.artyomefimov.expensescontrol.data.db.ExpensesDb
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.datetime.Clock
 import javax.inject.Singleton
 
@@ -28,5 +33,22 @@ class ProvidesModule {
 
     @Provides
     @Singleton
-    fun providesClock(): Clock = Clock.System
+    fun provideClock(): Clock = Clock.System
+
+    @Provides
+    @Singleton
+    fun provideDb(
+        @ApplicationContext context: Context
+    ): ExpensesDb {
+        return Room.databaseBuilder(
+            context,
+            ExpensesDb::class.java,
+            DB_NAME
+        ).build()
+    }
+
+    @Provides
+    @Singleton
+    @IoDispatcher
+    fun provideIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
 }

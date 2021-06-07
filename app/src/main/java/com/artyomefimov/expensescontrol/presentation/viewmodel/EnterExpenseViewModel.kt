@@ -3,15 +3,19 @@ package com.artyomefimov.expensescontrol.presentation.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.artyomefimov.expensescontrol.R
 import com.artyomefimov.expensescontrol.domain.interactor.dailyexpense.DailyExpenseInteractor
 import com.artyomefimov.expensescontrol.domain.interactor.income.IncomeInteractor
+import com.artyomefimov.expensescontrol.domain.model.Expense
 import com.artyomefimov.expensescontrol.domain.model.isZeroAndShouldBeEntered
 import com.artyomefimov.expensescontrol.presentation.ext.toggle
 import com.artyomefimov.expensescontrol.presentation.model.AvailableSumInfo
 import com.artyomefimov.expensescontrol.presentation.model.Event
 import com.artyomefimov.expensescontrol.presentation.resources.ResourcesProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,21 +27,24 @@ class EnterExpenseViewModel @Inject constructor(
 
     private val navigateToEnterIncomeScreen = MutableLiveData<Event<Unit>>()
     private val availableDailySumState = MutableLiveData<AvailableSumInfo>()
+    private val currentMonthExpensesState = MutableLiveData<List<Expense>>()
 
     init {
         initialCheck()
+        collectExpenses()
     }
 
     fun navigateToEnterIncomeScreen(): LiveData<Event<Unit>> = navigateToEnterIncomeScreen
     fun availableDailySumState(): LiveData<AvailableSumInfo> = availableDailySumState
+    fun currentMonthExpensesState(): LiveData<List<Expense>> = currentMonthExpensesState
 
     fun addExpense(
         stringSum: String?,
         comment: String?,
         category: String,
-    ) {
+    ) = viewModelScope.launch {
         if (stringSum.isNullOrEmpty()) {
-            return
+            return@launch
         }
 
         dailyExpenseInteractor.addExpense(
@@ -78,5 +85,11 @@ class EnterExpenseViewModel @Inject constructor(
             availableMonthlySum = availableMonthlySum,
             isInitial = isInitial,
         )
+    }
+
+    private fun collectExpenses() = viewModelScope.launch {
+        dailyExpenseInteractor.getAllExpensesForCurrentMonth().collect {
+            currentMonthExpensesState.value = it
+        }
     }
 }

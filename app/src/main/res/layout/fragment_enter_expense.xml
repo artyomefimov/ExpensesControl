@@ -81,15 +81,27 @@
         app:layout_constraintTop_toBottomOf="@id/availableDailyTextView"
         tools:text="@string/money_left_label_text" />
 
-    <com.artyomefimov.expensescontrol.presentation.view.CategoryGroup
+    <com.artyomefimov.expensescontrol.presentation.view.custom.CategoryGroup
         android:id="@+id/categoriesGroup"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_16dp"
         android:layout_marginEnd="@dimen/margin_16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/expensesRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/availableMonthlyTextView" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/expensesRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/categoriesGroup"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:listitem="@layout/item_expense" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

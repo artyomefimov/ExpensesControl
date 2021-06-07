@@ -2,7 +2,7 @@ package com.artyomefimov.expensescontrol.data.repo
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import com.artyomefimov.expensescontrol.domain.interactor.repo.IncomeRepository
+import com.artyomefimov.expensescontrol.domain.repo.IncomeRepository
 import kotlinx.datetime.Instant
 import java.math.BigDecimal
 import javax.inject.Inject

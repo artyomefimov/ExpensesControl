@@ -1,6 +1,6 @@
 package com.artyomefimov.expensescontrol.domain.interactor.income
 
-import com.artyomefimov.expensescontrol.domain.interactor.repo.IncomeRepository
+import com.artyomefimov.expensescontrol.domain.repo.IncomeRepository
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

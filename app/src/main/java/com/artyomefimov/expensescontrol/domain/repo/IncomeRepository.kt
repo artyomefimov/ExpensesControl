@@ -1,4 +1,4 @@
-package com.artyomefimov.expensescontrol.domain.interactor.repo
+package com.artyomefimov.expensescontrol.domain.repo
 
 import kotlinx.datetime.Instant
 import java.math.BigDecimal

@@ -20,4 +20,5 @@
     <string name="category_sports">Спорт</string>
     <string name="category_mandatory_payments">Обязательные</string>
     <string name="category_other">Другое</string>
+    <string name="money_placeholder">%1$s ₽</string>
 </resources>
