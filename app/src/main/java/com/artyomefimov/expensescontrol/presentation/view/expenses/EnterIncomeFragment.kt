@@ -40,7 +40,7 @@ class EnterIncomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.navigateToExpenseScreen().observeEvent(this) {
-            findNavController().navigate(R.id.expenses_dest)
+            findNavController().navigate(R.id.action_enterIncomeFragment_to_expensesFragment)
         }
     }
 }

@@ -64,6 +64,6 @@ class EnterExpenseFragment : Fragment() {
     }
 
     private fun navigateToEnterIncomeFragment() {
-        findNavController().navigate(R.id.enter_income_dest)
+        findNavController().navigate(R.id.action_expensesFragment_to_enterIncomeFragment)
     }
 }
