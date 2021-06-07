@@ -1,10 +1,10 @@
 package com.artyomefimov.expensescontrol.domain.interactor
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
+import androidx.lifecycle.Observer as Observer1
 
 fun <T> LiveData<T>.getOrAwaitValue(
     time: Long = 2,
@@ -13,7 +13,7 @@ fun <T> LiveData<T>.getOrAwaitValue(
 ): T {
     var data: T? = null
     val latch = CountDownLatch(1)
-    val observer = object : Observer<T> {
+    val observer = object : Observer1<T> {
         override fun onChanged(o: T?) {
             data = o
             latch.countDown()

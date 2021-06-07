@@ -1,13 +1,13 @@
 <resources>
-    <string name="app_name">ExpensesControl</string>
+    <string name="app_name">Expenses сontrol</string>
     <string name="current_expenses_fragment">Current expenses</string>
     <string name="enter_income_fragment">Enter income</string>
     
-    <string name="available_money_placeholder">%1$s ₽</string>
+    <string name="available_money_placeholder">%1$s ₽ for today</string>
 
     <string name="enter_field_hint">Enter expense</string>
     <string name="comment_field_hint">Enter comment</string>
-    <string name="money_left_label_text">Left this month</string>
+    <string name="money_left_label_text">%1$s ₽ left this month</string>
     <string name="apply_text">Apply</string>
     <string name="enter_income_hint">Planned income</string>
     <string name="enter_income_explanation">Enter your planned income for the next month. You enter this sum in the beginning of every month for calculating recommended daily expenses.</string>

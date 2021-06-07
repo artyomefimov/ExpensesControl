@@ -6,7 +6,6 @@ import com.artyomefimov.expensescontrol.domain.model.Expense
 import kotlinx.datetime.Clock
 import kotlinx.datetime.toJavaLocalDateTime
 import java.math.BigDecimal
-import java.math.BigInteger
 import java.math.RoundingMode
 import javax.inject.Inject
 
@@ -22,7 +21,7 @@ class DailyExpenseInteractorImpl @Inject constructor(
     override fun getAvailableDailySum(): BigDecimal {
         return incomeRepository.getIncomeValue()
             .divide(
-                BigDecimal(daysInThisMonth()),
+                BigDecimal(availableDaysInThisMonth()),
                 ROUNDING_SCALE,
                 RoundingMode.HALF_EVEN
             )
@@ -35,14 +34,15 @@ class DailyExpenseInteractorImpl @Inject constructor(
         val expense = Expense(
             sum = BigDecimal(stringSum),
             comment = comment,
-            timestamp = Clock.System.now(),
+            timestamp = clock.now(),
         )
         val newSum = incomeRepository.getIncomeValue().subtract(expense.sum)
         incomeRepository.updateIncome(newSum)
     }
 
-    private fun daysInThisMonth(): Int {
-        val isLeap = today(clock).toJavaLocalDateTime().toLocalDate().isLeapYear
-        return today(clock).month.length(isLeap)
+    private fun availableDaysInThisMonth(): Int {
+        val today = today(clock)
+        val isLeap = today.toJavaLocalDateTime().toLocalDate().isLeapYear
+        return today.month.length(isLeap) - today.dayOfMonth
     }
 }

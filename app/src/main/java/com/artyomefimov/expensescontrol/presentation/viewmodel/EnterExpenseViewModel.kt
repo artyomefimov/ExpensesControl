@@ -60,13 +60,20 @@ class EnterExpenseViewModel @Inject constructor(
     }
 
     private fun updateAvailableSum(isInitial: Boolean) {
-        val sum = dailyExpenseInteractor
+        val dailySum = dailyExpenseInteractor
             .getAvailableDailySum()
             .toString()
-        val availableSum = resourcesProvider.getString(R.string.available_money_placeholder)
-            .format(sum)
+        val monthlySum = incomeInteractor
+            .getIncomeForCurrentMonth()
+            .value
+            .toString()
+        val availableDailySum = resourcesProvider.getString(R.string.available_money_placeholder)
+            .format(dailySum)
+        val availableMonthlySum = resourcesProvider.getString(R.string.money_left_label_text)
+            .format(monthlySum)
         availableDailySumState.value = AvailableSumInfo(
-            availableSum = availableSum,
+            availableDailySum = availableDailySum,
+            availableMonthlySum = availableMonthlySum,
             isInitial = isInitial,
         )
     }

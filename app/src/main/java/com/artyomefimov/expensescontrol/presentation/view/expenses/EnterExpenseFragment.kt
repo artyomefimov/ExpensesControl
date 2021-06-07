@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.artyomefimov.expensescontrol.R
 import com.artyomefimov.expensescontrol.databinding.FragmentEnterExpenseBinding
+import com.artyomefimov.expensescontrol.presentation.ext.hideKeyboard
 import com.artyomefimov.expensescontrol.presentation.ext.observeEvent
 import com.artyomefimov.expensescontrol.presentation.ext.safeObserve
 import com.artyomefimov.expensescontrol.presentation.model.AvailableSumInfo
@@ -52,18 +53,25 @@ class EnterExpenseFragment : Fragment() {
     }
 
     private fun updateAvailableSum(info: AvailableSumInfo) {
-        binding.moneyLeftTextView.text = info.availableSum
+        binding.availableDailyTextView.text = info.availableDailySum
+        binding.availableMonthlyTextView.text = info.availableMonthlySum
         if (info.isInitial.not()) {
             val updateSumAnimation = AnimationUtils.loadAnimation(
                 requireContext(),
                 R.anim.shake_and_explode
             )
-            binding.moneyLeftTextView.startAnimation(updateSumAnimation)
+            binding.availableDailyTextView.startAnimation(updateSumAnimation)
         }
-        binding.enterSumEditText.text?.clear()
+        clear()
     }
 
     private fun navigateToEnterIncomeFragment() {
         findNavController().navigate(R.id.action_expensesFragment_to_enterIncomeFragment)
+    }
+
+    private fun clear() {
+        binding.enterSumEditText.text?.clear()
+        binding.commentEditText.text?.clear()
+        activity?.hideKeyboard()
     }
 }

@@ -32,7 +32,7 @@ class IncomeInteractorImpl @Inject constructor(
 
     override fun saveIncomeForNextMonth(incomeString: String) {
         incomeRepository.updateIncome(BigDecimal(incomeString))
-        incomeRepository.setLastChangeDate(Clock.System.now())
+        incomeRepository.setLastChangeDate(clock.now())
     }
 
     private fun isFirstDayOfMonth(): Boolean {

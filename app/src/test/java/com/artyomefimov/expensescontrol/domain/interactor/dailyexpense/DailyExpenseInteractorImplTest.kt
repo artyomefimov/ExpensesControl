@@ -12,8 +12,9 @@ import java.math.BigDecimal
 class DailyExpenseInteractorImplTest {
 
     private companion object {
-        val currentDate = Instant.parse("2018-08-01T10:00:00Z")
+        val currentDate = Instant.parse("2018-08-20T10:00:00Z")
         const val daysInCurrentMonth = 31
+        const val availableDays = 11
     }
 
     private val repository = mockk<IncomeRepository>()
@@ -31,9 +32,9 @@ class DailyExpenseInteractorImplTest {
     }
 
     @Test
-    fun `getAvailableDailySum returns average value if monthly income is not zero`() {
+    fun `getAvailableDailySum returns average value for days left if monthly income is not zero`() {
         val expected = 1000
-        val incomeValue = (daysInCurrentMonth * expected).toString()
+        val incomeValue = (availableDays * expected).toString()
         every { clock.now() } returns currentDate
         every { repository.getIncomeValue() } returns BigDecimal(incomeValue)
 
