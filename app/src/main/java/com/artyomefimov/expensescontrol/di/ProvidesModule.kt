@@ -27,9 +27,10 @@ class ProvidesModule {
     @Singleton
     fun providePreferences(
         @ApplicationContext context: Context
-    ): SharedPreferences {
-        return context.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE)
-    }
+    ): SharedPreferences = context.getSharedPreferences(
+        PREFS_FILE_NAME,
+        Context.MODE_PRIVATE
+    )
 
     @Provides
     @Singleton
@@ -39,13 +40,11 @@ class ProvidesModule {
     @Singleton
     fun provideDb(
         @ApplicationContext context: Context
-    ): ExpensesDb {
-        return Room.databaseBuilder(
-            context,
-            ExpensesDb::class.java,
-            DB_NAME
-        ).build()
-    }
+    ): ExpensesDb = Room.databaseBuilder(
+        context,
+        ExpensesDb::class.java,
+        DB_NAME
+    ).build()
 
     @Provides
     @Singleton

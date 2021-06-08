@@ -31,6 +31,7 @@ class EnterExpenseViewModel @Inject constructor(
 ): ViewModel() {
 
     private val navigateToEnterIncomeScreen = MutableLiveData<Event<Unit>>()
+    private val showSnackbar = MutableLiveData<Event<Unit>>()
     private val availableDailySumState = MutableLiveData<AvailableSumInfo>()
     private val currentMonthExpensesState = MutableLiveData<List<ExpenseInfo>>()
 
@@ -40,15 +41,17 @@ class EnterExpenseViewModel @Inject constructor(
     }
 
     fun navigateToEnterIncomeScreen(): LiveData<Event<Unit>> = navigateToEnterIncomeScreen
+    fun showSnackbar(): LiveData<Event<Unit>> = showSnackbar
     fun availableDailySumState(): LiveData<AvailableSumInfo> = availableDailySumState
     fun currentMonthExpensesState(): LiveData<List<ExpenseInfo>> = currentMonthExpensesState
 
     fun addExpense(
         stringSum: String?,
         comment: String?,
-        category: String,
+        category: String?,
     ) = viewModelScope.launch {
-        if (stringSum.isNullOrEmpty()) {
+        if (stringSum.isNullOrEmpty() || category.isNullOrEmpty()) {
+            showSnackbar.toggle()
             return@launch
         }
 

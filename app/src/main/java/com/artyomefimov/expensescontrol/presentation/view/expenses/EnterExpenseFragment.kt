@@ -12,6 +12,7 @@ import com.artyomefimov.expensescontrol.databinding.FragmentEnterExpenseBinding
 import com.artyomefimov.expensescontrol.presentation.ext.hideKeyboard
 import com.artyomefimov.expensescontrol.presentation.ext.observeEvent
 import com.artyomefimov.expensescontrol.presentation.ext.safeObserve
+import com.artyomefimov.expensescontrol.presentation.ext.showSnackbar
 import com.artyomefimov.expensescontrol.presentation.model.AvailableSumInfo
 import com.artyomefimov.expensescontrol.presentation.model.ExpenseInfo
 import com.artyomefimov.expensescontrol.presentation.view.expenses.recyclerview.ExpensesAdapter
@@ -63,6 +64,9 @@ class EnterExpenseFragment : Fragment() {
         viewModel.navigateToEnterIncomeScreen().observeEvent(this) {
             navigateToEnterIncomeFragment()
         }
+        viewModel.showSnackbar().observeEvent(this) {
+            showSnackbar()
+        }
     }
 
     private fun updateAvailableSum(info: AvailableSumInfo) {
@@ -71,7 +75,7 @@ class EnterExpenseFragment : Fragment() {
         if (info.isInitial.not()) {
             val updateSumAnimation = AnimationUtils.loadAnimation(
                 requireContext(),
-                R.anim.shake_and_explode
+                R.anim.shake_anim
             )
             binding.availableDailyTextView.startAnimation(updateSumAnimation)
         }
@@ -90,6 +94,10 @@ class EnterExpenseFragment : Fragment() {
 
     private fun navigateToEnterIncomeFragment() {
         findNavController().navigate(R.id.action_expensesFragment_to_enterIncomeFragment)
+    }
+
+    private fun showSnackbar() {
+        binding.root.showSnackbar(R.string.absent_expense_parameters_message)
     }
 
     private fun clear() {

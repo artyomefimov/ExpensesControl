@@ -19,5 +19,7 @@ class CategoryGroup @JvmOverloads constructor(
         chipSpacingHorizontal = context.resources.getDimension(R.dimen.margin_8dp).roundToInt()
     }
 
-    fun getSelectedCategory() = findViewById<Chip>(checkedChipId).text.toString()
+    fun getSelectedCategory(): String? {
+        return findViewById<Chip>(checkedChipId)?.text?.toString()
+    }
 }
