@@ -14,7 +14,7 @@ class ExpenseInfoItem @JvmOverloads constructor(
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
     private val binding: ItemExpenseInfoBinding = ItemExpenseInfoBinding.inflate(
-        LayoutInflater.from(context), this
+        LayoutInflater.from(context), this, true
     )
 
     fun setExpense(expense: ExpenseInfo) = with(binding) {
