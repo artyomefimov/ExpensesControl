@@ -13,6 +13,8 @@ import com.artyomefimov.expensescontrol.domain.repo.ExpenseRepository
 import com.artyomefimov.expensescontrol.domain.repo.IncomeRepository
 import com.artyomefimov.expensescontrol.domain.mapper.Mapper
 import com.artyomefimov.expensescontrol.domain.model.Expense
+import com.artyomefimov.expensescontrol.presentation.mapper.ExpenseInfoMapper
+import com.artyomefimov.expensescontrol.presentation.model.ExpenseInfo
 import com.artyomefimov.expensescontrol.presentation.resources.ResourcesProvider
 import com.artyomefimov.expensescontrol.presentation.resources.ResourcesProviderImpl
 import dagger.Binds
@@ -66,4 +68,10 @@ abstract class BindsModule {
     abstract fun expenseToEntityMapper(
         mapper: ExpenseToEntityMapper
     ): Mapper<Expense, ExpenseEntity>
+
+    @Binds
+    @Singleton
+    abstract fun expenseInfoMapper(
+        mapper: ExpenseInfoMapper
+    ): Mapper<Expense, ExpenseInfo>
 }

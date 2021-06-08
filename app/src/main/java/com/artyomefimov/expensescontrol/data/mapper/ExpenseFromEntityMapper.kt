@@ -10,6 +10,7 @@ class ExpenseFromEntityMapper @Inject constructor(
 
     override fun map(input: ExpenseEntity): Expense {
         return Expense(
+            id = input.id,
             sum = input.sum,
             comment = input.comment,
             category = input.category,

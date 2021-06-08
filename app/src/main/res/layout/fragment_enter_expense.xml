@@ -102,6 +102,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/categoriesGroup"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:listitem="@layout/item_expense" />
+        tools:listitem="@layout/item_expense_info" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

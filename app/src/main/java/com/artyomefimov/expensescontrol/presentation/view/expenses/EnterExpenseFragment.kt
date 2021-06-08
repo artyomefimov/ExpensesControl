@@ -3,20 +3,20 @@ package com.artyomefimov.expensescontrol.presentation.view.expenses
 import android.os.Bundle
 import android.view.*
 import android.view.animation.AnimationUtils
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DiffUtil
 import com.artyomefimov.expensescontrol.R
 import com.artyomefimov.expensescontrol.databinding.FragmentEnterExpenseBinding
-import com.artyomefimov.expensescontrol.domain.model.Expense
 import com.artyomefimov.expensescontrol.presentation.ext.hideKeyboard
 import com.artyomefimov.expensescontrol.presentation.ext.observeEvent
 import com.artyomefimov.expensescontrol.presentation.ext.safeObserve
 import com.artyomefimov.expensescontrol.presentation.model.AvailableSumInfo
+import com.artyomefimov.expensescontrol.presentation.model.ExpenseInfo
 import com.artyomefimov.expensescontrol.presentation.view.expenses.recyclerview.ExpensesAdapter
+import com.artyomefimov.expensescontrol.presentation.view.expenses.recyclerview.ExpensesDiffUtilCallback
 import com.artyomefimov.expensescontrol.presentation.viewmodel.EnterExpenseViewModel
-import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -78,9 +78,14 @@ class EnterExpenseFragment : Fragment() {
         clear()
     }
 
-    private fun updateExpenses(items: List<Expense>) {
-        adapter.items = items
-        adapter.notifyDataSetChanged()
+    private fun updateExpenses(items: List<ExpenseInfo>) {
+        val callback = ExpensesDiffUtilCallback(
+            oldItems = adapter.getItems(),
+            newItems = items
+        )
+        val diffResult = DiffUtil.calculateDiff(callback)
+        adapter.swapData(items)
+        diffResult.dispatchUpdatesTo(adapter)
     }
 
     private fun navigateToEnterIncomeFragment() {

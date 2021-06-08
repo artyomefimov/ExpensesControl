@@ -5,35 +5,34 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.artyomefimov.expensescontrol.R
-import com.artyomefimov.expensescontrol.domain.model.Expense
-import com.google.android.material.textview.MaterialTextView
+import com.artyomefimov.expensescontrol.presentation.model.ExpenseInfo
+import com.artyomefimov.expensescontrol.presentation.view.custom.ExpenseInfoItem
 
 class ExpensesAdapter(
-    var items: List<Expense> = listOf()
+    private val items: MutableList<ExpenseInfo> = mutableListOf()
 ): RecyclerView.Adapter<ExpenseViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExpenseViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_expense, parent, false)
+            .inflate(R.layout.list_item_expense, parent, false)
         return ExpenseViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ExpenseViewHolder, position: Int) = holder.bind(items[position])
 
     override fun getItemCount() = items.size
+
+    fun swapData(newItems: List<ExpenseInfo>) {
+        this.items.clear()
+        this.items.addAll(newItems)
+    }
+
+    fun getItems(): List<ExpenseInfo> = items
 }
 
 class ExpenseViewHolder(
     private val view: View,
 ): RecyclerView.ViewHolder(view) {
-    fun bind(expense: Expense) {
-        with(view) {
-            // todo separate model, separate view, diffutil
-            findViewById<MaterialTextView>(R.id.categoryTextView).text = expense.category
-            findViewById<MaterialTextView>(R.id.commentTextView).text = expense.comment
-            findViewById<MaterialTextView>(R.id.sumTextView).text = view.resources.getString(R.string.money_placeholder)
-                .format(expense.sum.toString())
-            findViewById<MaterialTextView>(R.id.timestampTextView).text = expense.timestamp.toString()
-        }
-    }
+
+    fun bind(expense: ExpenseInfo) = (view as ExpenseInfoItem).setExpense(expense)
 }
