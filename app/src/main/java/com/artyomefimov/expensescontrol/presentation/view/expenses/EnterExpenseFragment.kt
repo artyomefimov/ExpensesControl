@@ -17,7 +17,6 @@ import com.artyomefimov.expensescontrol.presentation.model.AvailableSumInfo
 import com.artyomefimov.expensescontrol.presentation.model.ExpenseInfo
 import com.artyomefimov.expensescontrol.presentation.view.expenses.recyclerview.ExpensesAdapter
 import com.artyomefimov.expensescontrol.presentation.view.expenses.recyclerview.ExpensesDiffUtilCallback
-import com.artyomefimov.expensescontrol.presentation.view.expenses.recyclerview.SpaceItemDecoration
 import com.artyomefimov.expensescontrol.presentation.viewmodel.EnterExpenseViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -56,11 +55,6 @@ class EnterExpenseFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         adapter = ExpensesAdapter()
         binding.expensesRecyclerView.adapter = adapter
-        binding.expensesRecyclerView.addItemDecoration(
-            SpaceItemDecoration(
-                resources.getDimensionPixelSize(R.dimen.margin_16dp)
-            )
-        )
         observeViewModel()
     }
 
