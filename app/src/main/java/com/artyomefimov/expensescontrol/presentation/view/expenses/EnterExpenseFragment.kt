@@ -90,6 +90,7 @@ class EnterExpenseFragment : Fragment() {
         val diffResult = DiffUtil.calculateDiff(callback)
         adapter.swapData(items)
         diffResult.dispatchUpdatesTo(adapter)
+        binding.expensesRecyclerView.smoothScrollToPosition(0)
     }
 
     private fun navigateToEnterIncomeFragment() {

@@ -69,11 +69,14 @@ dependencies {
     // Testing dependencies
     testImplementation "junit:junit:$junit_version"
     testImplementation "io.mockk:mockk:$mockk_version"
+    testImplementation "app.cash.turbine:turbine:$turbine_version"
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_test_version"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlin_test_version"
 
     // Android testing dependencies
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    androidTestImplementation "androidx.test.ext:junit:$android_junit_version"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
+    androidTestImplementation "com.kaspersky.android-components:kaspresso:$kaspresso_version"
 }
 
 dependencies {

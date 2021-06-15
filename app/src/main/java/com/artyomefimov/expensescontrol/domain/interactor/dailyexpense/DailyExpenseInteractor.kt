@@ -10,6 +10,9 @@ import java.math.BigInteger
  */
 interface DailyExpenseInteractor {
 
+    /**
+     * Возвращает [Flow] списка трат за текущий месяц
+     */
     fun getAllExpensesForCurrentMonth(): Flow<List<Expense>>
 
     /**

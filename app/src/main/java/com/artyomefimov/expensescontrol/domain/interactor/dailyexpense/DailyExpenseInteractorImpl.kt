@@ -24,9 +24,10 @@ class DailyExpenseInteractorImpl @Inject constructor(
     }
 
     override fun getAllExpensesForCurrentMonth(): Flow<List<Expense>> {
-        return expenseRepository.allExpenses().map { expenses ->
-            expenses.filter { expense -> expense.timestamp.isInCurrentMonth(clock) }
-        }
+        return expenseRepository
+            .allExpenses()
+            .map(::expensesInCurrentMonth)
+            .map(::reversed)
     }
 
     override fun getAvailableDailySum(): BigDecimal {
@@ -58,5 +59,13 @@ class DailyExpenseInteractorImpl @Inject constructor(
         val today = today(clock)
         val isLeap = today.toJavaLocalDateTime().toLocalDate().isLeapYear
         return today.month.length(isLeap) - today.dayOfMonth
+    }
+
+    private fun expensesInCurrentMonth(expenses: List<Expense>): List<Expense> {
+        return expenses.filter { expense -> expense.timestamp.isInCurrentMonth(clock) }
+    }
+
+    private fun reversed(expenses: List<Expense>): List<Expense> {
+        return expenses.asReversed()
     }
 }
