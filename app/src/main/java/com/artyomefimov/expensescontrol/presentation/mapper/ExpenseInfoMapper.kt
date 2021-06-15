@@ -19,7 +19,7 @@ class ExpenseInfoMapper @Inject constructor(
 ) : Mapper<Expense, ExpenseInfo> {
 
     private val formatter = DateTimeFormatter
-        .ofLocalizedDateTime(FormatStyle.LONG)
+        .ofLocalizedDateTime(FormatStyle.SHORT)
         .withLocale(Locale.getDefault())
         .withZone(ZoneId.systemDefault())
 
