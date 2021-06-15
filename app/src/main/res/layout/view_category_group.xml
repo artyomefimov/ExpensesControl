@@ -9,6 +9,7 @@
     <com.google.android.material.chip.Chip
         android:id="@+id/chipSupermarkets"
         style="@style/Widget.MaterialComponents.Chip.Choice"
+        android:textAppearance="@style/TextStyle.Size14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/category_supermarkets" />
@@ -16,6 +17,7 @@
     <com.google.android.material.chip.Chip
         android:id="@+id/chipFun"
         style="@style/Widget.MaterialComponents.Chip.Choice"
+        android:textAppearance="@style/TextStyle.Size14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/category_fun" />
@@ -23,6 +25,7 @@
     <com.google.android.material.chip.Chip
         android:id="@+id/chipTransfers"
         style="@style/Widget.MaterialComponents.Chip.Choice"
+        android:textAppearance="@style/TextStyle.Size14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/category_transfers" />
@@ -30,6 +33,7 @@
     <com.google.android.material.chip.Chip
         android:id="@+id/chipFastFood"
         style="@style/Widget.MaterialComponents.Chip.Choice"
+        android:textAppearance="@style/TextStyle.Size14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/category_fast_food" />
@@ -37,6 +41,7 @@
     <com.google.android.material.chip.Chip
         android:id="@+id/chipTransport"
         style="@style/Widget.MaterialComponents.Chip.Choice"
+        android:textAppearance="@style/TextStyle.Size14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/category_transport" />
@@ -44,6 +49,7 @@
     <com.google.android.material.chip.Chip
         android:id="@+id/chipHouse"
         style="@style/Widget.MaterialComponents.Chip.Choice"
+        android:textAppearance="@style/TextStyle.Size14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/category_house" />
@@ -51,6 +57,7 @@
     <com.google.android.material.chip.Chip
         android:id="@+id/chipClothes"
         style="@style/Widget.MaterialComponents.Chip.Choice"
+        android:textAppearance="@style/TextStyle.Size14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/category_clothes" />
@@ -58,6 +65,7 @@
     <com.google.android.material.chip.Chip
         android:id="@+id/chipSports"
         style="@style/Widget.MaterialComponents.Chip.Choice"
+        android:textAppearance="@style/TextStyle.Size14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/category_sports" />
@@ -65,6 +73,7 @@
     <com.google.android.material.chip.Chip
         android:id="@+id/chipMandatory"
         style="@style/Widget.MaterialComponents.Chip.Choice"
+        android:textAppearance="@style/TextStyle.Size14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/category_mandatory_payments" />
@@ -72,6 +81,7 @@
     <com.google.android.material.chip.Chip
         android:id="@+id/chipOther"
         style="@style/Widget.MaterialComponents.Chip.Choice"
+        android:textAppearance="@style/TextStyle.Size14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/category_other" />

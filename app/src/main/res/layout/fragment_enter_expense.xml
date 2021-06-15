@@ -9,7 +9,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/enterSumLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/TextInputLayoutStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_16dp"
@@ -17,6 +17,7 @@
         android:layout_marginEnd="@dimen/margin_16dp"
         android:hint="@string/enter_field_hint"
         app:endIconMode="clear_text"
+        app:hintTextColor="@color/colorAccent"
         app:layout_constraintBottom_toTopOf="@id/commentLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,7 +35,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/commentLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/TextInputLayoutStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_16dp"
@@ -42,6 +43,7 @@
         android:layout_marginEnd="@dimen/margin_16dp"
         android:hint="@string/comment_field_hint"
         app:endIconMode="clear_text"
+        app:hintTextColor="@color/colorAccent"
         app:layout_constraintBottom_toTopOf="@id/availableDailyTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,6 +65,7 @@
         android:layout_marginStart="@dimen/margin_16dp"
         android:layout_marginTop="@dimen/margin_16dp"
         android:layout_marginEnd="@dimen/margin_16dp"
+        android:textAppearance="@style/TextStyle.Size16"
         app:layout_constraintBottom_toTopOf="@id/availableMonthlyTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -76,6 +79,7 @@
         android:layout_marginStart="@dimen/margin_16dp"
         android:layout_marginTop="@dimen/margin_8dp"
         android:layout_marginEnd="@dimen/margin_16dp"
+        android:textAppearance="@style/TextStyle.Size16"
         app:layout_constraintBottom_toTopOf="@id/categoriesGroup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -6,5 +6,6 @@
     <color name="primaryTextColor">#1A1A1A</color>
     <color name="secondaryTextColor">#A3A6AB</color>
     <color name="dividerColor">#BDBDBD</color>
+    <color name="chipColor">#E0E0E0</color>
     <color name="backgroundColor">#F9FBFC</color>
 </resources>
