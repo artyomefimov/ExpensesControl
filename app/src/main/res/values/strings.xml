@@ -25,4 +25,9 @@
 
     <string name="money_placeholder">%1$s ₽</string>
     <string name="absent_expense_parameters_message">Enter expense sum and choose category</string>
+
+    <string name="notification_channel_id" translatable="false">ExpensesControl</string>
+    <string name="notification_channel_name">Common notifications</string>
+    <string name="notification_title">Don\'t forget about your expenses!</string>
+    <string name="notification_text">Write down today\'s spent money using the app</string>
 </resources>

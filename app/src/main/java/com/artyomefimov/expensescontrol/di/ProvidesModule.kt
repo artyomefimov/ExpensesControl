@@ -3,8 +3,13 @@ package com.artyomefimov.expensescontrol.di
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.room.Room
+import androidx.work.Configuration
+import androidx.work.WorkerFactory
 import com.artyomefimov.expensescontrol.data.db.DB_NAME
 import com.artyomefimov.expensescontrol.data.db.ExpensesDb
+import com.artyomefimov.expensescontrol.domain.interactor.dailyexpense.ExpenseInteractor
+import com.artyomefimov.expensescontrol.infrastructure.ExpensesWorkerFactory
+import com.artyomefimov.expensescontrol.infrastructure.NotificationBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -50,4 +55,24 @@ class ProvidesModule {
     @Singleton
     @IoDispatcher
     fun provideIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
+
+    @Provides
+    @Singleton
+    fun provideWorkerFactory(
+        expenseInteractor: ExpenseInteractor,
+        notificationBuilder: NotificationBuilder,
+        clock: Clock,
+    ): WorkerFactory = ExpensesWorkerFactory(
+        expenseInteractor,
+        notificationBuilder,
+        clock
+    )
+
+    @Provides
+    @Singleton
+    fun provideWorkManagerConfiguration(
+        workerFactory: WorkerFactory,
+    ): Configuration = Configuration.Builder()
+        .setWorkerFactory(workerFactory)
+        .build()
 }

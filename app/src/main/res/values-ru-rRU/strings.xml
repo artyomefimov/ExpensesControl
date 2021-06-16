@@ -25,4 +25,7 @@
 
     <string name="money_placeholder">%1$s ₽</string>
     <string name="absent_expense_parameters_message">Введите сумму траты и выберите категорию</string>
+    <string name="notification_channel_name">Общие уведомления</string>
+    <string name="notification_title">Не забудьте о расходах!</string>
+    <string name="notification_text">Запишите потраченные деньги в приложении</string>
 </resources>

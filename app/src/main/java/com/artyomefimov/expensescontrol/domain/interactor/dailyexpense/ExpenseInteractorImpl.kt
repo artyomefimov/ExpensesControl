@@ -1,10 +1,9 @@
 package com.artyomefimov.expensescontrol.domain.interactor.dailyexpense
 
-import com.artyomefimov.expensescontrol.domain.ext.isInCurrentMonth
 import com.artyomefimov.expensescontrol.domain.ext.today
+import com.artyomefimov.expensescontrol.domain.model.Expense
 import com.artyomefimov.expensescontrol.domain.repo.ExpenseRepository
 import com.artyomefimov.expensescontrol.domain.repo.IncomeRepository
-import com.artyomefimov.expensescontrol.domain.model.Expense
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Clock

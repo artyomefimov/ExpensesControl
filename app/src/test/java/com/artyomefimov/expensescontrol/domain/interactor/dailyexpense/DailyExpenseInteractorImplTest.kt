@@ -70,13 +70,13 @@ class DailyExpenseInteractorImplTest {
         runBlockingTest {
             val expected = listOf(expense3, expense2, expense1)
             every { clock.now() } returns currentDate
-            every { expenseRepository.allExpenses() } returns flowOf(expenses)
+            every { expenseRepository.getExpensesForCurrentMonth() } returns flowOf(expenses)
 
             interactor.getExpensesForCurrentMonth().test {
                 assertEquals(expected, expectItem())
                 expectComplete()
             }
 
-            verify(exactly = 1) { expenseRepository.allExpenses() }
+            verify(exactly = 1) { expenseRepository.getExpensesForCurrentMonth() }
         }
 }
