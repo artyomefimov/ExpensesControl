@@ -5,8 +5,8 @@ import com.artyomefimov.expensescontrol.data.mapper.ExpenseToEntityMapper
 import com.artyomefimov.expensescontrol.data.model.ExpenseEntity
 import com.artyomefimov.expensescontrol.data.repo.ExpenseRepositoryImpl
 import com.artyomefimov.expensescontrol.data.repo.IncomeRepositoryImpl
-import com.artyomefimov.expensescontrol.domain.interactor.dailyexpense.DailyExpenseInteractor
-import com.artyomefimov.expensescontrol.domain.interactor.dailyexpense.DailyExpenseInteractorImpl
+import com.artyomefimov.expensescontrol.domain.interactor.dailyexpense.ExpenseInteractor
+import com.artyomefimov.expensescontrol.domain.interactor.dailyexpense.ExpenseInteractorImpl
 import com.artyomefimov.expensescontrol.domain.interactor.income.IncomeInteractor
 import com.artyomefimov.expensescontrol.domain.interactor.income.IncomeInteractorImpl
 import com.artyomefimov.expensescontrol.domain.repo.ExpenseRepository
@@ -48,8 +48,8 @@ abstract class BindsModule {
     @Binds
     @Singleton
     abstract fun dailyExpenseInteractor(
-        interactor: DailyExpenseInteractorImpl
-    ): DailyExpenseInteractor
+        interactor: ExpenseInteractorImpl
+    ): ExpenseInteractor
 
     @Binds
     @Singleton

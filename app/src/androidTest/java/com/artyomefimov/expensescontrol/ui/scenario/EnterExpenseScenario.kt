@@ -1,8 +1,8 @@
-package com.artyomefimov.expensescontrol.scenario
+package com.artyomefimov.expensescontrol.ui.scenario
 
 import com.agoda.kakao.screen.Screen
 import com.artyomefimov.expensescontrol.R
-import com.artyomefimov.expensescontrol.screens.EnterExpenseScreen
+import com.artyomefimov.expensescontrol.ui.screens.EnterExpenseScreen
 import com.kaspersky.kaspresso.testcases.api.scenario.BaseScenario
 import com.kaspersky.kaspresso.testcases.core.testcontext.TestContext
 

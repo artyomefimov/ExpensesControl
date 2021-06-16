@@ -21,7 +21,21 @@ class ExpenseRepositoryImpl @Inject constructor(
 ): ExpenseRepository {
 
     override fun allExpenses(): Flow<List<Expense>> {
-        return db.expensesDao().allExpenses().map { it.mapList(fromEntityMapper) }
+        return db.expensesDao().allExpenses().map {
+            it.mapList(fromEntityMapper)
+        }
+    }
+
+    override fun getExpensesForCurrentMonth(): Flow<List<Expense>> {
+        return db.expensesDao().getExpensesForCurrentMonth().map {
+            it.mapList(fromEntityMapper)
+        }
+    }
+
+    override fun getExpensesForCurrentDay(): Flow<List<Expense>> {
+        return db.expensesDao().getExpensesForCurrentDay().map {
+            it.mapList(fromEntityMapper)
+        }
     }
 
     override suspend fun addExpense(expense: Expense) {

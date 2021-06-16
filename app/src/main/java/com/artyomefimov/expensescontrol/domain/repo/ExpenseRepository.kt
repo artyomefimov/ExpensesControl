@@ -11,6 +11,16 @@ interface ExpenseRepository {
     fun allExpenses(): Flow<List<Expense>>
 
     /**
+     * Возвращает [Flow] списка всех трат за текущий месяц
+     */
+    fun getExpensesForCurrentMonth(): Flow<List<Expense>>
+
+    /**
+     * Возвращает [Flow] списка всех трат за текущий день
+     */
+    fun getExpensesForCurrentDay(): Flow<List<Expense>>
+
+    /**
      * Добавляет новую трату за текущий день
      *
      * @param expense трата

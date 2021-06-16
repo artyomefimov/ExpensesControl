@@ -1,9 +1,9 @@
-package com.artyomefimov.expensescontrol
+package com.artyomefimov.expensescontrol.ui
 
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.artyomefimov.expensescontrol.presentation.view.MainActivity
-import com.artyomefimov.expensescontrol.scenario.EnterExpenseScenario
+import com.artyomefimov.expensescontrol.ui.scenario.EnterExpenseScenario
 import com.kaspersky.kaspresso.testcases.api.testcase.TestCase
 import org.junit.Rule
 import org.junit.Test

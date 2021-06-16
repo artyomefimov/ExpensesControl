@@ -13,20 +13,31 @@ import java.math.BigDecimal
 import java.math.RoundingMode
 import javax.inject.Inject
 
-class DailyExpenseInteractorImpl @Inject constructor(
+class ExpenseInteractorImpl @Inject constructor(
     private val incomeRepository: IncomeRepository,
     private val expenseRepository: ExpenseRepository,
     private val clock: Clock,
-) : DailyExpenseInteractor {
+) : ExpenseInteractor {
 
     private companion object {
         const val ROUNDING_SCALE = 0
     }
 
-    override fun getAllExpensesForCurrentMonth(): Flow<List<Expense>> {
+    override fun getAllExpenses(): Flow<List<Expense>> {
         return expenseRepository
             .allExpenses()
-            .map(::expensesInCurrentMonth)
+            .map(::reversed)
+    }
+
+    override fun getExpensesForCurrentMonth(): Flow<List<Expense>> {
+        return expenseRepository
+            .getExpensesForCurrentMonth()
+            .map(::reversed)
+    }
+
+    override fun getExpensesForCurrentDay(): Flow<List<Expense>> {
+        return expenseRepository
+            .getExpensesForCurrentMonth()
             .map(::reversed)
     }
 
@@ -59,10 +70,6 @@ class DailyExpenseInteractorImpl @Inject constructor(
         val today = today(clock)
         val isLeap = today.toJavaLocalDateTime().toLocalDate().isLeapYear
         return today.month.length(isLeap) - today.dayOfMonth
-    }
-
-    private fun expensesInCurrentMonth(expenses: List<Expense>): List<Expense> {
-        return expenses.filter { expense -> expense.timestamp.isInCurrentMonth(clock) }
     }
 
     private fun reversed(expenses: List<Expense>): List<Expense> {

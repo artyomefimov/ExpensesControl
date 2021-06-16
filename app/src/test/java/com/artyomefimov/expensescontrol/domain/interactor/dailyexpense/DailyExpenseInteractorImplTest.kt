@@ -41,7 +41,7 @@ class DailyExpenseInteractorImplTest {
     private val incomeRepository = mockk<IncomeRepository>()
     private val expenseRepository = mockk<ExpenseRepository>()
     private val clock = mockk<Clock>()
-    private val interactor = DailyExpenseInteractorImpl(incomeRepository, expenseRepository, clock)
+    private val interactor = ExpenseInteractorImpl(incomeRepository, expenseRepository, clock)
 
     @Test
     fun `getAvailableDailySum returns zero if monthly income is zero`() {
@@ -66,13 +66,13 @@ class DailyExpenseInteractorImplTest {
     }
 
     @Test
-    fun `getAllExpensesForCurrentMonth returns reversed list of expenses for current month`() =
+    fun `getExpensesForCurrentMonth returns reversed list of expenses for current month`() =
         runBlockingTest {
-            val expected = listOf(expense3, expense1)
+            val expected = listOf(expense3, expense2, expense1)
             every { clock.now() } returns currentDate
             every { expenseRepository.allExpenses() } returns flowOf(expenses)
 
-            interactor.getAllExpensesForCurrentMonth().test {
+            interactor.getExpensesForCurrentMonth().test {
                 assertEquals(expected, expectItem())
                 expectComplete()
             }

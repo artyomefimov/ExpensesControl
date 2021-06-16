@@ -8,12 +8,22 @@ import java.math.BigInteger
 /**
  * Содержит бизнес-логику для внесения новых трат и рассчета доступной суммы
  */
-interface DailyExpenseInteractor {
+interface ExpenseInteractor {
 
     /**
-     * Возвращает [Flow] списка трат за текущий месяц
+     * Возвращает [Flow] списка всех трат, введенных пользователем
      */
-    fun getAllExpensesForCurrentMonth(): Flow<List<Expense>>
+    fun getAllExpenses(): Flow<List<Expense>>
+
+    /**
+     * Возвращает [Flow] списка всех трат за текущий месяц
+     */
+    fun getExpensesForCurrentMonth(): Flow<List<Expense>>
+
+    /**
+     * Возвращает [Flow] списка всех трат за текущий день
+     */
+    fun getExpensesForCurrentDay(): Flow<List<Expense>>
 
     /**
      * Получает доступную сумму для трат для текущего дня

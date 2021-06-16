@@ -5,14 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.artyomefimov.expensescontrol.R
-import com.artyomefimov.expensescontrol.domain.interactor.dailyexpense.DailyExpenseInteractor
+import com.artyomefimov.expensescontrol.domain.interactor.dailyexpense.ExpenseInteractor
 import com.artyomefimov.expensescontrol.domain.interactor.income.IncomeInteractor
 import com.artyomefimov.expensescontrol.domain.mapper.Mapper
 import com.artyomefimov.expensescontrol.domain.mapper.mapList
 import com.artyomefimov.expensescontrol.domain.model.Expense
 import com.artyomefimov.expensescontrol.domain.model.isZeroAndShouldBeEntered
 import com.artyomefimov.expensescontrol.presentation.ext.toggle
-import com.artyomefimov.expensescontrol.presentation.mapper.ExpenseInfoMapper
 import com.artyomefimov.expensescontrol.presentation.model.AvailableSumInfo
 import com.artyomefimov.expensescontrol.presentation.model.Event
 import com.artyomefimov.expensescontrol.presentation.model.ExpenseInfo
@@ -25,7 +24,7 @@ import javax.inject.Inject
 @HiltViewModel
 class EnterExpenseViewModel @Inject constructor(
     private val incomeInteractor: IncomeInteractor,
-    private val dailyExpenseInteractor: DailyExpenseInteractor,
+    private val expenseInteractor: ExpenseInteractor,
     private val resourcesProvider: ResourcesProvider,
     private val expenseInfoMapper: Mapper<Expense, ExpenseInfo>,
 ): ViewModel() {
@@ -55,7 +54,7 @@ class EnterExpenseViewModel @Inject constructor(
             return@launch
         }
 
-        dailyExpenseInteractor.addExpense(
+        expenseInteractor.addExpense(
             stringSum = stringSum,
             comment = comment.orEmpty(),
             category = category,
@@ -77,7 +76,7 @@ class EnterExpenseViewModel @Inject constructor(
     }
 
     private fun updateAvailableSum(isInitial: Boolean) {
-        val dailySum = dailyExpenseInteractor
+        val dailySum = expenseInteractor
             .getAvailableDailySum()
             .toString()
         val monthlySum = incomeInteractor
@@ -96,7 +95,7 @@ class EnterExpenseViewModel @Inject constructor(
     }
 
     private fun collectExpenses() = viewModelScope.launch {
-        dailyExpenseInteractor.getAllExpensesForCurrentMonth().collect {
+        expenseInteractor.getExpensesForCurrentMonth().collect {
             currentMonthExpensesState.value = it.mapList(expenseInfoMapper)
         }
     }

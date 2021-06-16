@@ -1,4 +1,4 @@
-package com.artyomefimov.expensescontrol.screens
+package com.artyomefimov.expensescontrol.ui.screens
 
 import android.view.View
 import com.agoda.kakao.chipgroup.KChipGroup
