@@ -28,4 +28,7 @@
     <string name="notification_channel_name">Общие уведомления</string>
     <string name="notification_title">Не забудьте о расходах!</string>
     <string name="notification_text">Запишите потраченные деньги в приложении</string>
+    <string name="statistics_fragment">Статистика</string>
+    <string name="statistics_label">Статистика</string>
+    <string name="expenses_label">Расходы</string>
 </resources>

@@ -30,4 +30,8 @@
     <string name="notification_channel_name">Common notifications</string>
     <string name="notification_title">Don\'t forget about your expenses!</string>
     <string name="notification_text">Write down today\'s spent money using the app</string>
+
+    <string name="statistics_fragment">Statistics fragment</string>
+    <string name="statistics_label">Statistics</string>
+    <string name="expenses_label">Expenses</string>
 </resources>

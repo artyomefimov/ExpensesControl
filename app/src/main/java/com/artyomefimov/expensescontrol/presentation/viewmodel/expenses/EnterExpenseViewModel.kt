@@ -1,4 +1,4 @@
-package com.artyomefimov.expensescontrol.presentation.viewmodel
+package com.artyomefimov.expensescontrol.presentation.viewmodel.expenses
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

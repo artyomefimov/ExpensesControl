@@ -17,7 +17,7 @@ import com.artyomefimov.expensescontrol.presentation.model.AvailableSumInfo
 import com.artyomefimov.expensescontrol.presentation.model.ExpenseInfo
 import com.artyomefimov.expensescontrol.presentation.view.expenses.recyclerview.ExpensesAdapter
 import com.artyomefimov.expensescontrol.presentation.view.expenses.recyclerview.ExpensesDiffUtilCallback
-import com.artyomefimov.expensescontrol.presentation.viewmodel.EnterExpenseViewModel
+import com.artyomefimov.expensescontrol.presentation.viewmodel.expenses.EnterExpenseViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

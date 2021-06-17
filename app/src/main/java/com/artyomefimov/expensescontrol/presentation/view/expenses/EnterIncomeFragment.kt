@@ -8,7 +8,7 @@ import androidx.navigation.fragment.findNavController
 import com.artyomefimov.expensescontrol.R
 import com.artyomefimov.expensescontrol.databinding.FragmentEnterIncomeBinding
 import com.artyomefimov.expensescontrol.presentation.ext.observeEvent
-import com.artyomefimov.expensescontrol.presentation.viewmodel.EnterIncomeViewModel
+import com.artyomefimov.expensescontrol.presentation.viewmodel.expenses.EnterIncomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

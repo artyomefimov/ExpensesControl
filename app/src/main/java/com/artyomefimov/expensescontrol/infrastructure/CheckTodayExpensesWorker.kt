@@ -41,7 +41,7 @@ class CheckTodayExpensesWorker(
         notificationBuilder.showNotification(
             titleResId = R.string.notification_title,
             contentResId = R.string.notification_text,
-            iconResId = R.drawable.ic_launcher_foreground,
+            iconResId = R.drawable.ic_money_main,
         )
     }
 }
