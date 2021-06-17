@@ -1,8 +1,33 @@
 <resources>
-    <string name="app_name">ExpensesControl</string>
-    <string name="current_expenses">Current expenses</string>
+    <string name="app_name">Expenses сontrol</string>
+    <string name="current_expenses_fragment">Current expenses</string>
+    <string name="enter_income_fragment">Enter income</string>
+    
+    <string name="available_money_placeholder">%1$s ₽ for today</string>
+
     <string name="enter_field_hint">Enter expense</string>
     <string name="comment_field_hint">Enter comment</string>
-    <string name="money_left_label_text">Left this month</string>
-    <string name="apply_expense">Apply expense</string>
+    <string name="money_left_label_text">%1$s ₽ left this month</string>
+    <string name="apply_text">Apply</string>
+    <string name="enter_income_hint">Planned income</string>
+    <string name="enter_income_explanation">Enter your planned income for the next month. You enter this sum in the beginning of every month for calculating recommended daily expenses.</string>
+
+    <string name="category_supermarkets">Supermarkets</string>
+    <string name="category_fun">Fun</string>
+    <string name="category_transfers">Transfers</string>
+    <string name="category_fast_food">Fast food</string>
+    <string name="category_transport">Transport</string>
+    <string name="category_house">House</string>
+    <string name="category_clothes">Clothes</string>
+    <string name="category_sports">Sports</string>
+    <string name="category_mandatory_payments">Mandatory</string>
+    <string name="category_other">Other</string>
+
+    <string name="money_placeholder">%1$s ₽</string>
+    <string name="absent_expense_parameters_message">Enter expense sum and choose category</string>
+
+    <string name="notification_channel_id" translatable="false">ExpensesControl</string>
+    <string name="notification_channel_name">Common notifications</string>
+    <string name="notification_title">Don\'t forget about your expenses!</string>
+    <string name="notification_text">Write down today\'s spent money using the app</string>
 </resources>

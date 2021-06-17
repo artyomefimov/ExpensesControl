@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.constraintlayout.motion.widget.MotionLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    app:layoutDescription="@xml/fragment_enter_expense_scene">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/enterSumLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/TextInputLayoutStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_16dp"
@@ -16,6 +17,7 @@
         android:layout_marginEnd="@dimen/margin_16dp"
         android:hint="@string/enter_field_hint"
         app:endIconMode="clear_text"
+        app:hintTextColor="@color/colorAccent"
         app:layout_constraintBottom_toTopOf="@id/commentLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,7 +35,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/commentLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/TextInputLayoutStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_16dp"
@@ -41,7 +43,8 @@
         android:layout_marginEnd="@dimen/margin_16dp"
         android:hint="@string/comment_field_hint"
         app:endIconMode="clear_text"
-        app:layout_constraintBottom_toTopOf="@id/moneyLeftTextView"
+        app:hintTextColor="@color/colorAccent"
+        app:layout_constraintBottom_toTopOf="@id/availableDailyTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/enterSumLayout">
@@ -56,29 +59,53 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/moneyLeftTextView"
+        android:id="@+id/availableDailyTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_16dp"
         android:layout_marginTop="@dimen/margin_16dp"
         android:layout_marginEnd="@dimen/margin_16dp"
-        app:layout_constraintBottom_toTopOf="@id/moneyLeftLabelTextView"
+        android:textAppearance="@style/TextStyle.Size16"
+        app:layout_constraintBottom_toTopOf="@id/availableMonthlyTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/commentLayout"
-        tools:text="100 ₽" />
+        tools:text="@string/available_money_placeholder" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/moneyLeftLabelTextView"
+        android:id="@+id/availableMonthlyTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_16dp"
         android:layout_marginTop="@dimen/margin_8dp"
         android:layout_marginEnd="@dimen/margin_16dp"
-        android:text="@string/money_left_label_text"
+        android:textAppearance="@style/TextStyle.Size16"
+        app:layout_constraintBottom_toTopOf="@id/categoriesGroup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/availableDailyTextView"
+        tools:text="@string/money_left_label_text" />
+
+    <com.artyomefimov.expensescontrol.presentation.view.custom.CategoryGroup
+        android:id="@+id/categoriesGroup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_16dp"
+        android:layout_marginEnd="@dimen/margin_16dp"
+        app:layout_constraintBottom_toTopOf="@id/expensesRecyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/availableMonthlyTextView" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/expensesRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/moneyLeftTextView" />
+        app:layout_constraintTop_toBottomOf="@id/categoriesGroup"
+        tools:listitem="@layout/item_expense_info" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>
