@@ -43,16 +43,6 @@ class ProvidesModule {
 
     @Provides
     @Singleton
-    fun provideDb(
-        @ApplicationContext context: Context
-    ): ExpensesDb = Room.databaseBuilder(
-        context,
-        ExpensesDb::class.java,
-        DB_NAME
-    ).build()
-
-    @Provides
-    @Singleton
     @IoDispatcher
     fun provideIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
 

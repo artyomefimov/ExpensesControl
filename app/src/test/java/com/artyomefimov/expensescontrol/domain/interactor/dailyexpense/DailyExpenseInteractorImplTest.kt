@@ -79,4 +79,34 @@ class DailyExpenseInteractorImplTest {
 
             verify(exactly = 1) { expenseRepository.getExpensesForCurrentMonth() }
         }
+
+    @Test
+    fun `getExpensesForCurrentDay returns reversed list of expenses for current month`() =
+        runBlockingTest {
+            val expected = listOf(expense3, expense2, expense1)
+            every { clock.now() } returns currentDate
+            every { expenseRepository.getExpensesForCurrentDay() } returns flowOf(expenses)
+
+            interactor.getExpensesForCurrentDay().test {
+                assertEquals(expected, expectItem())
+                expectComplete()
+            }
+
+            verify(exactly = 1) { expenseRepository.getExpensesForCurrentDay() }
+        }
+
+    @Test
+    fun `getAllExpenses returns reversed list of expenses for current month`() =
+        runBlockingTest {
+            val expected = listOf(expense3, expense2, expense1)
+            every { clock.now() } returns currentDate
+            every { expenseRepository.allExpenses() } returns flowOf(expenses)
+
+            interactor.getAllExpenses().test {
+                assertEquals(expected, expectItem())
+                expectComplete()
+            }
+
+            verify(exactly = 1) { expenseRepository.allExpenses() }
+        }
 }

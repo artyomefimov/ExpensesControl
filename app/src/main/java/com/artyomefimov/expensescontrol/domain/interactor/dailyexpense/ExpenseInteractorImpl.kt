@@ -36,7 +36,7 @@ class ExpenseInteractorImpl @Inject constructor(
 
     override fun getExpensesForCurrentDay(): Flow<List<Expense>> {
         return expenseRepository
-            .getExpensesForCurrentMonth()
+            .getExpensesForCurrentDay()
             .map(::reversed)
     }
 

@@ -20,8 +20,7 @@ class CheckTodayExpensesWorker(
     companion object {
         private const val SCHEDULE_HOURS = 12L
         const val TAG = "CheckTodayExpensesWorker"
-        const val IS_SHOWN_KEY = "IS_SHOWN"
-        const val TIMESTAMP_KEY = "TIMESTAMP"
+        const val SHOWN_TIMESTAMP_KEY = "SHOWN_TIMESTAMP_KEY"
 
         fun buildWorkRequest(): PeriodicWorkRequest {
             return PeriodicWorkRequestBuilder<CheckTodayExpensesWorker>(
@@ -32,17 +31,11 @@ class CheckTodayExpensesWorker(
     }
 
     override suspend fun doWork(): Result {
-        var isShown = false
         val expenses = expenseInteractor.getExpensesForCurrentDay().first()
         if (expenses.isEmpty()) {
             showNotification()
-            isShown = true
         }
-        val output = workDataOf(
-            IS_SHOWN_KEY to isShown,
-            TIMESTAMP_KEY to clock.now().toString()
-        )
-        return Result.success(output)
+        return Result.success()
     }
 
     private fun showNotification() {
