@@ -1,4 +1,4 @@
-package com.artyomefimov.expensescontrol.presentation.ext
+package com.artyomefimov.expensescontrol.infrastructure
 
 import android.app.Activity
 import android.app.NotificationManager
@@ -20,6 +20,14 @@ fun View.showSnackbar(
 ) = Snackbar.make(
     this,
     context.getString(messageResId),
+    Snackbar.LENGTH_SHORT,
+).show()
+
+fun View.showSnackbar(
+    message: String,
+) = Snackbar.make(
+    this,
+    message,
     Snackbar.LENGTH_SHORT,
 ).show()
 

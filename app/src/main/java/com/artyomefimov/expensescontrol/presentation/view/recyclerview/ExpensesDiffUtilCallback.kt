@@ -1,4 +1,4 @@
-package com.artyomefimov.expensescontrol.presentation.view.expenses.recyclerview
+package com.artyomefimov.expensescontrol.presentation.view.recyclerview
 
 import androidx.recyclerview.widget.DiffUtil
 import com.artyomefimov.expensescontrol.presentation.model.ExpenseInfo

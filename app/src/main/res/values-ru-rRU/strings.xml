@@ -31,4 +31,7 @@
     <string name="statistics_fragment">Статистика</string>
     <string name="statistics_label">Статистика</string>
     <string name="expenses_label">Расходы</string>
+    <string name="chip_period">Период</string>
+    <string name="chip_category">Категория</string>
+    <string name="chip_max_sum">Макс. сумма</string>
 </resources>

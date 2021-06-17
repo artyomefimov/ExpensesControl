@@ -1,4 +1,4 @@
-package com.artyomefimov.expensescontrol.presentation.view.expenses.recyclerview
+package com.artyomefimov.expensescontrol.presentation.view.recyclerview
 
 import android.view.LayoutInflater
 import android.view.View

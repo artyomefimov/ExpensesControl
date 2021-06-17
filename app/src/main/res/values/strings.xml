@@ -34,4 +34,20 @@
     <string name="statistics_fragment">Statistics fragment</string>
     <string name="statistics_label">Statistics</string>
     <string name="expenses_label">Expenses</string>
+    <string name="chip_period">Period</string>
+    <string name="chip_category">Category</string>
+    <string name="chip_max_sum">Max sum</string>
+
+    <string-array name="categories_array">
+        <item>@string/category_supermarkets</item>
+        <item>@string/category_fun</item>
+        <item>@string/category_transfers</item>
+        <item>@string/category_fast_food</item>
+        <item>@string/category_transport</item>
+        <item>@string/category_house</item>
+        <item>@string/category_clothes</item>
+        <item>@string/category_sports</item>
+        <item>@string/category_mandatory_payments</item>
+        <item>@string/category_other</item>
+    </string-array>
 </resources>
