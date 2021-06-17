@@ -14,7 +14,6 @@ class CheckTodayExpensesWorker(
     parameters: WorkerParameters,
     private val expenseInteractor: ExpenseInteractor,
     private val notificationBuilder: NotificationBuilder,
-    private val clock: Clock,
 ) : CoroutineWorker(context, parameters) {
 
     companion object {

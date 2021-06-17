@@ -7,6 +7,7 @@ import com.artyomefimov.expensescontrol.ui.scenario.EnterExpenseScenario
 import com.kaspersky.kaspresso.testcases.api.testcase.TestCase
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -26,8 +27,9 @@ class MainActivityTest : TestCase() {
     @get:Rule
     val activityRule = ActivityScenarioRule(MainActivity::class.java)
 
+    @Ignore("This test will be ignored")
     @Test
-    fun mainActivityTest() {
+    fun expensesScreenTest() {
         before {
 
         }.after {

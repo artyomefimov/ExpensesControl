@@ -14,9 +14,11 @@ interface ExpensesDao {
     @Query("SELECT * FROM $TABLE_NAME")
     fun allExpenses(): Flow<List<ExpenseEntity>>
 
+    @Suppress("MaxLineLength")
     @Query("SELECT * FROM $TABLE_NAME WHERE $COLUMN_TIMESTAMP BETWEEN DATETIME('now','localtime','start of month') AND DATETIME('now','localtime', 'start of month','+1 month','-1 day')")
     fun getExpensesForCurrentMonth(): Flow<List<ExpenseEntity>>
 
+    @Suppress("MaxLineLength")
     @Query("SELECT * FROM $TABLE_NAME WHERE $COLUMN_TIMESTAMP BETWEEN DATETIME('now','localtime','start of day') AND DATETIME('now','localtime','start of day','+1 day')")
     fun getExpensesForCurrentDay(): Flow<List<ExpenseEntity>>
 
