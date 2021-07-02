@@ -77,6 +77,8 @@ class StatisticsFragment : Fragment() {
     }
 
     private fun updateExpenses(items: List<ExpenseInfo>) {
+        binding.noMatchingItemsTextView.isVisible = items.isEmpty()
+        binding.expensesRecyclerView.isVisible = items.isNotEmpty()
         val callback = ExpensesDiffUtilCallback(
             oldItems = adapter.getItems(),
             newItems = items

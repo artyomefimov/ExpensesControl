@@ -28,7 +28,9 @@
         app:layout_constraintBottom_toTopOf="@id/commonSumOfFilteredExpensesTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/topGuideline" />
+        app:layout_constraintTop_toBottomOf="@id/topGuideline"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintVertical_bias="0.0" />
 
     <com.google.android.material.chip.Chip
         android:id="@+id/chipPeriod"
@@ -65,7 +67,7 @@
         android:layout_marginEnd="@dimen/margin_16dp"
         android:gravity="center"
         android:textAppearance="@style/TextStyle.Size16"
-        app:layout_constraintBottom_toTopOf="@id/expensesRecyclerView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/chipsFlow"
@@ -81,5 +83,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/commonSumOfFilteredExpensesTextView"
         tools:listitem="@layout/item_expense_info" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/noMatchingItemsTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_16dp"
+        android:layout_marginEnd="@dimen/margin_16dp"
+        android:gravity="center"
+        android:text="@string/no_matching_items"
+        android:textAppearance="@style/TextStyle.Size16"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/commonSumOfFilteredExpensesTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

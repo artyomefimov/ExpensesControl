@@ -51,4 +51,5 @@
         <item>@string/category_other</item>
     </string-array>
     <string name="common_sum">Common sum for these expenses is\n%1$s ₽</string>
+    <string name="no_matching_items">No items matching this filter</string>
 </resources>

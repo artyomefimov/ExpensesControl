@@ -36,7 +36,11 @@ class StatisticsInteractorImpl @Inject constructor(
                     resultList.add(expenseWithMaxSum)
                 }
             }
-            val commonSum = if (filter.isMaxSumFilterEnabled) null else calculateCommonSum(resultList)
+            val commonSum = if (filter.isMaxSumFilterEnabled || resultList.isEmpty()) {
+                null
+            } else {
+                calculateCommonSum(resultList)
+            }
             expensesFlow.value = expensesFlow.value.copy(
                 expenses = resultList,
                 commonSum = commonSum
