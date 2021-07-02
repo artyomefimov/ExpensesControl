@@ -2,12 +2,9 @@ package com.artyomefimov.expensescontrol.di
 
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.room.Room
 import androidx.work.Configuration
 import androidx.work.WorkerFactory
-import com.artyomefimov.expensescontrol.data.db.DB_NAME
-import com.artyomefimov.expensescontrol.data.db.ExpensesDb
-import com.artyomefimov.expensescontrol.domain.interactor.dailyexpense.ExpenseInteractor
+import com.artyomefimov.expensescontrol.domain.interactor.expense.ExpenseInteractor
 import com.artyomefimov.expensescontrol.infrastructure.ExpensesWorkerFactory
 import com.artyomefimov.expensescontrol.infrastructure.NotificationBuilder
 import dagger.Module

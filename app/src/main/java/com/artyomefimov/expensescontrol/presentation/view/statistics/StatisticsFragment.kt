@@ -8,9 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DiffUtil
 import com.artyomefimov.expensescontrol.databinding.FragmentStatisticsBinding
-import com.artyomefimov.expensescontrol.infrastructure.showSnackbar
+import com.artyomefimov.expensescontrol.domain.model.statistics.StatisticsFilter
+import com.artyomefimov.expensescontrol.presentation.ext.observeEvent
+import com.artyomefimov.expensescontrol.presentation.ext.safeObserve
 import com.artyomefimov.expensescontrol.presentation.model.ExpenseInfo
-import com.artyomefimov.expensescontrol.presentation.model.FilterModel
 import com.artyomefimov.expensescontrol.presentation.model.FilterType
 import com.artyomefimov.expensescontrol.presentation.view.recyclerview.ExpensesAdapter
 import com.artyomefimov.expensescontrol.presentation.view.recyclerview.ExpensesDiffUtilCallback
@@ -47,22 +48,26 @@ class StatisticsFragment: Fragment() {
         }
         adapter = ExpensesAdapter()
         binding.expensesRecyclerView.adapter = adapter
+
+        observeViewModel()
     }
 
-    private fun applyFilterModel(model: FilterModel) = with(model) {
-        binding.chipPeriod.isChecked = periodFilterEnabled
-        binding.chipCategory.isChecked = categoryFilterEnabled
-        binding.chipMaxSum.isChecked = maxSumFilterEnabled
-    }
-
-    private fun showPeriodDialog() {
-        showPeriodSelectDialog { from, to -> viewModel.setPeriodFilter(from, to) }
-    }
-
-    private fun showCategoryDialog(items: Array<String>) {
-        requireContext().showCategoryDialog(items) {
-            binding.root.showSnackbar(it)
+    private fun observeViewModel() {
+        viewModel.currentFiltersState().safeObserve(this, ::applyCurrentFilters)
+        viewModel.selectedCategoryState().safeObserve(this, ::showCategory)
+        viewModel.suitableExpensesState().safeObserve(this, ::updateExpenses)
+        viewModel.showPeriodDialogViewEvent().observeEvent(this) {
+            showPeriodDialog()
         }
+        viewModel.showCategoryDialogViewEvent().observeEvent(this) { categories ->
+            showCategoryDialog(categories)
+        }
+    }
+
+    private fun applyCurrentFilters(model: StatisticsFilter) = with(model) {
+        binding.chipPeriod.isChecked = model.periodFilter != null
+        binding.chipCategory.isChecked = model.categoryFilter != null
+        binding.chipMaxSum.isChecked = model.isMaxSumFilterEnabled
     }
 
     private fun showCategory(category: String) {
@@ -78,5 +83,15 @@ class StatisticsFragment: Fragment() {
         adapter.swapData(items)
         diffResult.dispatchUpdatesTo(adapter)
         binding.expensesRecyclerView.smoothScrollToPosition(0)
+    }
+
+    private fun showPeriodDialog() {
+        showPeriodSelectDialog { from, to -> viewModel.setPeriodFilter(from, to) }
+    }
+
+    private fun showCategoryDialog(items: Array<String>) {
+        requireContext().showCategoryDialog(items) { selectedCategory ->
+            viewModel.setCategoryFilter(selectedCategory)
+        }
     }
 }

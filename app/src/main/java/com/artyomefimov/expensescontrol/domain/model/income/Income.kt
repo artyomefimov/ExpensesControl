@@ -1,4 +1,4 @@
-package com.artyomefimov.expensescontrol.domain.model
+package com.artyomefimov.expensescontrol.domain.model.income
 
 import java.math.BigDecimal
 

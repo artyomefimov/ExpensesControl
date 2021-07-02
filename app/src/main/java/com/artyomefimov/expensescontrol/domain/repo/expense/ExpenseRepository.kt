@@ -1,6 +1,6 @@
-package com.artyomefimov.expensescontrol.domain.repo
+package com.artyomefimov.expensescontrol.domain.repo.expense
 
-import com.artyomefimov.expensescontrol.domain.model.Expense
+import com.artyomefimov.expensescontrol.domain.model.expense.Expense
 import kotlinx.coroutines.flow.Flow
 
 interface ExpenseRepository {

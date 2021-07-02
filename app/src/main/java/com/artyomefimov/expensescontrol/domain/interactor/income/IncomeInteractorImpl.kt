@@ -1,8 +1,8 @@
 package com.artyomefimov.expensescontrol.domain.interactor.income
 
 import com.artyomefimov.expensescontrol.domain.ext.today
-import com.artyomefimov.expensescontrol.domain.repo.IncomeRepository
-import com.artyomefimov.expensescontrol.domain.model.Income
+import com.artyomefimov.expensescontrol.domain.model.income.Income
+import com.artyomefimov.expensescontrol.domain.repo.income.IncomeRepository
 import kotlinx.datetime.Clock
 import java.math.BigDecimal
 import javax.inject.Inject

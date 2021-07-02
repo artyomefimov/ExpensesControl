@@ -3,16 +3,18 @@ package com.artyomefimov.expensescontrol.di
 import com.artyomefimov.expensescontrol.data.mapper.ExpenseFromEntityMapper
 import com.artyomefimov.expensescontrol.data.mapper.ExpenseToEntityMapper
 import com.artyomefimov.expensescontrol.data.model.ExpenseEntity
-import com.artyomefimov.expensescontrol.data.repo.ExpenseRepositoryImpl
-import com.artyomefimov.expensescontrol.data.repo.IncomeRepositoryImpl
-import com.artyomefimov.expensescontrol.domain.interactor.dailyexpense.ExpenseInteractor
-import com.artyomefimov.expensescontrol.domain.interactor.dailyexpense.ExpenseInteractorImpl
+import com.artyomefimov.expensescontrol.data.repo.expense.ExpenseRepositoryImpl
+import com.artyomefimov.expensescontrol.data.repo.income.IncomeRepositoryImpl
+import com.artyomefimov.expensescontrol.domain.interactor.expense.ExpenseInteractor
+import com.artyomefimov.expensescontrol.domain.interactor.expense.ExpenseInteractorImpl
 import com.artyomefimov.expensescontrol.domain.interactor.income.IncomeInteractor
 import com.artyomefimov.expensescontrol.domain.interactor.income.IncomeInteractorImpl
-import com.artyomefimov.expensescontrol.domain.repo.ExpenseRepository
-import com.artyomefimov.expensescontrol.domain.repo.IncomeRepository
+import com.artyomefimov.expensescontrol.domain.interactor.statistics.StatisticsInteractor
+import com.artyomefimov.expensescontrol.domain.interactor.statistics.StatisticsInteractorImpl
+import com.artyomefimov.expensescontrol.domain.repo.expense.ExpenseRepository
+import com.artyomefimov.expensescontrol.domain.repo.income.IncomeRepository
 import com.artyomefimov.expensescontrol.domain.mapper.Mapper
-import com.artyomefimov.expensescontrol.domain.model.Expense
+import com.artyomefimov.expensescontrol.domain.model.expense.Expense
 import com.artyomefimov.expensescontrol.infrastructure.NotificationBuilder
 import com.artyomefimov.expensescontrol.infrastructure.NotificationBuilderImpl
 import com.artyomefimov.expensescontrol.presentation.mapper.ExpenseInfoMapper
@@ -52,6 +54,12 @@ abstract class BindsModule {
     abstract fun dailyExpenseInteractor(
         interactor: ExpenseInteractorImpl
     ): ExpenseInteractor
+
+    @Binds
+    @Singleton
+    abstract fun statisticsInteractor(
+        interactor: StatisticsInteractorImpl
+    ): StatisticsInteractor
 
     @Binds
     @Singleton

@@ -15,3 +15,17 @@ fun hoursDiffAtMillis(
     val twelveHoursOffset = now.toJavaInstant().plus(Duration.ofHours(diffInHours))
     return twelveHoursOffset.toEpochMilli() - now.toEpochMilliseconds()
 }
+
+fun daysRange(
+    instantFrom: Instant,
+    instantTo: Instant,
+): ClosedRange<Instant> {
+    return if (instantFrom == instantTo) {
+        val beginOfNextDay = instantTo.toJavaInstant().plus(Duration.ofDays(1))
+        instantFrom..beginOfNextDay.toKotlinInstant()
+    } else {
+        instantFrom..instantTo
+    }
+}
+
+fun Long.toInstant() = Instant.fromEpochMilliseconds(this)

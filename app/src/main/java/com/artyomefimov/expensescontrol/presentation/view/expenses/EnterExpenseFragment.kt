@@ -94,6 +94,7 @@ class EnterExpenseFragment : Fragment() {
     }
 
     private fun navigateToEnterIncomeFragment() {
+        requireActivity().hideKeyboard()
         findNavController().navigate(R.id.action_expensesFragment_to_enterIncomeFragment)
     }
 
