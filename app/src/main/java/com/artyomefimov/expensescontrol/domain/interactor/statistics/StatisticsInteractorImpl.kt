@@ -2,16 +2,19 @@ package com.artyomefimov.expensescontrol.domain.interactor.statistics
 
 import com.artyomefimov.expensescontrol.domain.ext.daysRange
 import com.artyomefimov.expensescontrol.domain.model.expense.Expense
+import com.artyomefimov.expensescontrol.domain.model.statistics.FilteredExpensesResult
 import com.artyomefimov.expensescontrol.domain.model.statistics.StatisticsFilter
 import com.artyomefimov.expensescontrol.domain.repo.expense.ExpenseRepository
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
 class StatisticsInteractorImpl @Inject constructor(
     private val repository: ExpenseRepository,
 ) : StatisticsInteractor {
 
-    private val expensesFlow = MutableStateFlow(listOf<Expense>())
+    private val expensesFlow = MutableStateFlow(FilteredExpensesResult())
 
     override suspend fun applyFilter(filter: StatisticsFilter) {
         val periodRange = filter.periodFilter?.let { daysRange(it.from, it.to) }
@@ -33,9 +36,15 @@ class StatisticsInteractorImpl @Inject constructor(
                     resultList.add(expenseWithMaxSum)
                 }
             }
-            expensesFlow.value = resultList
+            val commonSum = if (filter.isMaxSumFilterEnabled) null else calculateCommonSum(resultList)
+            expensesFlow.value = expensesFlow.value.copy(
+                expenses = resultList,
+                commonSum = commonSum
+            )
         }
     }
 
-    override fun getExpensesFlow(): StateFlow<List<Expense>> = expensesFlow
+    override fun getFilteringResult(): StateFlow<FilteredExpensesResult> = expensesFlow
+
+    private fun calculateCommonSum(expenses: List<Expense>) = expenses.sumOf { it.sum }
 }

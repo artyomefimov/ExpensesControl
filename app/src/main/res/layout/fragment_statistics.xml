@@ -25,7 +25,7 @@
         app:flow_verticalGap="@dimen/margin_4dp"
         app:flow_verticalStyle="packed"
         app:flow_wrapMode="chain"
-        app:layout_constraintBottom_toTopOf="@id/expensesRecyclerView"
+        app:layout_constraintBottom_toTopOf="@id/commonSumOfFilteredExpensesTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topGuideline" />
@@ -56,6 +56,21 @@
         android:text="@string/chip_max_sum"
         tools:ignore="MissingConstraints" />
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/commonSumOfFilteredExpensesTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_16dp"
+        android:layout_marginTop="@dimen/margin_8dp"
+        android:layout_marginEnd="@dimen/margin_16dp"
+        android:gravity="center"
+        android:textAppearance="@style/TextStyle.Size16"
+        app:layout_constraintBottom_toTopOf="@id/expensesRecyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/chipsFlow"
+        tools:text="Общая сумма трат: 200 000 ₽" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/expensesRecyclerView"
         android:layout_width="0dp"
@@ -64,7 +79,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chipsFlow"
+        app:layout_constraintTop_toBottomOf="@id/commonSumOfFilteredExpensesTextView"
         tools:listitem="@layout/item_expense_info" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

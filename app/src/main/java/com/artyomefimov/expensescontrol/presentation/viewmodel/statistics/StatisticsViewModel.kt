@@ -32,6 +32,7 @@ class StatisticsViewModel @Inject constructor(
     private val currentFiltersState = MutableLiveData<StatisticsFilter>()
     private val selectedCategoryState = MutableLiveData<String>()
     private val suitableExpensesState = MutableLiveData<List<ExpenseInfo>>()
+    private val commonSumState = MutableLiveData<String?>()
     private val showPeriodDialogViewEvent = MutableLiveData<Event<Unit>>()
     private val showCategoryDialogViewEvent = MutableLiveData<Event<Array<String>>>()
 
@@ -42,8 +43,11 @@ class StatisticsViewModel @Inject constructor(
     init {
         applyFilterToInteractor(currentFilter)
         viewModelScope.launch {
-            interactor.getExpensesFlow().collect {
-                suitableExpensesState.value = it.mapList(expenseInfoMapper)
+            interactor.getFilteringResult().collect { result ->
+                suitableExpensesState.value = result.expenses.mapList(expenseInfoMapper)
+                commonSumState.value = result.commonSum?.let { sum ->
+                    resourcesProvider.getString(R.string.common_sum).format(sum)
+                }
             }
         }
     }
@@ -51,6 +55,7 @@ class StatisticsViewModel @Inject constructor(
     fun currentFiltersState(): LiveData<StatisticsFilter> = currentFiltersState
     fun selectedCategoryState(): LiveData<String> = selectedCategoryState
     fun suitableExpensesState(): LiveData<List<ExpenseInfo>> = suitableExpensesState
+    fun commonSumState(): LiveData<String?> = commonSumState
     fun showPeriodDialogViewEvent(): LiveData<Event<Unit>> = showPeriodDialogViewEvent
     fun showCategoryDialogViewEvent(): LiveData<Event<Array<String>>> = showCategoryDialogViewEvent
 

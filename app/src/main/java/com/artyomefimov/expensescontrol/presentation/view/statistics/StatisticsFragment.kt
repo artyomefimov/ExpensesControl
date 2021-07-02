@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DiffUtil
@@ -21,7 +22,7 @@ import com.artyomefimov.expensescontrol.presentation.viewmodel.statistics.Statis
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class StatisticsFragment: Fragment() {
+class StatisticsFragment : Fragment() {
 
     private lateinit var binding: FragmentStatisticsBinding
     private lateinit var adapter: ExpensesAdapter
@@ -56,6 +57,7 @@ class StatisticsFragment: Fragment() {
         viewModel.currentFiltersState().safeObserve(this, ::applyCurrentFilters)
         viewModel.selectedCategoryState().safeObserve(this, ::showCategory)
         viewModel.suitableExpensesState().safeObserve(this, ::updateExpenses)
+        viewModel.commonSumState().observe(viewLifecycleOwner, ::showCommonSum)
         viewModel.showPeriodDialogViewEvent().observeEvent(this) {
             showPeriodDialog()
         }
@@ -84,6 +86,12 @@ class StatisticsFragment: Fragment() {
         diffResult.dispatchUpdatesTo(adapter)
         binding.expensesRecyclerView.smoothScrollToPosition(0)
     }
+
+    private fun showCommonSum(commonSum: String?) =
+        with(binding.commonSumOfFilteredExpensesTextView) {
+            isVisible = commonSum != null
+            text = commonSum.orEmpty()
+        }
 
     private fun showPeriodDialog() {
         showPeriodSelectDialog { from, to -> viewModel.setPeriodFilter(from, to) }

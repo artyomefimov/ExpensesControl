@@ -14,6 +14,7 @@ import kotlinx.datetime.Instant
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.math.BigDecimal
+import kotlin.test.assertNull
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
@@ -59,10 +60,13 @@ class StatisticsInteractorImplTest {
             categoryFilter = null,
             isMaxSumFilterEnabled = false,
         )
+        val expectedSum = expenses.sumOf { it.sum }
 
         interactor.applyFilter(filter)
-        interactor.getExpensesFlow().test {
-            assertEquals(expenses, expectItem())
+        interactor.getFilteringResult().test {
+            val result = expectItem()
+            assertEquals(expenses, result.expenses)
+            assertEquals(expectedSum, result.commonSum)
         }
     }
 
@@ -75,10 +79,13 @@ class StatisticsInteractorImplTest {
             isMaxSumFilterEnabled = false,
         )
         val expected = listOf(expense1, expense2)
+        val expectedSum = expected.sumOf { it.sum }
 
         interactor.applyFilter(filter)
-        interactor.getExpensesFlow().test {
-            assertEquals(expected, expectItem())
+        interactor.getFilteringResult().test {
+            val result = expectItem()
+            assertEquals(expected, result.expenses)
+            assertEquals(expectedSum, result.commonSum)
         }
     }
 
@@ -91,10 +98,13 @@ class StatisticsInteractorImplTest {
             isMaxSumFilterEnabled = false,
         )
         val expected = listOf(expense3)
+        val expectedSum = expense3.sum
 
         interactor.applyFilter(filter)
-        interactor.getExpensesFlow().test {
-            assertEquals(expected, expectItem())
+        interactor.getFilteringResult().test {
+            val result = expectItem()
+            assertEquals(expected, result.expenses)
+            assertEquals(expectedSum, result.commonSum)
         }
     }
 
@@ -109,8 +119,10 @@ class StatisticsInteractorImplTest {
         val expected = listOf(expense3)
 
         interactor.applyFilter(filter)
-        interactor.getExpensesFlow().test {
-            assertEquals(expected, expectItem())
+        interactor.getFilteringResult().test {
+            val result = expectItem()
+            assertEquals(expected, result.expenses)
+            assertNull(result.commonSum)
         }
     }
 
@@ -125,8 +137,10 @@ class StatisticsInteractorImplTest {
         val expected = emptyList<Expense>()
 
         interactor.applyFilter(filter)
-        interactor.getExpensesFlow().test {
-            assertEquals(expected, expectItem())
+        interactor.getFilteringResult().test {
+            val result = expectItem()
+            assertEquals(expected, result.expenses)
+            assertNull(result.commonSum)
         }
     }
 }
