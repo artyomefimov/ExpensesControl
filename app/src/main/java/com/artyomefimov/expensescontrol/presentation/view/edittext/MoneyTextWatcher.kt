@@ -4,6 +4,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
 import com.artyomefimov.expensescontrol.presentation.ext.COMMA
+import com.artyomefimov.expensescontrol.presentation.ext.POINT
 import com.artyomefimov.expensescontrol.presentation.ext.formatToAmount
 import java.math.BigDecimal
 import java.text.NumberFormat
@@ -33,10 +34,13 @@ class MoneyTextWatcher(
     }
 
     private fun getCursorPosition(text: String): Int {
+        // todo проверить на англ локали
         val indexOfComma = text.indexOf(COMMA)
+        val indexOfPoint = text.indexOf(POINT)
         val indexOfLastNumberBeforeCurrency = text.length - 2
         return when {
             indexOfComma >= 0 -> indexOfComma
+            indexOfPoint >= 0 -> indexOfPoint
             indexOfLastNumberBeforeCurrency >= 0 -> indexOfLastNumberBeforeCurrency
             else -> text.length
         }
