@@ -2,7 +2,7 @@ package com.artyomefimov.expensescontrol.presentation.mapper
 
 import com.artyomefimov.expensescontrol.R
 import com.artyomefimov.expensescontrol.domain.mapper.Mapper
-import com.artyomefimov.expensescontrol.domain.model.Expense
+import com.artyomefimov.expensescontrol.domain.model.expense.Expense
 import com.artyomefimov.expensescontrol.presentation.model.ExpenseInfo
 import com.artyomefimov.expensescontrol.presentation.resources.ResourcesProvider
 import kotlinx.datetime.Instant

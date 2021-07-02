@@ -1,12 +1,12 @@
-package com.artyomefimov.expensescontrol.data.repo
+package com.artyomefimov.expensescontrol.data.repo.expense
 
 import com.artyomefimov.expensescontrol.data.db.ExpensesDb
 import com.artyomefimov.expensescontrol.data.model.ExpenseEntity
 import com.artyomefimov.expensescontrol.di.IoDispatcher
-import com.artyomefimov.expensescontrol.domain.repo.ExpenseRepository
+import com.artyomefimov.expensescontrol.domain.repo.expense.ExpenseRepository
 import com.artyomefimov.expensescontrol.domain.mapper.Mapper
 import com.artyomefimov.expensescontrol.domain.mapper.mapList
-import com.artyomefimov.expensescontrol.domain.model.Expense
+import com.artyomefimov.expensescontrol.domain.model.expense.Expense
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

@@ -1,4 +1,4 @@
-package com.artyomefimov.expensescontrol.domain.model
+package com.artyomefimov.expensescontrol.domain.model.income
 
 import java.math.BigDecimal
 
@@ -13,6 +13,9 @@ data class Income(
     val shouldEnterIncome: Boolean
 )
 
+/**
+ * Возвращает true, если сумма трат равна 0 и нужно ввести новую сумму трат
+ */
 fun Income.isZeroAndShouldBeEntered(): Boolean {
     return this.value == BigDecimal.ZERO && this.shouldEnterIncome
 }

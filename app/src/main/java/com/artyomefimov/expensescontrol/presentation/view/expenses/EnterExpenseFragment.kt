@@ -9,15 +9,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import com.artyomefimov.expensescontrol.R
 import com.artyomefimov.expensescontrol.databinding.FragmentEnterExpenseBinding
-import com.artyomefimov.expensescontrol.presentation.ext.hideKeyboard
+import com.artyomefimov.expensescontrol.infrastructure.hideKeyboard
 import com.artyomefimov.expensescontrol.presentation.ext.observeEvent
 import com.artyomefimov.expensescontrol.presentation.ext.safeObserve
-import com.artyomefimov.expensescontrol.presentation.ext.showSnackbar
+import com.artyomefimov.expensescontrol.infrastructure.showSnackbar
 import com.artyomefimov.expensescontrol.presentation.model.AvailableSumInfo
 import com.artyomefimov.expensescontrol.presentation.model.ExpenseInfo
-import com.artyomefimov.expensescontrol.presentation.view.expenses.recyclerview.ExpensesAdapter
-import com.artyomefimov.expensescontrol.presentation.view.expenses.recyclerview.ExpensesDiffUtilCallback
-import com.artyomefimov.expensescontrol.presentation.viewmodel.EnterExpenseViewModel
+import com.artyomefimov.expensescontrol.presentation.view.recyclerview.ExpensesAdapter
+import com.artyomefimov.expensescontrol.presentation.view.recyclerview.ExpensesDiffUtilCallback
+import com.artyomefimov.expensescontrol.presentation.viewmodel.expenses.EnterExpenseViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -94,6 +94,7 @@ class EnterExpenseFragment : Fragment() {
     }
 
     private fun navigateToEnterIncomeFragment() {
+        requireActivity().hideKeyboard()
         findNavController().navigate(R.id.action_expensesFragment_to_enterIncomeFragment)
     }
 

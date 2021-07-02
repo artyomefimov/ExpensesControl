@@ -1,6 +1,6 @@
 package com.artyomefimov.expensescontrol.domain.interactor.income
 
-import com.artyomefimov.expensescontrol.domain.model.Income
+import com.artyomefimov.expensescontrol.domain.model.income.Income
 import java.math.BigDecimal
 
 /**

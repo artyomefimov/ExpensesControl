@@ -1,4 +1,4 @@
-package com.artyomefimov.expensescontrol.domain.model
+package com.artyomefimov.expensescontrol.domain.model.expense
 
 import kotlinx.datetime.Instant
 import java.math.BigDecimal

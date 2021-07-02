@@ -9,8 +9,6 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.artyomefimov.expensescontrol.R
-import com.artyomefimov.expensescontrol.presentation.ext.notificationManager
-import com.artyomefimov.expensescontrol.presentation.ext.notificationManagerCompat
 import com.artyomefimov.expensescontrol.presentation.view.MainActivity
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.datetime.Clock

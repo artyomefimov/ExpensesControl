@@ -4,8 +4,7 @@ import android.content.Context
 import androidx.work.ListenableWorker
 import androidx.work.WorkerFactory
 import androidx.work.WorkerParameters
-import com.artyomefimov.expensescontrol.domain.interactor.dailyexpense.ExpenseInteractor
-import kotlinx.datetime.Clock
+import com.artyomefimov.expensescontrol.domain.interactor.expense.ExpenseInteractor
 import javax.inject.Inject
 
 class ExpensesWorkerFactory @Inject constructor(

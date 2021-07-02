@@ -1,4 +1,4 @@
-package com.artyomefimov.expensescontrol.domain.repo
+package com.artyomefimov.expensescontrol.domain.repo.income
 
 import kotlinx.datetime.Instant
 import java.math.BigDecimal

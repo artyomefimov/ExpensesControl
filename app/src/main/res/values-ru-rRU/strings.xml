@@ -28,4 +28,12 @@
     <string name="notification_channel_name">Общие уведомления</string>
     <string name="notification_title">Не забудьте о расходах!</string>
     <string name="notification_text">Запишите потраченные деньги в приложении</string>
+    <string name="statistics_fragment">Статистика</string>
+    <string name="statistics_label">Статистика</string>
+    <string name="expenses_label">Расходы</string>
+    <string name="chip_period">Период</string>
+    <string name="chip_category">Категория</string>
+    <string name="chip_max_sum">Макс. сумма</string>
+    <string name="common_sum">Сумма трат по выбранным расходам\n%1$s ₽</string>
+    <string name="no_matching_items">Нет элементов, удовлетворяющих фильтру</string>
 </resources>

@@ -3,10 +3,8 @@ package com.artyomefimov.expensescontrol.infrastructure
 import android.content.Context
 import androidx.work.*
 import com.artyomefimov.expensescontrol.R
-import com.artyomefimov.expensescontrol.domain.interactor.dailyexpense.ExpenseInteractor
-import kotlinx.coroutines.flow.collectLatest
+import com.artyomefimov.expensescontrol.domain.interactor.expense.ExpenseInteractor
 import kotlinx.coroutines.flow.first
-import kotlinx.datetime.Clock
 import java.util.concurrent.TimeUnit
 
 class CheckTodayExpensesWorker(
@@ -41,7 +39,7 @@ class CheckTodayExpensesWorker(
         notificationBuilder.showNotification(
             titleResId = R.string.notification_title,
             contentResId = R.string.notification_text,
-            iconResId = R.drawable.ic_launcher_foreground,
+            iconResId = R.drawable.ic_money_main,
         )
     }
 }

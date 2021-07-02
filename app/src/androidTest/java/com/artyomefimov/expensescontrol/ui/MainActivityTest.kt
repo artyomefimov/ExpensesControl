@@ -27,7 +27,7 @@ class MainActivityTest : TestCase() {
     @get:Rule
     val activityRule = ActivityScenarioRule(MainActivity::class.java)
 
-    @Ignore("This test will be ignored")
+    @Ignore("Ignored in CI. Should be run manually")
     @Test
     fun expensesScreenTest() {
         before {

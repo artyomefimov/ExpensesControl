@@ -1,9 +1,8 @@
-package com.artyomefimov.expensescontrol.domain.interactor.dailyexpense
+package com.artyomefimov.expensescontrol.domain.interactor.expense
 
-import com.artyomefimov.expensescontrol.domain.model.Expense
+import com.artyomefimov.expensescontrol.domain.model.expense.Expense
 import kotlinx.coroutines.flow.Flow
 import java.math.BigDecimal
-import java.math.BigInteger
 
 /**
  * Содержит бизнес-логику для внесения новых трат и рассчета доступной суммы

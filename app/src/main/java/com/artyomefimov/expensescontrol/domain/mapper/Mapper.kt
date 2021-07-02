@@ -1,7 +1,6 @@
 package com.artyomefimov.expensescontrol.domain.mapper
 
 interface Mapper<IN, OUT> {
-
     fun map(input: IN): OUT
 }
 

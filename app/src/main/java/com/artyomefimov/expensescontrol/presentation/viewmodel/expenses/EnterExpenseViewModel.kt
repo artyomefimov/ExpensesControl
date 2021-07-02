@@ -1,16 +1,16 @@
-package com.artyomefimov.expensescontrol.presentation.viewmodel
+package com.artyomefimov.expensescontrol.presentation.viewmodel.expenses
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.artyomefimov.expensescontrol.R
-import com.artyomefimov.expensescontrol.domain.interactor.dailyexpense.ExpenseInteractor
+import com.artyomefimov.expensescontrol.domain.interactor.expense.ExpenseInteractor
 import com.artyomefimov.expensescontrol.domain.interactor.income.IncomeInteractor
 import com.artyomefimov.expensescontrol.domain.mapper.Mapper
 import com.artyomefimov.expensescontrol.domain.mapper.mapList
-import com.artyomefimov.expensescontrol.domain.model.Expense
-import com.artyomefimov.expensescontrol.domain.model.isZeroAndShouldBeEntered
+import com.artyomefimov.expensescontrol.domain.model.expense.Expense
+import com.artyomefimov.expensescontrol.domain.model.income.isZeroAndShouldBeEntered
 import com.artyomefimov.expensescontrol.presentation.ext.toggle
 import com.artyomefimov.expensescontrol.presentation.model.AvailableSumInfo
 import com.artyomefimov.expensescontrol.presentation.model.Event
