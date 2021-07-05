@@ -108,4 +108,19 @@
         app:layout_constraintTop_toBottomOf="@id/categoriesGroup"
         tools:listitem="@layout/item_expense_info" />
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/noItemsTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_16dp"
+        android:layout_marginEnd="@dimen/margin_16dp"
+        android:gravity="center"
+        android:text="@string/no_expenses_for_current_month"
+        android:textAppearance="@style/TextStyle.Size16"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/categoriesGroup" />
+
 </androidx.constraintlayout.motion.widget.MotionLayout>

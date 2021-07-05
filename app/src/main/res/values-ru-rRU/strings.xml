@@ -35,4 +35,6 @@
     <string name="chip_max_sum">Макс. сумма</string>
     <string name="common_sum">Сумма трат по выбранным расходам\n%1$s</string>
     <string name="no_matching_items">Нет элементов, удовлетворяющих фильтру</string>
+
+    <string name="no_expenses_for_current_month">Нет расходов за текущий месяц</string>
 </resources>

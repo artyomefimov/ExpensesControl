@@ -3,6 +3,7 @@ package com.artyomefimov.expensescontrol.presentation.view.expenses
 import android.os.Bundle
 import android.view.*
 import android.view.animation.AnimationUtils
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -95,6 +96,8 @@ class EnterExpenseFragment : Fragment() {
     }
 
     private fun updateExpenses(items: List<ExpenseInfo>) {
+        binding.noItemsTextView.isVisible = items.isEmpty()
+        binding.expensesRecyclerView.isVisible = items.isNotEmpty()
         val callback = ExpensesDiffUtilCallback(
             oldItems = adapter.getItems(),
             newItems = items
