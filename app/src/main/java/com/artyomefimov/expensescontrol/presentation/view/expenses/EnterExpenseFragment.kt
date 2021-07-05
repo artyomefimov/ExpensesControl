@@ -23,6 +23,10 @@ import com.artyomefimov.expensescontrol.presentation.view.recyclerview.ExpensesD
 import com.artyomefimov.expensescontrol.presentation.viewmodel.expenses.EnterExpenseViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * Экран, на котором происходит добавление траты, выбор категории, отображение
+ * списка трат за текущий месяц
+ */
 @AndroidEntryPoint
 class EnterExpenseFragment : Fragment() {
 

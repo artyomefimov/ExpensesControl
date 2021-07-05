@@ -9,6 +9,12 @@ import androidx.annotation.StringRes
 import androidx.core.app.NotificationManagerCompat
 import com.google.android.material.snackbar.Snackbar
 
+val Context.notificationManager: NotificationManager
+    get() = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+val Context.notificationManagerCompat: NotificationManagerCompat
+    get() = NotificationManagerCompat.from(this)
+
 fun Activity.hideKeyboard() = currentFocus?.let {
     val inputManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     inputManager.hideSoftInputFromWindow(it.windowToken, 0)
@@ -22,17 +28,3 @@ fun View.showSnackbar(
     context.getString(messageResId),
     Snackbar.LENGTH_SHORT,
 ).show()
-
-fun View.showSnackbar(
-    message: String,
-) = Snackbar.make(
-    this,
-    message,
-    Snackbar.LENGTH_SHORT,
-).show()
-
-val Context.notificationManager: NotificationManager
-    get() = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-val Context.notificationManagerCompat: NotificationManagerCompat
-    get() = NotificationManagerCompat.from(this)

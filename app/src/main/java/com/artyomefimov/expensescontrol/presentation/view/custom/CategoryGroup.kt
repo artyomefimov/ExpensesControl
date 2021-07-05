@@ -7,6 +7,9 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import kotlin.math.roundToInt
 
+/**
+ * Отображает группу [Chip], представляющих категории трат
+ */
 class CategoryGroup @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet?,
@@ -19,6 +22,9 @@ class CategoryGroup @JvmOverloads constructor(
         chipSpacingHorizontal = context.resources.getDimension(R.dimen.margin_8dp).roundToInt()
     }
 
+    /**
+     * Возвращает название текущего выбранного чипа
+     */
     fun getSelectedCategory(): String? {
         return findViewById<Chip>(checkedChipId)?.text?.toString()
     }

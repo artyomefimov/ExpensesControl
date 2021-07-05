@@ -21,6 +21,10 @@ import com.artyomefimov.expensescontrol.presentation.view.statistics.dialogs.sho
 import com.artyomefimov.expensescontrol.presentation.viewmodel.statistics.StatisticsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * Экран, на котором происходит фильтрация трат по доступным фильтрам для
+ * отображении статистики, необходимой пользователю
+ */
 @AndroidEntryPoint
 class StatisticsFragment : Fragment() {
 

@@ -14,6 +14,9 @@ import com.artyomefimov.expensescontrol.presentation.view.edittext.MoneyTextWatc
 import com.artyomefimov.expensescontrol.presentation.viewmodel.expenses.EnterIncomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * Экран, на котором происходит ввод суммы, доступной пользователю на месяц
+ */
 @AndroidEntryPoint
 class EnterIncomeFragment : Fragment() {
 

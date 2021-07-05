@@ -7,6 +7,10 @@ import com.artyomefimov.expensescontrol.domain.interactor.expense.ExpenseInterac
 import kotlinx.coroutines.flow.first
 import java.util.concurrent.TimeUnit
 
+/**
+ * [Worker], раз в 12 часов проверяющий, были ли добавлены траты за текущий день.
+ * Если таких трат не найдено, показывает уведомление пользователю с напоминанием
+ */
 class CheckTodayExpensesWorker(
     context: Context,
     parameters: WorkerParameters,
@@ -17,7 +21,6 @@ class CheckTodayExpensesWorker(
     companion object {
         private const val SCHEDULE_HOURS = 12L
         const val TAG = "CheckTodayExpensesWorker"
-        const val SHOWN_TIMESTAMP_KEY = "SHOWN_TIMESTAMP_KEY"
 
         fun buildWorkRequest(): PeriodicWorkRequest {
             return PeriodicWorkRequestBuilder<CheckTodayExpensesWorker>(

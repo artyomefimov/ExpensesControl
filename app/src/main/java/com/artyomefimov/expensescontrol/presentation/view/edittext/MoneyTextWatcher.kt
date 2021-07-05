@@ -9,6 +9,13 @@ import com.artyomefimov.expensescontrol.presentation.ext.formatToAmount
 import java.math.BigDecimal
 import java.text.NumberFormat
 
+/**
+ * [TextWatcher], преобразующий введенную сумму в более читаемый вид:
+ * с пробелами между тысячами, графемой валюты текущей локали
+ *
+ * @param editText  поле ввода суммы
+ * @param formatter форматтер для введенной суммы
+ */
 class MoneyTextWatcher(
     private val editText: EditText,
     private val formatter: NumberFormat,
