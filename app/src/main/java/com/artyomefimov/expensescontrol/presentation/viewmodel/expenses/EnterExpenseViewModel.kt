@@ -11,6 +11,8 @@ import com.artyomefimov.expensescontrol.domain.mapper.Mapper
 import com.artyomefimov.expensescontrol.domain.mapper.mapList
 import com.artyomefimov.expensescontrol.domain.model.expense.Expense
 import com.artyomefimov.expensescontrol.domain.model.income.isZeroAndShouldBeEntered
+import com.artyomefimov.expensescontrol.presentation.ext.formatToAmount
+import com.artyomefimov.expensescontrol.presentation.ext.integerFormatter
 import com.artyomefimov.expensescontrol.presentation.ext.toggle
 import com.artyomefimov.expensescontrol.presentation.model.AvailableSumInfo
 import com.artyomefimov.expensescontrol.presentation.model.Event
@@ -78,11 +80,11 @@ class EnterExpenseViewModel @Inject constructor(
     private fun updateAvailableSum(isInitial: Boolean) {
         val dailySum = expenseInteractor
             .getAvailableDailySum()
-            .toString()
+            .let { integerFormatter.format(it) }
         val monthlySum = incomeInteractor
             .getIncomeForCurrentMonth()
             .value
-            .toString()
+            .let { integerFormatter.format(it) }
         val availableDailySum = resourcesProvider.getString(R.string.available_money_placeholder)
             .format(dailySum)
         val availableMonthlySum = resourcesProvider.getString(R.string.money_left_label_text)

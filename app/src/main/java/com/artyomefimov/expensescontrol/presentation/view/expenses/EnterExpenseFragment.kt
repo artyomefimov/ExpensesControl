@@ -13,8 +13,11 @@ import com.artyomefimov.expensescontrol.infrastructure.hideKeyboard
 import com.artyomefimov.expensescontrol.presentation.ext.observeEvent
 import com.artyomefimov.expensescontrol.presentation.ext.safeObserve
 import com.artyomefimov.expensescontrol.infrastructure.showSnackbar
+import com.artyomefimov.expensescontrol.presentation.ext.formatToAmount
+import com.artyomefimov.expensescontrol.presentation.ext.fractionFormatter
 import com.artyomefimov.expensescontrol.presentation.model.AvailableSumInfo
 import com.artyomefimov.expensescontrol.presentation.model.ExpenseInfo
+import com.artyomefimov.expensescontrol.presentation.view.edittext.MoneyTextWatcher
 import com.artyomefimov.expensescontrol.presentation.view.recyclerview.ExpensesAdapter
 import com.artyomefimov.expensescontrol.presentation.view.recyclerview.ExpensesDiffUtilCallback
 import com.artyomefimov.expensescontrol.presentation.viewmodel.expenses.EnterExpenseViewModel
@@ -26,6 +29,7 @@ class EnterExpenseFragment : Fragment() {
     private lateinit var binding: FragmentEnterExpenseBinding
     private lateinit var adapter: ExpensesAdapter
     private val viewModel: EnterExpenseViewModel by viewModels()
+    private lateinit var textWatcher: MoneyTextWatcher
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,7 +48,7 @@ class EnterExpenseFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.apply_expense_item) {
             viewModel.addExpense(
-                stringSum = binding.enterSumEditText.text?.toString(),
+                stringSum = binding.enterSumEditText.text?.toString()?.formatToAmount(),
                 comment = binding.commentEditText.text?.toString(),
                 category = binding.categoriesGroup.getSelectedCategory()
             )
@@ -55,6 +59,10 @@ class EnterExpenseFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         adapter = ExpensesAdapter()
         binding.expensesRecyclerView.adapter = adapter
+        binding.enterSumEditText.apply {
+            textWatcher = MoneyTextWatcher(this, fractionFormatter)
+            addTextChangedListener(textWatcher)
+        }
         observeViewModel()
     }
 

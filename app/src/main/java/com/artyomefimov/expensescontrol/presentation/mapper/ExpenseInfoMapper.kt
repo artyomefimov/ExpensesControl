@@ -1,10 +1,9 @@
 package com.artyomefimov.expensescontrol.presentation.mapper
 
-import com.artyomefimov.expensescontrol.R
 import com.artyomefimov.expensescontrol.domain.mapper.Mapper
 import com.artyomefimov.expensescontrol.domain.model.expense.Expense
+import com.artyomefimov.expensescontrol.presentation.ext.fractionFormatter
 import com.artyomefimov.expensescontrol.presentation.model.ExpenseInfo
-import com.artyomefimov.expensescontrol.presentation.resources.ResourcesProvider
 import kotlinx.datetime.Instant
 import kotlinx.datetime.toJavaInstant
 import java.math.BigDecimal
@@ -15,7 +14,6 @@ import java.util.*
 import javax.inject.Inject
 
 class ExpenseInfoMapper @Inject constructor(
-    private val resourcesProvider: ResourcesProvider,
 ) : Mapper<Expense, ExpenseInfo> {
 
     private val formatter = DateTimeFormatter
@@ -34,8 +32,7 @@ class ExpenseInfoMapper @Inject constructor(
     }
 
     private fun BigDecimal.formatSum(): String {
-        return resourcesProvider.getString(R.string.money_placeholder)
-            .format(this.toString())
+        return fractionFormatter.format(this)
     }
 
     private fun Instant.formatToString(): String {

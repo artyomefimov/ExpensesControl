@@ -8,12 +8,14 @@ import com.artyomefimov.expensescontrol.domain.repo.expense.ExpenseRepository
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Instant
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.math.BigDecimal
+import java.util.concurrent.Executors
 import kotlin.test.assertNull
 import kotlin.time.ExperimentalTime
 
@@ -50,10 +52,11 @@ class StatisticsInteractorImplTest {
     }
 
     private val expenseRepository = mockk<ExpenseRepository>()
-    private val interactor = StatisticsInteractorImpl(expenseRepository)
+    private val dispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
+    private val interactor = StatisticsInteractorImpl(expenseRepository, dispatcher)
 
     @Test
-    fun `applyFilter returns all items if no filters were applied`() = runBlockingTest {
+    fun `applyFilter returns all items if no filters were applied`() = runBlocking {
         every { expenseRepository.allExpenses() } returns flowOf(expenses)
         val filter = StatisticsFilter(
             periodFilter = null,
@@ -63,6 +66,7 @@ class StatisticsInteractorImplTest {
         val expectedSum = expenses.sumOf { it.sum }
 
         interactor.applyFilter(filter)
+
         interactor.getFilteringResult().test {
             val result = expectItem()
             assertEquals(expenses, result.expenses)
@@ -71,7 +75,7 @@ class StatisticsInteractorImplTest {
     }
 
     @Test
-    fun `applyFilter filters expenses by period`() = runBlockingTest {
+    fun `applyFilter filters expenses by period`() = runBlocking {
         every { expenseRepository.allExpenses() } returns flowOf(expenses)
         val filter = StatisticsFilter(
             periodFilter = PeriodFilter(from = currentDate, to = currentDate),
@@ -82,6 +86,7 @@ class StatisticsInteractorImplTest {
         val expectedSum = expected.sumOf { it.sum }
 
         interactor.applyFilter(filter)
+
         interactor.getFilteringResult().test {
             val result = expectItem()
             assertEquals(expected, result.expenses)
@@ -90,7 +95,7 @@ class StatisticsInteractorImplTest {
     }
 
     @Test
-    fun `applyFilter filters expenses by category`() = runBlockingTest {
+    fun `applyFilter filters expenses by category`() = runBlocking {
         every { expenseRepository.allExpenses() } returns flowOf(expenses)
         val filter = StatisticsFilter(
             periodFilter = null,
@@ -101,6 +106,7 @@ class StatisticsInteractorImplTest {
         val expectedSum = expense3.sum
 
         interactor.applyFilter(filter)
+
         interactor.getFilteringResult().test {
             val result = expectItem()
             assertEquals(expected, result.expenses)
@@ -109,7 +115,7 @@ class StatisticsInteractorImplTest {
     }
 
     @Test
-    fun `applyFilter filters expenses by max sum`() = runBlockingTest {
+    fun `applyFilter filters expenses by max sum`() = runBlocking {
         every { expenseRepository.allExpenses() } returns flowOf(expenses)
         val filter = StatisticsFilter(
             periodFilter = null,
@@ -119,6 +125,7 @@ class StatisticsInteractorImplTest {
         val expected = listOf(expense3)
 
         interactor.applyFilter(filter)
+
         interactor.getFilteringResult().test {
             val result = expectItem()
             assertEquals(expected, result.expenses)
@@ -127,7 +134,7 @@ class StatisticsInteractorImplTest {
     }
 
     @Test
-    fun `applyFilter filters expenses by multiple filters`() = runBlockingTest {
+    fun `applyFilter filters expenses by multiple filters`() = runBlocking {
         every { expenseRepository.allExpenses() } returns flowOf(expenses)
         val filter = StatisticsFilter(
             periodFilter = PeriodFilter(from = dateTomorrow, to = dateTomorrow),
@@ -137,6 +144,7 @@ class StatisticsInteractorImplTest {
         val expected = emptyList<Expense>()
 
         interactor.applyFilter(filter)
+
         interactor.getFilteringResult().test {
             val result = expectItem()
             assertEquals(expected, result.expenses)

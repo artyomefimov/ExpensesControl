@@ -12,6 +12,7 @@ import com.artyomefimov.expensescontrol.domain.mapper.mapList
 import com.artyomefimov.expensescontrol.domain.model.expense.Expense
 import com.artyomefimov.expensescontrol.domain.model.statistics.PeriodFilter
 import com.artyomefimov.expensescontrol.domain.model.statistics.StatisticsFilter
+import com.artyomefimov.expensescontrol.presentation.ext.fractionFormatter
 import com.artyomefimov.expensescontrol.presentation.ext.toggle
 import com.artyomefimov.expensescontrol.presentation.model.Event
 import com.artyomefimov.expensescontrol.presentation.model.ExpenseInfo
@@ -46,7 +47,8 @@ class StatisticsViewModel @Inject constructor(
             interactor.getFilteringResult().collect { result ->
                 suitableExpensesState.value = result.expenses.mapList(expenseInfoMapper)
                 commonSumState.value = result.commonSum?.let { sum ->
-                    resourcesProvider.getString(R.string.common_sum).format(sum)
+                    resourcesProvider.getString(R.string.common_sum)
+                        .format(fractionFormatter.format(sum))
                 }
             }
         }
