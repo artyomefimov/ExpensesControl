@@ -96,12 +96,19 @@ class StatisticsFragment : Fragment() {
         }
 
     private fun showPeriodDialog() {
-        showPeriodSelectDialog { from, to -> viewModel.setPeriodFilter(from, to) }
+        showPeriodSelectDialog(
+            onPeriodSelected =  { from, to -> viewModel.setPeriodFilter(from, to) },
+            onCancel = { binding.chipPeriod.isChecked = binding.chipPeriod.isChecked.not() }
+        )
     }
 
     private fun showCategoryDialog(items: Array<String>) {
-        requireContext().showCategoryDialog(items) { selectedCategory ->
-            viewModel.setCategoryFilter(selectedCategory)
-        }
+        requireContext().showCategoryDialog(
+            items = items,
+            onCategorySelected = { selectedCategory ->
+                viewModel.setCategoryFilter(selectedCategory)
+            },
+            onCancel = { binding.chipCategory.isChecked = binding.chipCategory.isChecked.not() }
+        )
     }
 }

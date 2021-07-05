@@ -7,7 +7,8 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 fun Fragment.showPeriodSelectDialog(
-    onPeriodSelected: (Long, Long) -> Unit
+    onPeriodSelected: (Long, Long) -> Unit,
+    onCancel: () -> Unit,
 ) {
     val constraints = CalendarConstraints.Builder().build()
     val picker = MaterialDatePicker.Builder
@@ -18,15 +19,18 @@ fun Fragment.showPeriodSelectDialog(
     picker.addOnPositiveButtonClickListener {
         onPeriodSelected(it.first, it.second)
     }
+    picker.addOnNegativeButtonClickListener { onCancel() }
 }
 
 fun Context.showCategoryDialog(
     items: Array<String>,
     onCategorySelected: (String) -> Unit,
+    onCancel: () -> Unit,
 ) = MaterialAlertDialogBuilder(this)
     .setSingleChoiceItems(items, -1) { dialog, which ->
         onCategorySelected(items[which])
         dialog.dismiss()
     }
+    .setOnCancelListener { onCancel() }
     .create()
     .show()
