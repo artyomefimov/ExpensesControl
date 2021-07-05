@@ -14,3 +14,12 @@ val fractionFormatter: NumberFormat = DecimalFormat.getCurrencyInstance()
 fun String?.formatToAmount(): String? = this
     ?.replace(COMMA, POINT)
     ?.replace(decimalNumbersRegex, "")
+    ?.run {
+        if (count { it == POINT } > 1) {
+            val indexOfLastPointBeforeFractionPart = lastIndexOf(POINT)
+            val integerPart = substring(0, indexOfLastPointBeforeFractionPart)
+            return@run integerPart.replace(POINT.toString(), "")
+        } else {
+            return@run this
+        }
+    }

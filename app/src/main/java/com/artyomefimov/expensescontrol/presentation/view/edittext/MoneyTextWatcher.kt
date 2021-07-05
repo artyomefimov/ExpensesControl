@@ -34,13 +34,15 @@ class MoneyTextWatcher(
     }
 
     private fun getCursorPosition(text: String): Int {
-        // todo проверить на англ локали
         val indexOfComma = text.indexOf(COMMA)
+        val hasComma = indexOfComma >=0
         val indexOfPoint = text.indexOf(POINT)
+        val hasPoint = indexOfPoint >= 0
         val indexOfLastNumberBeforeCurrency = text.length - 2
         return when {
-            indexOfComma >= 0 -> indexOfComma
-            indexOfPoint >= 0 -> indexOfPoint
+            hasComma && hasPoint -> indexOfPoint
+            hasComma -> indexOfComma
+            hasPoint -> indexOfPoint
             indexOfLastNumberBeforeCurrency >= 0 -> indexOfLastNumberBeforeCurrency
             else -> text.length
         }
