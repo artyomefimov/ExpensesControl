@@ -69,6 +69,9 @@ dependencies {
     // Work manager
     implementation "androidx.work:work-runtime-ktx:$work_manager_version"
 
+    // DataStore
+    implementation "androidx.datastore:datastore-preferences:$data_store_version"
+
     // Testing dependencies
     testImplementation "junit:junit:$junit_version"
     testImplementation "io.mockk:mockk:$mockk_version"

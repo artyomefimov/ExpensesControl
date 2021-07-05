@@ -10,12 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import com.artyomefimov.expensescontrol.R
 import com.artyomefimov.expensescontrol.databinding.FragmentEnterExpenseBinding
-import com.artyomefimov.expensescontrol.infrastructure.hideKeyboard
-import com.artyomefimov.expensescontrol.presentation.ext.observeEvent
-import com.artyomefimov.expensescontrol.presentation.ext.safeObserve
-import com.artyomefimov.expensescontrol.infrastructure.showSnackbar
-import com.artyomefimov.expensescontrol.presentation.ext.formatToAmount
-import com.artyomefimov.expensescontrol.presentation.ext.fractionFormatter
+import com.artyomefimov.expensescontrol.presentation.ext.*
 import com.artyomefimov.expensescontrol.presentation.model.AvailableSumInfo
 import com.artyomefimov.expensescontrol.presentation.model.ExpenseInfo
 import com.artyomefimov.expensescontrol.presentation.view.edittext.MoneyTextWatcher

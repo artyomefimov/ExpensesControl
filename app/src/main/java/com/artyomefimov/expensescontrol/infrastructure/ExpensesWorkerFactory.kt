@@ -5,11 +5,13 @@ import androidx.work.ListenableWorker
 import androidx.work.WorkerFactory
 import androidx.work.WorkerParameters
 import com.artyomefimov.expensescontrol.domain.interactor.expense.ExpenseInteractor
+import kotlinx.datetime.Clock
 import javax.inject.Inject
 
 class ExpensesWorkerFactory @Inject constructor(
     private val expenseInteractor: ExpenseInteractor,
     private val notificationBuilder: NotificationBuilder,
+    private val clock: Clock,
 ) : WorkerFactory() {
 
     override fun createWorker(
@@ -18,10 +20,11 @@ class ExpensesWorkerFactory @Inject constructor(
         workerParameters: WorkerParameters
     ): ListenableWorker {
         return CheckTodayExpensesWorker(
-            appContext,
             workerParameters,
+            appContext,
             expenseInteractor,
             notificationBuilder,
+            clock,
         )
     }
 }

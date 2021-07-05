@@ -48,9 +48,11 @@ class ProvidesModule {
     fun provideWorkerFactory(
         expenseInteractor: ExpenseInteractor,
         notificationBuilder: NotificationBuilder,
+        clock: Clock
     ): WorkerFactory = ExpensesWorkerFactory(
         expenseInteractor,
         notificationBuilder,
+        clock,
     )
 
     @Provides
