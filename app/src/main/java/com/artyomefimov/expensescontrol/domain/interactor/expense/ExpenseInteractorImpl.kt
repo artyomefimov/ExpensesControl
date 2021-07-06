@@ -83,7 +83,6 @@ class ExpenseInteractorImpl @Inject constructor(
     }
 
     private fun updateWidget() {
-        // todo не всегда обновляет
         Intent(context, ExpensesControlAppWidget::class.java)
             .apply { action = AppWidgetManager.ACTION_APPWIDGET_UPDATE }
             .also { context.sendBroadcast(it) }

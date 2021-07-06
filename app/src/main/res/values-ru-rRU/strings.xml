@@ -37,4 +37,5 @@
     <string name="no_matching_items">Нет элементов, удовлетворяющих фильтру</string>
 
     <string name="no_expenses_for_current_month">Нет расходов за текущий месяц</string>
+    <string name="current_month_expenses">За текущий месяц</string>
 </resources>

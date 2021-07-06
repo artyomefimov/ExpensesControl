@@ -52,4 +52,5 @@
     <string name="common_sum">Common sum for these expenses is\n%1$s</string>
     <string name="no_matching_items">No items matching this filter</string>
     <string name="no_expenses_for_current_month">No expenses for current month</string>
+    <string name="current_month_expenses">Current month expenses</string>
 </resources>

@@ -55,8 +55,10 @@ class ExpensesWidgetRemoteViewsFactory(
     override fun getViewAt(position: Int): RemoteViews {
         val expense = expenses[position]
         return RemoteViews(appContext.packageName, R.layout.widget_list_item).apply {
-            setTextViewText(R.id.widgetCategoryTextView, expense.category)
             setTextViewText(R.id.widgetSumTextView, expense.sum)
+            setTextViewText(R.id.widgetCommentTextView, expense.comment)
+            setTextViewText(R.id.widgetCategoryTextView, expense.category)
+            setTextViewText(R.id.widgetTimestampTextView, expense.timestamp)
         }
     }
 
