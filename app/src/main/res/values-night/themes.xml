@@ -14,7 +14,6 @@
 
     <style name="ThemeOverlay.ExpensesControl.AppWidgetContainer" parent="">
         <item name="appWidgetBackgroundColor">@color/backgroundColor</item>
-        <item name="appWidgetTextColor">@color/primaryTextColor</item>
         <item name="topBarBackgroundColor">@color/colorPrimary</item>
     </style>
 </resources>
