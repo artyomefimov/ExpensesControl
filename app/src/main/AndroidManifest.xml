@@ -13,24 +13,35 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ExpensesControl">
 
-        <activity android:name=".presentation.view.SplashActivity" android:theme="@style/SplashTheme">
+        <activity
+            android:name=".presentation.view.SplashActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".presentation.view.MainActivity"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"/>
+            tools:ignore="LockedOrientationActivity" />
 
         <provider
             android:name="androidx.work.impl.WorkManagerInitializer"
             android:authorities="${applicationId}.workmanager-init"
             android:exported="false"
             tools:node="remove" />
+
+        <receiver android:name=".infrastructure.widget.ExpensesControlAppWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/expenses_control_app_widget_info" />
+        </receiver>
 
     </application>
 
