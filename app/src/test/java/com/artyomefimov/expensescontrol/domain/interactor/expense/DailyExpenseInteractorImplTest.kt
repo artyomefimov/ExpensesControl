@@ -4,6 +4,7 @@ import app.cash.turbine.test
 import com.artyomefimov.expensescontrol.domain.model.expense.Expense
 import com.artyomefimov.expensescontrol.domain.repo.expense.ExpenseRepository
 import com.artyomefimov.expensescontrol.domain.repo.income.IncomeRepository
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -44,9 +45,9 @@ class DailyExpenseInteractorImplTest {
     private val interactor = ExpenseInteractorImpl(incomeRepository, expenseRepository, clock)
 
     @Test
-    fun `getAvailableDailySum returns zero if monthly income is zero`() {
+    fun `getAvailableDailySum returns zero if monthly income is zero`() = runBlockingTest {
         every { clock.now() } returns currentDate
-        every { incomeRepository.getIncomeValue() } returns BigDecimal.ZERO
+        coEvery { incomeRepository.getIncomeValue() } returns BigDecimal.ZERO
 
         val result = interactor.getAvailableDailySum()
 
@@ -54,16 +55,17 @@ class DailyExpenseInteractorImplTest {
     }
 
     @Test
-    fun `getAvailableDailySum returns average value for days left if monthly income is not zero`() {
-        val expected = 1000
-        val incomeValue = (availableDays * expected).toString()
-        every { clock.now() } returns currentDate
-        every { incomeRepository.getIncomeValue() } returns BigDecimal(incomeValue)
+    fun `getAvailableDailySum returns average value for days left if monthly income is not zero`() =
+        runBlockingTest {
+            val expected = 1000
+            val incomeValue = (availableDays * expected).toString()
+            every { clock.now() } returns currentDate
+            coEvery { incomeRepository.getIncomeValue() } returns BigDecimal(incomeValue)
 
-        val result = interactor.getAvailableDailySum()
+            val result = interactor.getAvailableDailySum()
 
-        assertEquals(BigDecimal(expected.toString()), result)
-    }
+            assertEquals(BigDecimal(expected.toString()), result)
+        }
 
     @Test
     fun `getExpensesForCurrentMonth returns reversed list of expenses for current month`() =

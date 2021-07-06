@@ -30,7 +30,7 @@ interface ExpenseInteractor {
      * @return [BigDecimal] доступная сумма для трат для текущего дня,
      * рассчитанная на основе остатка на месяц
      */
-    fun getAvailableDailySum(): BigDecimal
+    suspend fun getAvailableDailySum(): BigDecimal
 
     /**
      * Добавляет новую трату за текущий день

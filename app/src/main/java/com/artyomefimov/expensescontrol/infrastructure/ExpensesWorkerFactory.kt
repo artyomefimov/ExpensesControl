@@ -1,6 +1,8 @@
 package com.artyomefimov.expensescontrol.infrastructure
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.work.ListenableWorker
 import androidx.work.WorkerFactory
 import androidx.work.WorkerParameters
@@ -12,6 +14,7 @@ class ExpensesWorkerFactory @Inject constructor(
     private val expenseInteractor: ExpenseInteractor,
     private val notificationBuilder: NotificationBuilder,
     private val clock: Clock,
+    private val dataStore: DataStore<Preferences>,
 ) : WorkerFactory() {
 
     override fun createWorker(
@@ -25,6 +28,7 @@ class ExpensesWorkerFactory @Inject constructor(
             expenseInteractor,
             notificationBuilder,
             clock,
+            dataStore
         )
     }
 }

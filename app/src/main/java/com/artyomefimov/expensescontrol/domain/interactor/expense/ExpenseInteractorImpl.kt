@@ -40,7 +40,7 @@ class ExpenseInteractorImpl @Inject constructor(
             .map(::reversed)
     }
 
-    override fun getAvailableDailySum(): BigDecimal {
+    override suspend fun getAvailableDailySum(): BigDecimal {
         return incomeRepository.getIncomeValue()
             .divide(
                 BigDecimal(availableDaysInThisMonth()),

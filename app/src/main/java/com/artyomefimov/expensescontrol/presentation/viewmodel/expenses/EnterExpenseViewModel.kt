@@ -64,7 +64,7 @@ class EnterExpenseViewModel @Inject constructor(
         updateAvailableSum(isInitial = false)
     }
 
-    private fun initialCheck() {
+    private fun initialCheck() = viewModelScope.launch {
         if (shouldEnterIncome()) {
             navigateToEnterIncomeScreen.toggle()
         } else {
@@ -72,12 +72,12 @@ class EnterExpenseViewModel @Inject constructor(
         }
     }
 
-    private fun shouldEnterIncome(): Boolean {
+    private suspend fun shouldEnterIncome(): Boolean {
         return incomeInteractor.getIncomeForCurrentMonth()
             .isZeroAndShouldBeEntered()
     }
 
-    private fun updateAvailableSum(isInitial: Boolean) {
+    private suspend fun updateAvailableSum(isInitial: Boolean) {
         val dailySum = expenseInteractor
             .getAvailableDailySum()
             .let { integerFormatter.format(it) }

@@ -1,42 +1,46 @@
 package com.artyomefimov.expensescontrol.data.repo.income
 
-import android.content.SharedPreferences
-import androidx.core.content.edit
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import com.artyomefimov.expensescontrol.domain.repo.income.IncomeRepository
+import kotlinx.coroutines.flow.first
 import kotlinx.datetime.Instant
 import java.math.BigDecimal
 import javax.inject.Inject
 
 class IncomeRepositoryImpl @Inject constructor(
-    private val preferences: SharedPreferences,
-): IncomeRepository {
+    private val dataStore: DataStore<Preferences>,
+) : IncomeRepository {
 
     private companion object {
-        const val CURRENT_MONTH_INCOME_KEY = "CURRENT_MONTH_INCOME_KEY"
-        const val LAST_CHANGE_DATE_KEY = "LAST_CHANGE_DATE_KEY"
+        val CURRENT_MONTH_INCOME_KEY = stringPreferencesKey(
+            "CURRENT_MONTH_INCOME_KEY"
+        )
+        val LAST_CHANGE_DATE_KEY = stringPreferencesKey(
+            "LAST_CHANGE_DATE_KEY"
+        )
     }
 
-    override fun updateIncome(income: BigDecimal) {
-        preferences.edit {
-            putString(CURRENT_MONTH_INCOME_KEY, income.toString())
+    override suspend fun updateIncome(income: BigDecimal) {
+        dataStore.edit { prefs ->
+            prefs[CURRENT_MONTH_INCOME_KEY] = income.toString()
         }
     }
 
-    override fun getIncomeValue(): BigDecimal {
-        val stringValue = preferences.getString(
-            CURRENT_MONTH_INCOME_KEY,
-            BigDecimal.ZERO.toString()
-        )
+    override suspend fun getIncomeValue(): BigDecimal {
+        val stringValue = dataStore.data.first()[CURRENT_MONTH_INCOME_KEY]
         return BigDecimal(stringValue)
     }
 
-    override fun getLastChangeDateString(): String {
-        return preferences.getString(LAST_CHANGE_DATE_KEY, "").orEmpty()
+    override suspend fun getLastChangeDateString(): String {
+        return dataStore.data.first()[LAST_CHANGE_DATE_KEY].orEmpty()
     }
 
-    override fun setLastChangeDate(date: Instant) {
-        preferences.edit {
-            putString(LAST_CHANGE_DATE_KEY, date.toString())
+    override suspend fun setLastChangeDate(date: Instant) {
+        dataStore.edit { prefs ->
+            prefs[LAST_CHANGE_DATE_KEY] = date.toString()
         }
     }
 }

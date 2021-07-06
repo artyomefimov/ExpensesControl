@@ -10,13 +10,13 @@ import javax.inject.Inject
 class IncomeInteractorImpl @Inject constructor(
     private val incomeRepository: IncomeRepository,
     private val clock: Clock,
-): IncomeInteractor {
+) : IncomeInteractor {
 
     private companion object {
         const val FIRST_DAY = 1
     }
 
-    override fun getIncomeForCurrentMonth(): Income {
+    override suspend fun getIncomeForCurrentMonth(): Income {
         return if (isFirstDayOfMonth() || hasNoChangeDate()) {
             Income(
                 value = BigDecimal.ZERO,
@@ -30,7 +30,7 @@ class IncomeInteractorImpl @Inject constructor(
         }
     }
 
-    override fun saveIncomeForNextMonth(incomeString: String) {
+    override suspend fun saveIncomeForNextMonth(incomeString: String) {
         incomeRepository.updateIncome(BigDecimal(incomeString))
         incomeRepository.setLastChangeDate(clock.now())
     }
@@ -39,7 +39,7 @@ class IncomeInteractorImpl @Inject constructor(
         return today(clock).dayOfMonth == FIRST_DAY
     }
 
-    private fun hasNoChangeDate(): Boolean {
+    private suspend fun hasNoChangeDate(): Boolean {
         return incomeRepository.getLastChangeDateString().isEmpty()
     }
 }
