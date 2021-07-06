@@ -1,9 +1,14 @@
 package com.artyomefimov.expensescontrol.domain.interactor.expense
 
+import android.appwidget.AppWidgetManager
+import android.content.Context
+import android.content.Intent
 import com.artyomefimov.expensescontrol.domain.ext.today
 import com.artyomefimov.expensescontrol.domain.model.expense.Expense
 import com.artyomefimov.expensescontrol.domain.repo.expense.ExpenseRepository
 import com.artyomefimov.expensescontrol.domain.repo.income.IncomeRepository
+import com.artyomefimov.expensescontrol.infrastructure.widget.ExpensesControlAppWidget
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Clock
@@ -16,6 +21,7 @@ class ExpenseInteractorImpl @Inject constructor(
     private val incomeRepository: IncomeRepository,
     private val expenseRepository: ExpenseRepository,
     private val clock: Clock,
+    @ApplicationContext private val context: Context,
 ) : ExpenseInteractor {
 
     private companion object {
@@ -63,6 +69,7 @@ class ExpenseInteractorImpl @Inject constructor(
         val newSum = incomeRepository.getIncomeValue().subtract(expense.sum)
         incomeRepository.updateIncome(newSum)
         expenseRepository.addExpense(expense)
+        updateWidget()
     }
 
     private fun availableDaysInThisMonth(): Int {
@@ -73,5 +80,12 @@ class ExpenseInteractorImpl @Inject constructor(
 
     private fun reversed(expenses: List<Expense>): List<Expense> {
         return expenses.asReversed()
+    }
+
+    private fun updateWidget() {
+        // todo не всегда обновляет
+        Intent(context, ExpensesControlAppWidget::class.java)
+            .apply { action = AppWidgetManager.ACTION_APPWIDGET_UPDATE }
+            .also { context.sendBroadcast(it) }
     }
 }

@@ -4,12 +4,53 @@ import android.content.Context
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import com.artyomefimov.expensescontrol.R
+import com.artyomefimov.expensescontrol.domain.interactor.expense.ExpenseInteractor
+import com.artyomefimov.expensescontrol.domain.mapper.Mapper
+import com.artyomefimov.expensescontrol.domain.mapper.mapList
+import com.artyomefimov.expensescontrol.domain.model.expense.Expense
 import com.artyomefimov.expensescontrol.presentation.model.ExpenseInfo
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 
 class ExpensesWidgetRemoteViewsFactory(
     private val appContext: Context,
-    private val expenses: List<ExpenseInfo>,
 ) : RemoteViewsService.RemoteViewsFactory {
+
+    @InstallIn(SingletonComponent::class)
+    @EntryPoint
+    interface ExpensesWidgetRemoteViewsFactoryEntryPoint {
+
+        fun interactor(): ExpenseInteractor
+
+        fun expenseInfoMapper(): Mapper<Expense, ExpenseInfo>
+    }
+
+    private val expenseInteractor: ExpenseInteractor
+    private val expenseInfoMapper: Mapper<Expense, ExpenseInfo>
+
+    private var expenses: List<ExpenseInfo> = emptyList()
+
+    init {
+        val hiltEntryPoint = EntryPointAccessors.fromApplication(
+            appContext,
+            ExpensesWidgetRemoteViewsFactoryEntryPoint::class.java
+        )
+        expenseInteractor = hiltEntryPoint.interactor()
+        expenseInfoMapper = hiltEntryPoint.expenseInfoMapper()
+    }
+
+    override fun onDataSetChanged() {
+        // works in binder thread pool
+        runBlocking {
+            expenses = expenseInteractor.getExpensesForCurrentMonth()
+                .first()
+                .mapList(expenseInfoMapper)
+        }
+    }
 
     override fun getViewAt(position: Int): RemoteViews {
         val expense = expenses[position]
@@ -26,8 +67,6 @@ class ExpensesWidgetRemoteViewsFactory(
     override fun getViewTypeCount(): Int = 1
 
     override fun onCreate() = Unit
-
-    override fun onDataSetChanged() = Unit
 
     override fun onDestroy() = Unit
 
