@@ -1,17 +1,11 @@
 package com.artyomefimov.expensescontrol.presentation.ext
 
-import android.app.Activity
-import android.content.Context
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import androidx.annotation.StringRes
+import com.artyomefimov.expensescontrol.domain.ext.inputMethodManager
 import com.google.android.material.snackbar.Snackbar
 
-fun Activity.hideKeyboard() = currentFocus?.let {
-    val inputManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-    inputManager.hideSoftInputFromWindow(it.windowToken, 0)
-    it.clearFocus()
-}
+fun View.hideKeyboard() = context.inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
 
 fun View.showSnackbar(
     @StringRes messageResId: Int,

@@ -46,7 +46,7 @@ class ExpensesWidgetRemoteViewsFactory(
     override fun onDataSetChanged() {
         // works in binder thread pool
         runBlocking {
-            expenses = expenseInteractor.getExpensesForCurrentMonth()
+            expenses = expenseInteractor.getExpensesForCurrentDay()
                 .first()
                 .mapList(expenseInfoMapper)
         }

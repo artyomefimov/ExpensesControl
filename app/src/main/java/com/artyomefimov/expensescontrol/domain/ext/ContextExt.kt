@@ -3,6 +3,7 @@ package com.artyomefimov.expensescontrol.domain.ext
 import android.app.NotificationManager
 import android.appwidget.AppWidgetManager
 import android.content.Context
+import android.view.inputmethod.InputMethodManager
 import androidx.core.app.NotificationManagerCompat
 
 val Context.notificationManager: NotificationManager
@@ -13,3 +14,6 @@ val Context.notificationManagerCompat: NotificationManagerCompat
 
 val Context.appWidgetManager: AppWidgetManager
     get() = getSystemService(Context.APPWIDGET_SERVICE) as AppWidgetManager
+
+val Context.inputMethodManager: InputMethodManager
+    get() = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

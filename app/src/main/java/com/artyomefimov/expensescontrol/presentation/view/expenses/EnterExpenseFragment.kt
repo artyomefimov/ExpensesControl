@@ -104,7 +104,7 @@ class EnterExpenseFragment : Fragment() {
     }
 
     private fun navigateToEnterIncomeFragment() {
-        requireActivity().hideKeyboard()
+        binding.root.hideKeyboard()
         findNavController().navigate(R.id.action_expensesFragment_to_enterIncomeFragment)
     }
 
@@ -112,10 +112,16 @@ class EnterExpenseFragment : Fragment() {
         binding.root.showSnackbar(R.string.absent_expense_parameters_message)
     }
 
-    private fun clear() {
-        binding.enterSumEditText.text?.clear()
-        binding.commentEditText.text?.clear()
-        activity?.hideKeyboard()
-        binding.categoriesGroup.clearCheck()
+    private fun clear() = with(binding) {
+        enterSumEditText.apply {
+            text?.clear()
+            clearFocus()
+        }
+        commentEditText.apply {
+            text?.clear()
+            clearFocus()
+        }
+        categoriesGroup.clearCheck()
+        root.hideKeyboard()
     }
 }
