@@ -1,5 +1,6 @@
 package com.artyomefimov.expensescontrol.domain.interactor.expense
 
+import android.content.Context
 import app.cash.turbine.test
 import com.artyomefimov.expensescontrol.domain.model.expense.Expense
 import com.artyomefimov.expensescontrol.domain.repo.expense.ExpenseRepository
@@ -42,7 +43,8 @@ class DailyExpenseInteractorImplTest {
     private val incomeRepository = mockk<IncomeRepository>()
     private val expenseRepository = mockk<ExpenseRepository>()
     private val clock = mockk<Clock>()
-    private val interactor = ExpenseInteractorImpl(incomeRepository, expenseRepository, clock)
+    private val context = mockk<Context>()
+    private val interactor = ExpenseInteractorImpl(incomeRepository, expenseRepository, clock, context)
 
     @Test
     fun `getAvailableDailySum returns zero if monthly income is zero`() = runBlockingTest {

@@ -12,17 +12,24 @@ fun today(
 ): LocalDateTime = clock.now().toLocalDateTime(timeZone)
 
 /**
- * Возвращает [ClosedRange] между двумя датами
+ * Возвращает [ClosedRange] между началом дня instantFrom и концом дня instantTo
  */
 fun daysRange(
     instantFrom: Instant,
     instantTo: Instant,
 ): ClosedRange<Instant> {
     return if (instantFrom == instantTo) {
-        val beginOfNextDay = instantTo.toJavaInstant().plus(Duration.ofDays(1))
-        instantFrom..beginOfNextDay.toKotlinInstant()
+        val beginOfNextDay = instantTo
+            .toJavaInstant()
+            .plus(Duration.ofDays(1))
+            .toKotlinInstant()
+        instantFrom..beginOfNextDay
     } else {
-        instantFrom..instantTo
+        val endOfNextDay = instantTo.toJavaInstant()
+            .plus(Duration.ofDays(1))
+            .minus(Duration.ofSeconds(1))
+            .toKotlinInstant()
+        instantFrom..endOfNextDay
     }
 }
 
