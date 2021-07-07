@@ -37,12 +37,15 @@ class ExpensesControlAppWidget : AppWidgetProvider() {
 
     init {
         scope.launch {
-            expenseInteractor.getExpensesForCurrentMonth().collectLatest {
-                appContext.appWidgetManager.apply {
-                    val ids = getAppWidgetIds(
-                        ComponentName(appContext.packageName, javaClass.name)
-                    )
-                    notifyAppWidgetViewDataChanged(ids, R.id.widgetExpensesListView)
+            // https://github.com/google/dagger/issues/2741
+            if (::expenseInteractor.isInitialized && ::appContext.isInitialized) {
+                expenseInteractor.getExpensesForCurrentMonth().collectLatest {
+                    appContext.appWidgetManager.apply {
+                        val ids = getAppWidgetIds(
+                            ComponentName(appContext.packageName, javaClass.name)
+                        )
+                        notifyAppWidgetViewDataChanged(ids, R.id.widgetExpensesListView)
+                    }
                 }
             }
         }
