@@ -3,13 +3,13 @@ package com.artyomefimov.expensescontrol.infrastructure.widget
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
 import androidx.navigation.NavDeepLinkBuilder
 import com.artyomefimov.expensescontrol.R
 import com.artyomefimov.expensescontrol.domain.ext.appWidgetManager
+import com.artyomefimov.expensescontrol.domain.ext.getAppWidgetIds
 import com.artyomefimov.expensescontrol.domain.interactor.expense.ExpenseInteractor
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -38,17 +38,15 @@ class ExpensesControlAppWidget : AppWidgetProvider() {
     init {
         scope.launch {
             // https://github.com/google/dagger/issues/2741
-            if (::expenseInteractor.isInitialized && ::appContext.isInitialized) {
-                expenseInteractor.getExpensesForCurrentMonth().collectLatest {
-                    appContext.appWidgetManager.apply {
-                        val ids = getAppWidgetIds(
-                            ComponentName(appContext.packageName, javaClass.name)
-                        )
-                        notifyAppWidgetViewDataChanged(ids, R.id.widgetExpensesListView)
-                    }
+//            if (::expenseInteractor.isInitialized && ::appContext.isInitialized) {
+                expenseInteractor.getExpensesForCurrentDay().collectLatest {
+                    appContext.appWidgetManager.notifyAppWidgetViewDataChanged(
+                        appContext.getAppWidgetIds(),
+                        R.id.widgetExpensesListView
+                    )
                 }
             }
-        }
+//        }
     }
 
     override fun onUpdate(
