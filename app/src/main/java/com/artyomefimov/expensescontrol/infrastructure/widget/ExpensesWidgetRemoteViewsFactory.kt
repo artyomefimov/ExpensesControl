@@ -46,9 +46,13 @@ class ExpensesWidgetRemoteViewsFactory(
     override fun onDataSetChanged() {
         // works in binder thread pool
         runBlocking {
-            expenses = expenseInteractor.getExpensesForCurrentDay()
-                .first()
-                .mapList(expenseInfoMapper)
+            expenses = try {
+                expenseInteractor.getExpensesForCurrentDay()
+                    .first()
+                    .mapList(expenseInfoMapper)
+            } catch (e: Exception) {
+                emptyList()
+            }
         }
     }
 
