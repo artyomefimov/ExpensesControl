@@ -47,7 +47,8 @@ class StatisticsInteractorImpl @Inject constructor(
             }
             expensesFlow.value = expensesFlow.value.copy(
                 expenses = resultList,
-                commonSum = commonSum
+                commonSum = commonSum,
+                isGraphicAvailable = isOnlyPeriodFilterEnabled(filter),
             )
         }
     }
@@ -55,4 +56,10 @@ class StatisticsInteractorImpl @Inject constructor(
     override fun getFilteringResult(): StateFlow<FilteredExpensesResult> = expensesFlow
 
     private fun calculateCommonSum(expenses: List<Expense>) = expenses.sumOf { it.sum }
+
+    private fun isOnlyPeriodFilterEnabled(filter: StatisticsFilter): Boolean {
+        return filter.periodFilter != null
+                && filter.categoryFilter == null
+                && filter.isMaxSumFilterEnabled.not()
+    }
 }

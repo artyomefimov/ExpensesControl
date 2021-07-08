@@ -23,8 +23,10 @@ val Context.inputMethodManager: InputMethodManager
 
 fun Context.updateWidget() {
     Intent(this, ExpensesControlAppWidget::class.java)
-        .apply { action = AppWidgetManager.ACTION_APPWIDGET_UPDATE }
-        .apply { putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, getAppWidgetIds()) }
+        .apply {
+            action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+            putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, getAppWidgetIds())
+        }
         .also { sendBroadcast(it) }
 }
 
