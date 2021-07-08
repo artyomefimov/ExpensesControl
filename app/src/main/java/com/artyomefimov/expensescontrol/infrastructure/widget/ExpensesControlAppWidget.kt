@@ -10,50 +10,21 @@ import androidx.navigation.NavDeepLinkBuilder
 import com.artyomefimov.expensescontrol.R
 import com.artyomefimov.expensescontrol.domain.ext.appWidgetManager
 import com.artyomefimov.expensescontrol.domain.ext.getAppWidgetIds
-import com.artyomefimov.expensescontrol.domain.interactor.expense.ExpenseInteractor
-import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 /**
- * Implementation of App Widget functionality.
+ * [AppWidgetProvider] для виджета расходов на лаунчере
  */
-@AndroidEntryPoint
 class ExpensesControlAppWidget : AppWidgetProvider() {
-
-    @Inject
-    @ApplicationContext
-    lateinit var appContext: Context
-    @Inject
-    lateinit var expenseInteractor: ExpenseInteractor
-
-    private val job = SupervisorJob()
-    private val scope = CoroutineScope(Dispatchers.IO + job)
-
-    init {
-        scope.launch {
-            // https://github.com/google/dagger/issues/2741
-//            if (::expenseInteractor.isInitialized && ::appContext.isInitialized) {
-                expenseInteractor.getExpensesForCurrentDay().collectLatest {
-                    appContext.appWidgetManager.notifyAppWidgetViewDataChanged(
-                        appContext.getAppWidgetIds(),
-                        R.id.widgetExpensesListView
-                    )
-                }
-            }
-//        }
-    }
 
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
         appWidgetIds: IntArray
     ) {
+        context.appWidgetManager.notifyAppWidgetViewDataChanged(
+            context.getAppWidgetIds(),
+            R.id.widgetExpensesListView
+        )
         for (appWidgetId in appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId)
         }
