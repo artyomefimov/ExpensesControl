@@ -34,6 +34,7 @@ class StatisticsViewModel @Inject constructor(
     private val selectedCategoryState = MutableLiveData<String>()
     private val suitableExpensesState = MutableLiveData<List<ExpenseInfo>>()
     private val commonSumState = MutableLiveData<String?>()
+    private val chartAvailabilityState = MutableLiveData<Boolean>()
     private val showPeriodDialogViewEvent = MutableLiveData<Event<Unit>>()
     private val showCategoryDialogViewEvent = MutableLiveData<Event<Array<String>>>()
 
@@ -50,6 +51,7 @@ class StatisticsViewModel @Inject constructor(
                     resourcesProvider.getString(R.string.common_sum)
                         .format(fractionFormatter.format(sum))
                 }
+                chartAvailabilityState.value = result.isChartAvailable
             }
         }
     }
@@ -58,6 +60,7 @@ class StatisticsViewModel @Inject constructor(
     fun selectedCategoryState(): LiveData<String> = selectedCategoryState
     fun suitableExpensesState(): LiveData<List<ExpenseInfo>> = suitableExpensesState
     fun commonSumState(): LiveData<String?> = commonSumState
+    fun chartAvailabilityState(): LiveData<Boolean> = chartAvailabilityState
     fun showPeriodDialogViewEvent(): LiveData<Event<Unit>> = showPeriodDialogViewEvent
     fun showCategoryDialogViewEvent(): LiveData<Event<Array<String>>> = showCategoryDialogViewEvent
 

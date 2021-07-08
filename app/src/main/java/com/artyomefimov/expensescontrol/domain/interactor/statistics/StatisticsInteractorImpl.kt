@@ -48,7 +48,7 @@ class StatisticsInteractorImpl @Inject constructor(
             expensesFlow.value = expensesFlow.value.copy(
                 expenses = resultList,
                 commonSum = commonSum,
-                isGraphicAvailable = isOnlyPeriodFilterEnabled(filter),
+                isChartAvailable = isOnlyPeriodFilterEnabled(filter),
             )
         }
     }

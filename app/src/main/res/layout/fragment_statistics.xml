@@ -6,18 +6,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/topGuideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="@dimen/margin_16dp" />
+    <com.artyomefimov.expensescontrol.presentation.view.custom.ToolbarView
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="?android:attr/actionBarSize"
+        app:icon="@drawable/ic_pie_chart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/statistics_screen_title" />
 
     <androidx.constraintlayout.helper.widget.Flow
         android:id="@+id/chipsFlow"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_16dp"
+        android:layout_marginTop="@dimen/margin_16dp"
         android:layout_marginEnd="@dimen/margin_16dp"
         app:constraint_referenced_ids="chipPeriod,chipCategory,chipMaxSum"
         app:flow_horizontalGap="@dimen/margin_8dp"
@@ -28,9 +32,9 @@
         app:layout_constraintBottom_toTopOf="@id/commonSumOfFilteredExpensesTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/topGuideline"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <com.google.android.material.chip.Chip
         android:id="@+id/chipPeriod"

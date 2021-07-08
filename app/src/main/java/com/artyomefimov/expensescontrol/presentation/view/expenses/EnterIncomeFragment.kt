@@ -1,7 +1,9 @@
 package com.artyomefimov.expensescontrol.presentation.view.expenses
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -20,8 +22,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class EnterIncomeFragment : Fragment() {
 
-    private lateinit var binding: FragmentEnterIncomeBinding
     private val viewModel: EnterIncomeViewModel by viewModels()
+    private lateinit var binding: FragmentEnterIncomeBinding
     private lateinit var textWatcher: MoneyTextWatcher
 
     override fun onCreateView(
@@ -29,25 +31,16 @@ class EnterIncomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        setHasOptionsMenu(true)
         binding = FragmentEnterIncomeBinding.inflate(inflater)
         return binding.root
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.enter_income_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.apply_income_item) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.toolbar.onIconPressedListener = {
             viewModel.addIncome(
                 stringSum = binding.enterMoneyEditText.text?.toString()?.formatToAmount()
             )
         }
-        return true
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.enterMoneyEditText.apply {
             textWatcher = MoneyTextWatcher(this, fractionFormatter)
             addTextChangedListener(textWatcher)

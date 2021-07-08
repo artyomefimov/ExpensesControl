@@ -38,4 +38,8 @@
 
     <string name="no_expenses_for_current_month">Нет расходов за текущий месяц</string>
     <string name="current_day_expenses">За сегодня</string>
+    <string name="show_chart_menu_text">Показать график</string>
+    <string name="enter_income_screen_title">Планируемый доход</string>
+    <string name="enter_expense_screen_title">Добавление трат</string>
+    <string name="statistics_screen_title">Статистика расходов</string>
 </resources>

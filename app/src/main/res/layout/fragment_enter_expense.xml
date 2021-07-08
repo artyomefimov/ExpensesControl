@@ -7,6 +7,16 @@
     android:layout_height="match_parent"
     app:layoutDescription="@xml/fragment_enter_expense_scene">
 
+    <com.artyomefimov.expensescontrol.presentation.view.custom.ToolbarView
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="?android:attr/actionBarSize"
+        app:icon="@drawable/ic_apply"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/enter_expense_screen_title" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/enterSumLayout"
         style="@style/TextInputLayoutStyle"
@@ -21,7 +31,7 @@
         app:layout_constraintBottom_toTopOf="@id/commentLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintVertical_bias="0.0"
         app:layout_constraintVertical_chainStyle="packed">
 

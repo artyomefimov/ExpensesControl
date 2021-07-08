@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:initialKeyguardLayout="@layout/expenses_control_app_widget"
-    android:initialLayout="@layout/expenses_control_app_widget"
+    android:initialKeyguardLayout="@layout/widget_expenses_control_app"
+    android:initialLayout="@layout/widget_expenses_control_app"
     android:minWidth="@dimen/widget_width"
     android:minHeight="@dimen/widget_height"
-    android:previewImage="@drawable/example_appwidget_preview"
+    android:previewImage="@drawable/ic_money_main"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="3600000"
     android:widgetCategory="home_screen" />

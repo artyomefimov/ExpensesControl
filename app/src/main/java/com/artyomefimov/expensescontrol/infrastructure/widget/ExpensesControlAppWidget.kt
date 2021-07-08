@@ -35,7 +35,7 @@ class ExpensesControlAppWidget : AppWidgetProvider() {
         appWidgetManager: AppWidgetManager,
         appWidgetId: Int
     ) {
-        val views = RemoteViews(context.packageName, R.layout.expenses_control_app_widget).apply {
+        val views = RemoteViews(context.packageName, R.layout.widget_expenses_control_app).apply {
             setOnClickPendingIntent(R.id.widgetAddImageView, getDeepLinkToExpensesScreen(context))
             setRemoteAdapter(R.id.widgetExpensesListView, getIntentToRemoteViewsService(context))
         }

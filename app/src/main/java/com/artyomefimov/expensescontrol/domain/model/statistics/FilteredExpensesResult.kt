@@ -6,13 +6,13 @@ import java.math.BigDecimal
 /**
  * Результат фильтрации текущих расходов
  *
- * @param expenses           список трат, удовлетворяющих текущий фильтр
- * @param commonSum          общая сумма отфильтрованных трат
- * @param isGraphicAvailable доступен ли график для просмотра трат по категориям за
+ * @param expenses         список трат, удовлетворяющих текущий фильтр
+ * @param commonSum        общая сумма отфильтрованных трат
+ * @param isChartAvailable доступен ли график для просмотра трат по категориям за
  * выбранный период
  */
 data class FilteredExpensesResult(
     val expenses: List<Expense> = listOf(),
     val commonSum: BigDecimal? = null,
-    val isGraphicAvailable: Boolean = false
+    val isChartAvailable: Boolean = false
 )

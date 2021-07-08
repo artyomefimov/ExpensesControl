@@ -1,7 +1,9 @@
 package com.artyomefimov.expensescontrol.presentation.view.expenses
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -36,29 +38,20 @@ class EnterExpenseFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        setHasOptionsMenu(true)
         binding = FragmentEnterExpenseBinding.inflate(inflater)
         return binding.root
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.enter_expense_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.apply_expense_item) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        adapter = ExpensesAdapter()
+        binding.expensesRecyclerView.adapter = adapter
+        binding.toolbar.onIconPressedListener = {
             viewModel.addExpense(
                 stringSum = binding.enterSumEditText.text?.toString()?.formatToAmount(),
                 comment = binding.commentEditText.text?.toString(),
                 category = binding.categoriesGroup.getSelectedCategory()
             )
         }
-        return true
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        adapter = ExpensesAdapter()
-        binding.expensesRecyclerView.adapter = adapter
         binding.enterSumEditText.apply {
             textWatcher = MoneyTextWatcher(this, fractionFormatter)
             addTextChangedListener(textWatcher)

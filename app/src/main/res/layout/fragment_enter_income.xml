@@ -5,6 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.artyomefimov.expensescontrol.presentation.view.custom.ToolbarView
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="?android:attr/actionBarSize"
+        app:icon="@drawable/ic_apply"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/enter_income_screen_title" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/enterMoneyLayout"
         style="@style/TextInputLayoutStyle"
@@ -19,7 +29,7 @@
         app:layout_constraintBottom_toTopOf="@id/availableMoneyExplanationTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintVertical_chainStyle="packed">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -34,12 +44,12 @@
         android:id="@+id/availableMoneyExplanationTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextStyle.Size16"
         android:layout_marginStart="@dimen/margin_16dp"
         android:layout_marginTop="@dimen/margin_16dp"
         android:layout_marginEnd="@dimen/margin_16dp"
         android:gravity="center"
         android:text="@string/enter_income_explanation"
+        android:textAppearance="@style/TextStyle.Size16"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

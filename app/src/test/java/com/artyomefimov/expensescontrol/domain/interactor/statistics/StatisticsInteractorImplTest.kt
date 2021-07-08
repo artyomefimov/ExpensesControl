@@ -186,7 +186,7 @@ class StatisticsInteractorImplTest {
 
         interactor.getFilteringResult().test {
             val result = expectItem()
-            assertTrue(result.isGraphicAvailable)
+            assertTrue(result.isChartAvailable)
         }
     }
 
@@ -203,7 +203,7 @@ class StatisticsInteractorImplTest {
 
         interactor.getFilteringResult().test {
             val result = expectItem()
-            assertFalse(result.isGraphicAvailable)
+            assertFalse(result.isChartAvailable)
         }
     }
 }

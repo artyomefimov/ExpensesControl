@@ -3,4 +3,8 @@
         <attr name="appWidgetBackgroundColor" format="color" />
         <attr name="topBarBackgroundColor" format="color" />
     </declare-styleable>
+    <declare-styleable name="ToolbarView">
+        <attr name="title" format="string" />
+        <attr name="icon" format="reference" />
+    </declare-styleable>
 </resources>
