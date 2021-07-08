@@ -12,6 +12,7 @@ import com.artyomefimov.expensescontrol.databinding.FragmentEnterIncomeBinding
 import com.artyomefimov.expensescontrol.presentation.ext.formatToAmount
 import com.artyomefimov.expensescontrol.presentation.ext.fractionFormatter
 import com.artyomefimov.expensescontrol.presentation.ext.observeEvent
+import com.artyomefimov.expensescontrol.presentation.ext.showSnackbar
 import com.artyomefimov.expensescontrol.presentation.view.edittext.MoneyTextWatcher
 import com.artyomefimov.expensescontrol.presentation.viewmodel.expenses.EnterIncomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,6 +48,9 @@ class EnterIncomeFragment : Fragment() {
         }
         viewModel.navigateToExpenseScreen().observeEvent(this) {
             findNavController().navigate(R.id.action_enterIncomeFragment_to_expensesFragment)
+        }
+        viewModel.incorrectSum().observeEvent(this) {
+            binding.root.showSnackbar(R.string.incorrect_sum)
         }
     }
 }

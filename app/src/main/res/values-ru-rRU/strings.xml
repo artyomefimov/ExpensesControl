@@ -42,4 +42,5 @@
     <string name="enter_income_screen_title">Планируемый доход</string>
     <string name="enter_expense_screen_title">Добавление трат</string>
     <string name="statistics_screen_title">Статистика расходов</string>
+    <string name="incorrect_sum">Минимальная сумма 1.00 ₽</string>
 </resources>

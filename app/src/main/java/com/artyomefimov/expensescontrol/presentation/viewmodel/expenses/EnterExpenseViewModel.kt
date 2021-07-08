@@ -13,6 +13,7 @@ import com.artyomefimov.expensescontrol.domain.model.expense.Expense
 import com.artyomefimov.expensescontrol.domain.model.income.isZeroAndShouldBeEntered
 import com.artyomefimov.expensescontrol.presentation.ext.formatToAmount
 import com.artyomefimov.expensescontrol.presentation.ext.integerFormatter
+import com.artyomefimov.expensescontrol.presentation.ext.isLessThanMinimalSum
 import com.artyomefimov.expensescontrol.presentation.ext.toggle
 import com.artyomefimov.expensescontrol.presentation.model.AvailableSumInfo
 import com.artyomefimov.expensescontrol.presentation.model.Event
@@ -33,6 +34,7 @@ class EnterExpenseViewModel @Inject constructor(
 
     private val navigateToEnterIncomeScreen = MutableLiveData<Event<Unit>>()
     private val showSnackbar = MutableLiveData<Event<Unit>>()
+    private val incorrectSum = MutableLiveData<Event<Unit>>()
     private val availableDailySumState = MutableLiveData<AvailableSumInfo>()
     private val currentMonthExpensesState = MutableLiveData<List<ExpenseInfo>>()
 
@@ -43,6 +45,7 @@ class EnterExpenseViewModel @Inject constructor(
 
     fun navigateToEnterIncomeScreen(): LiveData<Event<Unit>> = navigateToEnterIncomeScreen
     fun showSnackbar(): LiveData<Event<Unit>> = showSnackbar
+    fun incorrectSum(): LiveData<Event<Unit>> = incorrectSum
     fun availableDailySumState(): LiveData<AvailableSumInfo> = availableDailySumState
     fun currentMonthExpensesState(): LiveData<List<ExpenseInfo>> = currentMonthExpensesState
 
@@ -51,17 +54,22 @@ class EnterExpenseViewModel @Inject constructor(
         comment: String?,
         category: String?,
     ) = viewModelScope.launch {
-        if (stringSum.isNullOrEmpty() || category.isNullOrEmpty()) {
-            showSnackbar.toggle()
-            return@launch
+        when {
+            stringSum.isNullOrEmpty() || category.isNullOrEmpty() -> {
+                showSnackbar.toggle()
+            }
+            stringSum.isLessThanMinimalSum() -> {
+                incorrectSum.toggle()
+            }
+            else -> {
+                expenseInteractor.addExpense(
+                    stringSum = stringSum,
+                    comment = comment.orEmpty(),
+                    category = category,
+                )
+                updateAvailableSum(isInitial = false)
+            }
         }
-
-        expenseInteractor.addExpense(
-            stringSum = stringSum,
-            comment = comment.orEmpty(),
-            category = category,
-        )
-        updateAvailableSum(isInitial = false)
     }
 
     private fun initialCheck() = viewModelScope.launch {

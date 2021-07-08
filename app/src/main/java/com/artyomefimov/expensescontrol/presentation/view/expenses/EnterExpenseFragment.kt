@@ -67,6 +67,9 @@ class EnterExpenseFragment : Fragment() {
         viewModel.showSnackbar().observeEvent(this) {
             showSnackbar()
         }
+        viewModel.incorrectSum().observeEvent(this) {
+            binding.root.showSnackbar(R.string.incorrect_sum)
+        }
     }
 
     private fun updateAvailableSum(info: AvailableSumInfo) {

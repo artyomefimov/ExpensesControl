@@ -1,5 +1,6 @@
 package com.artyomefimov.expensescontrol.presentation.ext
 
+import java.math.BigDecimal
 import java.text.DecimalFormat
 import java.text.NumberFormat
 
@@ -33,3 +34,5 @@ fun String?.formatToAmount(): String? = this
             return@run this
         }
     }
+
+fun String.isLessThanMinimalSum() = toBigDecimal() < BigDecimal.ONE
