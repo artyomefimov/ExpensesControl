@@ -41,6 +41,11 @@ class ProvidesModule {
 
     @Provides
     @Singleton
+    @DefaultDispatcher
+    fun provideDefaultDispatcher(): CoroutineDispatcher = Dispatchers.Default
+
+    @Provides
+    @Singleton
     fun provideWorkerFactory(
         expenseInteractor: ExpenseInteractor,
         notificationBuilder: NotificationBuilder,

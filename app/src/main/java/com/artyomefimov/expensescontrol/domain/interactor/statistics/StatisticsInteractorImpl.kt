@@ -20,7 +20,9 @@ class StatisticsInteractorImpl @Inject constructor(
 
     private val expensesFlow = MutableStateFlow(FilteredExpensesResult())
 
-    override suspend fun applyFilter(filter: StatisticsFilter) = withContext(dispatcher) {
+    override suspend fun applyFilter(
+        filter: StatisticsFilter
+    ) = withContext(dispatcher) {
         val periodRange = filter.periodFilter?.let { daysRange(it.from, it.to) }
         repository.allExpenses().collectLatest { expenses ->
             val resultList = expenses.toMutableList()

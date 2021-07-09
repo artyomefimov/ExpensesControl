@@ -14,6 +14,7 @@ import com.artyomefimov.expensescontrol.domain.model.statistics.StatisticsFilter
 import com.artyomefimov.expensescontrol.presentation.ext.observeEvent
 import com.artyomefimov.expensescontrol.presentation.ext.safeObserve
 import com.artyomefimov.expensescontrol.presentation.ext.showSnackbar
+import com.artyomefimov.expensescontrol.presentation.model.ChartDataUi
 import com.artyomefimov.expensescontrol.presentation.model.ExpenseInfo
 import com.artyomefimov.expensescontrol.presentation.model.FilterType
 import com.artyomefimov.expensescontrol.presentation.view.recyclerview.ExpensesAdapter
@@ -45,7 +46,7 @@ class StatisticsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.toolbar.onIconPressedListener = {
-            binding.root.showSnackbar(R.string.show_chart_menu_text)
+            viewModel.prepareDataForChart()
         }
         binding.chipPeriod.setOnClickListener {
             viewModel.setFilter(FilterType.PERIOD)
@@ -68,6 +69,7 @@ class StatisticsFragment : Fragment() {
         viewModel.suitableExpensesState().safeObserve(this, ::updateExpenses)
         viewModel.commonSumState().observe(viewLifecycleOwner, ::showCommonSum)
         viewModel.chartAvailabilityState().observe(viewLifecycleOwner, ::showChartIcon)
+        viewModel.chartDataState().observe(viewLifecycleOwner, ::showChartWithData)
         viewModel.showPeriodDialogViewEvent().observeEvent(this) {
             showPeriodDialog()
         }
@@ -107,6 +109,10 @@ class StatisticsFragment : Fragment() {
 
     private fun showChartIcon(isAvailable: Boolean) {
         binding.toolbar.isIconVisible = isAvailable
+    }
+
+    private fun showChartWithData(chartData: ChartDataUi) {
+        // todo отправка данных на вью и отрисовка
     }
 
     private fun showPeriodDialog() {
