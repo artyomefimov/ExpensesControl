@@ -28,6 +28,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
+@Suppress("TooManyFunctions")
 class StatisticsViewModel @Inject constructor(
     private val resourcesProvider: ResourcesProvider,
     private val statisticsInteractor: StatisticsInteractor,
@@ -121,7 +122,8 @@ class StatisticsViewModel @Inject constructor(
             resourcesProvider.getString(R.string.common_sum)
                 .format(fractionFormatter.format(sum))
         }
-        chartAvailabilityState.value = result.isChartAvailable
+        // todo release 1.3
+        chartAvailabilityState.value = false //result.isChartAvailable
     }
 
     private fun processChartData(chartData: ChartData) {

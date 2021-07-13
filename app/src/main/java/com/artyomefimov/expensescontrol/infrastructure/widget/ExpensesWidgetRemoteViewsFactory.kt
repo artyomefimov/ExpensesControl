@@ -1,6 +1,7 @@
 package com.artyomefimov.expensescontrol.infrastructure.widget
 
 import android.content.Context
+import android.util.Log
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import com.artyomefimov.expensescontrol.R
@@ -43,6 +44,7 @@ class ExpensesWidgetRemoteViewsFactory(
         expenseInfoMapper = hiltEntryPoint.expenseInfoMapper()
     }
 
+    @Suppress("TooGenericExceptionCaught", "UnusedPrivateMember")
     override fun onDataSetChanged() {
         // works in binder thread pool
         runBlocking {
@@ -51,6 +53,7 @@ class ExpensesWidgetRemoteViewsFactory(
                     .first()
                     .mapList(expenseInfoMapper)
             } catch (e: Exception) {
+                Log.e("Widget data set changed", "", e)
                 emptyList()
             }
         }

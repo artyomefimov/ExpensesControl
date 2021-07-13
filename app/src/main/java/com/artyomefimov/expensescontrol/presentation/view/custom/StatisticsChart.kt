@@ -6,6 +6,7 @@ import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
 
+@Suppress("MagicNumber", "UnusedPrivateMember")
 class StatisticsChart @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,

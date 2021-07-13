@@ -28,6 +28,7 @@ import dagger.hilt.android.AndroidEntryPoint
  * Экран, на котором происходит фильтрация трат по доступным фильтрам для
  * отображении статистики, необходимой пользователю
  */
+@Suppress("TooManyFunctions")
 @AndroidEntryPoint
 class StatisticsFragment : Fragment() {
 
@@ -111,6 +112,7 @@ class StatisticsFragment : Fragment() {
         binding.toolbar.isIconVisible = isAvailable
     }
 
+    @Suppress("UnusedPrivateMember")
     private fun showChartWithData(chartData: ChartDataUi) {
         // todo отправка данных на вью и отрисовка
     }

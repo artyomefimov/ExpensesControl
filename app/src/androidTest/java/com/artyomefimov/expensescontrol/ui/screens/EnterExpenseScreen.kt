@@ -19,7 +19,7 @@ object EnterExpenseScreen : Screen<EnterExpenseScreen>() {
         builder = { withId(R.id.expensesRecyclerView) },
         itemTypeBuilder = { itemType(::ExpenseItem) },
     )
-    val applyExpenseItem = KView { withId(R.id.apply_expense_item) }
+    val toolbarIconButton = KView { withId(R.id.toolbarIconButton) }
     val snackbarView = KView { withId(com.google.android.material.R.id.snackbar_text) }
 
     class ExpenseItem(parent: Matcher<View>) : KRecyclerItem<ExpenseItem>(parent) {
