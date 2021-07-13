@@ -13,22 +13,22 @@ interface IncomeRepository {
      *
      * @param income новая доступная сумма на месяц
      */
-    fun updateIncome(income: BigDecimal)
+    suspend fun updateIncome(income: BigDecimal)
 
     /**
      * Получить текущее значение доступной суммы на месяц
      */
-    fun getIncomeValue(): BigDecimal
+    suspend fun getIncomeValue(): BigDecimal
 
     /**
      * Получить дату последнего изменения дохода в начале месяца
      */
-    fun getLastChangeDateString(): String
+    suspend fun getLastChangeDateString(): String
 
     /**
      * Установить дату последнего изменения дохода в начале месяца
      *
      * @param date новая дата
      */
-    fun setLastChangeDate(date: Instant)
+    suspend fun setLastChangeDate(date: Instant)
 }

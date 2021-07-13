@@ -1,9 +1,12 @@
 package com.artyomefimov.expensescontrol.domain.interactor.expense
 
+import android.content.Context
 import com.artyomefimov.expensescontrol.domain.ext.today
+import com.artyomefimov.expensescontrol.domain.ext.updateWidget
 import com.artyomefimov.expensescontrol.domain.model.expense.Expense
 import com.artyomefimov.expensescontrol.domain.repo.expense.ExpenseRepository
 import com.artyomefimov.expensescontrol.domain.repo.income.IncomeRepository
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Clock
@@ -16,6 +19,7 @@ class ExpenseInteractorImpl @Inject constructor(
     private val incomeRepository: IncomeRepository,
     private val expenseRepository: ExpenseRepository,
     private val clock: Clock,
+    @ApplicationContext private val context: Context,
 ) : ExpenseInteractor {
 
     private companion object {
@@ -40,7 +44,7 @@ class ExpenseInteractorImpl @Inject constructor(
             .map(::reversed)
     }
 
-    override fun getAvailableDailySum(): BigDecimal {
+    override suspend fun getAvailableDailySum(): BigDecimal {
         return incomeRepository.getIncomeValue()
             .divide(
                 BigDecimal(availableDaysInThisMonth()),
@@ -63,6 +67,7 @@ class ExpenseInteractorImpl @Inject constructor(
         val newSum = incomeRepository.getIncomeValue().subtract(expense.sum)
         incomeRepository.updateIncome(newSum)
         expenseRepository.addExpense(expense)
+        context.updateWidget()
     }
 
     private fun availableDaysInThisMonth(): Int {

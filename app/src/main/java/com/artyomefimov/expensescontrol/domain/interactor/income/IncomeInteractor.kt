@@ -1,7 +1,6 @@
 package com.artyomefimov.expensescontrol.domain.interactor.income
 
 import com.artyomefimov.expensescontrol.domain.model.income.Income
-import java.math.BigDecimal
 
 /**
  * Содержит бизнес-логику для суммы дохода на текущий месяц
@@ -13,7 +12,7 @@ interface IncomeInteractor {
      *
      * @return [Income]
      */
-    fun getIncomeForCurrentMonth(): Income
+    suspend fun getIncomeForCurrentMonth(): Income
 
     /**
      * Сохранение планируемой суммы дохода в начале месяца
@@ -21,5 +20,5 @@ interface IncomeInteractor {
      * @param incomeString строковое представление планируемой суммы дохода
      * в начале месяца
      */
-    fun saveIncomeForNextMonth(incomeString: String)
+    suspend fun saveIncomeForNextMonth(incomeString: String)
 }

@@ -51,4 +51,11 @@
     </string-array>
     <string name="common_sum">Common sum for these expenses is\n%1$s</string>
     <string name="no_matching_items">No items matching this filter</string>
+    <string name="no_expenses_for_current_month">No expenses for current month</string>
+    <string name="current_day_expenses">Today\'s expenses</string>
+    <string name="show_chart_menu_text">Show chart</string>
+    <string name="enter_income_screen_title">Planning income</string>
+    <string name="enter_expense_screen_title">Enter expenses</string>
+    <string name="statistics_screen_title">Expenses statistics</string>
+    <string name="incorrect_sum">Minimal amount is $1.00</string>
 </resources>

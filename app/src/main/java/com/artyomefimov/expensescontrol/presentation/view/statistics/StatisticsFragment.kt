@@ -8,10 +8,13 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DiffUtil
+import com.artyomefimov.expensescontrol.R
 import com.artyomefimov.expensescontrol.databinding.FragmentStatisticsBinding
 import com.artyomefimov.expensescontrol.domain.model.statistics.StatisticsFilter
 import com.artyomefimov.expensescontrol.presentation.ext.observeEvent
 import com.artyomefimov.expensescontrol.presentation.ext.safeObserve
+import com.artyomefimov.expensescontrol.presentation.ext.showSnackbar
+import com.artyomefimov.expensescontrol.presentation.model.ChartDataUi
 import com.artyomefimov.expensescontrol.presentation.model.ExpenseInfo
 import com.artyomefimov.expensescontrol.presentation.model.FilterType
 import com.artyomefimov.expensescontrol.presentation.view.recyclerview.ExpensesAdapter
@@ -21,6 +24,11 @@ import com.artyomefimov.expensescontrol.presentation.view.statistics.dialogs.sho
 import com.artyomefimov.expensescontrol.presentation.viewmodel.statistics.StatisticsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * Экран, на котором происходит фильтрация трат по доступным фильтрам для
+ * отображении статистики, необходимой пользователю
+ */
+@Suppress("TooManyFunctions")
 @AndroidEntryPoint
 class StatisticsFragment : Fragment() {
 
@@ -38,6 +46,9 @@ class StatisticsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.toolbar.onIconPressedListener = {
+            viewModel.prepareDataForChart()
+        }
         binding.chipPeriod.setOnClickListener {
             viewModel.setFilter(FilterType.PERIOD)
         }
@@ -58,6 +69,8 @@ class StatisticsFragment : Fragment() {
         viewModel.selectedCategoryState().safeObserve(this, ::showCategory)
         viewModel.suitableExpensesState().safeObserve(this, ::updateExpenses)
         viewModel.commonSumState().observe(viewLifecycleOwner, ::showCommonSum)
+        viewModel.chartAvailabilityState().observe(viewLifecycleOwner, ::showChartIcon)
+        viewModel.chartDataState().observe(viewLifecycleOwner, ::showChartWithData)
         viewModel.showPeriodDialogViewEvent().observeEvent(this) {
             showPeriodDialog()
         }
@@ -94,6 +107,15 @@ class StatisticsFragment : Fragment() {
             isVisible = commonSum != null
             text = commonSum.orEmpty()
         }
+
+    private fun showChartIcon(isAvailable: Boolean) {
+        binding.toolbar.isIconVisible = isAvailable
+    }
+
+    @Suppress("UnusedPrivateMember")
+    private fun showChartWithData(chartData: ChartDataUi) {
+        // todo отправка данных на вью и отрисовка
+    }
 
     private fun showPeriodDialog() {
         showPeriodSelectDialog(

@@ -8,6 +8,9 @@ import com.artyomefimov.expensescontrol.R
 import com.artyomefimov.expensescontrol.presentation.model.ExpenseInfo
 import com.artyomefimov.expensescontrol.presentation.view.custom.ExpenseInfoItem
 
+/**
+ * Адаптер для списка трат
+ */
 class ExpensesAdapter(
     private val items: MutableList<ExpenseInfo> = mutableListOf()
 ): RecyclerView.Adapter<ExpenseViewHolder>() {

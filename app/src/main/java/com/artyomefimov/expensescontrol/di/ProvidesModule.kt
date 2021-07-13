@@ -1,7 +1,12 @@
 package com.artyomefimov.expensescontrol.di
 
 import android.content.Context
-import android.content.SharedPreferences
+import androidx.datastore.core.DataMigration
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.SharedPreferencesMigration
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.work.Configuration
 import androidx.work.WorkerFactory
 import com.artyomefimov.expensescontrol.domain.interactor.expense.ExpenseInteractor
@@ -27,15 +32,6 @@ class ProvidesModule {
 
     @Provides
     @Singleton
-    fun providePreferences(
-        @ApplicationContext context: Context
-    ): SharedPreferences = context.getSharedPreferences(
-        PREFS_FILE_NAME,
-        Context.MODE_PRIVATE
-    )
-
-    @Provides
-    @Singleton
     fun provideClock(): Clock = Clock.System
 
     @Provides
@@ -45,12 +41,21 @@ class ProvidesModule {
 
     @Provides
     @Singleton
+    @DefaultDispatcher
+    fun provideDefaultDispatcher(): CoroutineDispatcher = Dispatchers.Default
+
+    @Provides
+    @Singleton
     fun provideWorkerFactory(
         expenseInteractor: ExpenseInteractor,
         notificationBuilder: NotificationBuilder,
+        clock: Clock,
+        dataStore: DataStore<Preferences>,
     ): WorkerFactory = ExpensesWorkerFactory(
         expenseInteractor,
         notificationBuilder,
+        clock,
+        dataStore
     )
 
     @Provides
@@ -60,4 +65,27 @@ class ProvidesModule {
     ): Configuration = Configuration.Builder()
         .setWorkerFactory(workerFactory)
         .build()
+
+    @Provides
+    @Singleton
+    fun provideDataStore(
+        @ApplicationContext context: Context
+    ): DataStore<Preferences> {
+        return PreferenceDataStoreFactory.create(
+            migrations = providesMigrations(context)
+        ) {
+            context.preferencesDataStoreFile(PREFS_FILE_NAME)
+        }
+    }
+
+    @Provides
+    @Singleton
+    fun providesMigrations(
+        @ApplicationContext context: Context
+    ): List<DataMigration<Preferences>> = listOf(
+        SharedPreferencesMigration(
+            context = context,
+            sharedPreferencesName = PREFS_FILE_NAME,
+        )
+    )
 }

@@ -23,4 +23,13 @@
     <style name="TextStyle.Size16.Medium">
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
+
+    <style name="TextStyle.Size18">
+        <item name="android:textSize">18sp</item>
+        <item name="android:lineSpacingExtra">3sp</item>
+        <item name="android:letterSpacing">0.0015</item>
+    </style>
+    <style name="TextStyle.Size18.Medium">
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
 </resources>

@@ -7,6 +7,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.artyomefimov.expensescontrol.databinding.ItemExpenseInfoBinding
 import com.artyomefimov.expensescontrol.presentation.model.ExpenseInfo
 
+/**
+ * Отображает информацию о трате в списке трат
+ */
 class ExpenseInfoItem @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet?,

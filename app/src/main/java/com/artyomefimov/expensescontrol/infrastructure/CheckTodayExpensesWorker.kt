@@ -1,23 +1,36 @@
 package com.artyomefimov.expensescontrol.infrastructure
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.work.*
 import com.artyomefimov.expensescontrol.R
 import com.artyomefimov.expensescontrol.domain.interactor.expense.ExpenseInteractor
 import kotlinx.coroutines.flow.first
+import kotlinx.datetime.Clock
 import java.util.concurrent.TimeUnit
 
+/**
+ * [Worker], раз в 12 часов проверяющий, были ли добавлены траты за текущий день.
+ * Если таких трат не найдено, показывает уведомление пользователю с напоминанием
+ */
 class CheckTodayExpensesWorker(
-    context: Context,
     parameters: WorkerParameters,
+    context: Context,
     private val expenseInteractor: ExpenseInteractor,
     private val notificationBuilder: NotificationBuilder,
+    private val clock: Clock,
+    private val dataStore: DataStore<Preferences>,
 ) : CoroutineWorker(context, parameters) {
 
     companion object {
         private const val SCHEDULE_HOURS = 12L
+        private val LAST_SHOWN_NOTIFICATION = stringPreferencesKey(
+            "LAST_SHOWN_NOTIFICATION"
+        )
         const val TAG = "CheckTodayExpensesWorker"
-        const val SHOWN_TIMESTAMP_KEY = "SHOWN_TIMESTAMP_KEY"
 
         fun buildWorkRequest(): PeriodicWorkRequest {
             return PeriodicWorkRequestBuilder<CheckTodayExpensesWorker>(
@@ -31,6 +44,9 @@ class CheckTodayExpensesWorker(
         val expenses = expenseInteractor.getExpensesForCurrentDay().first()
         if (expenses.isEmpty()) {
             showNotification()
+            dataStore.edit { prefs ->
+                prefs[LAST_SHOWN_NOTIFICATION] = clock.now().toString()
+            }
         }
         return Result.success()
     }

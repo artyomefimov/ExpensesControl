@@ -12,7 +12,7 @@ import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Instant
-import org.junit.Assert.assertEquals
+import org.junit.Assert.*
 import org.junit.Test
 import java.math.BigDecimal
 import java.util.concurrent.Executors
@@ -26,6 +26,7 @@ class StatisticsInteractorImplTest {
     private companion object {
         val currentDate = Instant.parse("2018-08-20T00:00:00Z")
         val alsoCurrentDate = Instant.parse("2018-08-20T10:00:00Z")
+        val dateTomorrowBegin = Instant.parse("2018-08-21T00:00:00Z")
         val dateTomorrow = Instant.parse("2018-08-21T21:00:00Z")
         val expense1 = Expense(
             id = 0,
@@ -75,7 +76,7 @@ class StatisticsInteractorImplTest {
     }
 
     @Test
-    fun `applyFilter filters expenses by period`() = runBlocking {
+    fun `applyFilter filters expenses by period for single day`() = runBlocking {
         every { expenseRepository.allExpenses() } returns flowOf(expenses)
         val filter = StatisticsFilter(
             periodFilter = PeriodFilter(from = currentDate, to = currentDate),
@@ -83,6 +84,26 @@ class StatisticsInteractorImplTest {
             isMaxSumFilterEnabled = false,
         )
         val expected = listOf(expense1, expense2)
+        val expectedSum = expected.sumOf { it.sum }
+
+        interactor.applyFilter(filter)
+
+        interactor.getFilteringResult().test {
+            val result = expectItem()
+            assertEquals(expected, result.expenses)
+            assertEquals(expectedSum, result.commonSum)
+        }
+    }
+
+    @Test
+    fun `applyFilter filters expenses by period for two days`() = runBlocking {
+        every { expenseRepository.allExpenses() } returns flowOf(expenses)
+        val filter = StatisticsFilter(
+            periodFilter = PeriodFilter(from = currentDate, to = dateTomorrowBegin),
+            categoryFilter = null,
+            isMaxSumFilterEnabled = false,
+        )
+        val expected = listOf(expense1, expense2, expense3)
         val expectedSum = expected.sumOf { it.sum }
 
         interactor.applyFilter(filter)
@@ -137,11 +158,11 @@ class StatisticsInteractorImplTest {
     fun `applyFilter filters expenses by multiple filters`() = runBlocking {
         every { expenseRepository.allExpenses() } returns flowOf(expenses)
         val filter = StatisticsFilter(
-            periodFilter = PeriodFilter(from = dateTomorrow, to = dateTomorrow),
+            periodFilter = PeriodFilter(from = currentDate, to = dateTomorrowBegin),
             categoryFilter = "Развлечения",
             isMaxSumFilterEnabled = true,
         )
-        val expected = emptyList<Expense>()
+        val expected = listOf(expense2)
 
         interactor.applyFilter(filter)
 
@@ -149,6 +170,40 @@ class StatisticsInteractorImplTest {
             val result = expectItem()
             assertEquals(expected, result.expenses)
             assertNull(result.commonSum)
+        }
+    }
+
+    @Test
+    fun `graphic is available when only period filter is enable`() = runBlocking {
+        every { expenseRepository.allExpenses() } returns flowOf(expenses)
+        val filter = StatisticsFilter(
+            periodFilter = PeriodFilter(from = currentDate, to = dateTomorrowBegin),
+            categoryFilter = null,
+            isMaxSumFilterEnabled = false,
+        )
+
+        interactor.applyFilter(filter)
+
+        interactor.getFilteringResult().test {
+            val result = expectItem()
+            assertTrue(result.isChartAvailable)
+        }
+    }
+
+    @Test
+    fun `graphic is not available when not only period filter is enable`() = runBlocking {
+        every { expenseRepository.allExpenses() } returns flowOf(expenses)
+        val filter = StatisticsFilter(
+            periodFilter = PeriodFilter(from = currentDate, to = dateTomorrowBegin),
+            categoryFilter = "Развлечения",
+            isMaxSumFilterEnabled = true,
+        )
+
+        interactor.applyFilter(filter)
+
+        interactor.getFilteringResult().test {
+            val result = expectItem()
+            assertFalse(result.isChartAvailable)
         }
     }
 }

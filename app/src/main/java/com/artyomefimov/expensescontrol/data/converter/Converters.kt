@@ -4,6 +4,9 @@ import androidx.room.TypeConverter
 import kotlinx.datetime.Instant
 import java.math.BigDecimal
 
+/**
+ * Конвертеры типов бизнес-логики в типы, понятные базе данных
+ */
 class Converters {
 
     @TypeConverter

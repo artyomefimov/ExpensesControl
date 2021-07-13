@@ -20,7 +20,9 @@ class StatisticsInteractorImpl @Inject constructor(
 
     private val expensesFlow = MutableStateFlow(FilteredExpensesResult())
 
-    override suspend fun applyFilter(filter: StatisticsFilter) = withContext(dispatcher) {
+    override suspend fun applyFilter(
+        filter: StatisticsFilter
+    ) = withContext(dispatcher) {
         val periodRange = filter.periodFilter?.let { daysRange(it.from, it.to) }
         repository.allExpenses().collectLatest { expenses ->
             val resultList = expenses.toMutableList()
@@ -47,7 +49,8 @@ class StatisticsInteractorImpl @Inject constructor(
             }
             expensesFlow.value = expensesFlow.value.copy(
                 expenses = resultList,
-                commonSum = commonSum
+                commonSum = commonSum,
+                isChartAvailable = isOnlyPeriodFilterEnabled(filter),
             )
         }
     }
@@ -55,4 +58,10 @@ class StatisticsInteractorImpl @Inject constructor(
     override fun getFilteringResult(): StateFlow<FilteredExpensesResult> = expensesFlow
 
     private fun calculateCommonSum(expenses: List<Expense>) = expenses.sumOf { it.sum }
+
+    private fun isOnlyPeriodFilterEnabled(filter: StatisticsFilter): Boolean {
+        return filter.periodFilter != null
+                && filter.categoryFilter == null
+                && filter.isMaxSumFilterEnabled.not()
+    }
 }

@@ -10,7 +10,6 @@ class EnterExpenseScenario<ScenarioData> : BaseScenario<ScenarioData>() {
 
     private companion object {
         const val sum = "1000"
-        const val sumValue = "1000 ₽"
         const val comment = "comment"
     }
 
@@ -25,7 +24,7 @@ class EnterExpenseScenario<ScenarioData> : BaseScenario<ScenarioData>() {
                     clearText()
                     typeText(comment)
                 }
-                applyExpenseItem.click()
+                toolbarIconButton.click()
 
                 snackbarView.isVisible()
             }
@@ -44,12 +43,11 @@ class EnterExpenseScenario<ScenarioData> : BaseScenario<ScenarioData>() {
                     typeText(comment)
                 }
                 categoriesGroup.selectChip(R.id.chipMandatory)
-                applyExpenseItem.click()
+                toolbarIconButton.click()
 
                 expensesRecyclerView.firstChild<EnterExpenseScreen.ExpenseItem> {
                     categoryTextView.hasText(R.string.category_mandatory_payments)
                     commentTextView.hasText(comment)
-                    sumTextView.hasText(sumValue)
                 }
             }
         }

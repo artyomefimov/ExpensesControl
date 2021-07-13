@@ -6,6 +6,9 @@ import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
+/**
+ * Показывает диалог для выбора периода трат на экране статистики
+ */
 fun Fragment.showPeriodSelectDialog(
     onPeriodSelected: (Long, Long) -> Unit,
     onCancel: () -> Unit,
@@ -22,6 +25,9 @@ fun Fragment.showPeriodSelectDialog(
     picker.addOnNegativeButtonClickListener { onCancel() }
 }
 
+/**
+ * Показывает диалог для выбора категории трат на экране статистики
+ */
 fun Context.showCategoryDialog(
     items: Array<String>,
     onCategorySelected: (String) -> Unit,

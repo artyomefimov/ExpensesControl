@@ -13,6 +13,9 @@ import java.time.format.FormatStyle
 import java.util.*
 import javax.inject.Inject
 
+/**
+ * Преобразует [Expense] в [ExpenseInfo] для presentation слоя
+ */
 class ExpenseInfoMapper @Inject constructor(
 ) : Mapper<Expense, ExpenseInfo> {
 

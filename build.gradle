@@ -13,6 +13,7 @@ buildscript {
     ext.hilt_version = '2.35'
     ext.room_version = '2.3.0'
     ext.work_manager_version = '2.5.0'
+    ext.data_store_version = '1.0.0-rc01'
 
     ext.junit_version = '4.13.2'
     ext.mockk_version = '1.11.0'
