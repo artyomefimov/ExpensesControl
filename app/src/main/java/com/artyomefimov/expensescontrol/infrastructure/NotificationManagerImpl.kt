@@ -16,10 +16,10 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.datetime.Clock
 import javax.inject.Inject
 
-class NotificationBuilderImpl @Inject constructor(
+class NotificationManagerImpl @Inject constructor(
     @ApplicationContext private val context: Context,
     private val clock: Clock,
-): NotificationBuilder {
+): com.artyomefimov.expensescontrol.infrastructure.NotificationManager {
 
     private companion object {
         const val REQUEST_CODE = 100
@@ -45,6 +45,14 @@ class NotificationBuilderImpl @Inject constructor(
         }
 
         context.notificationManagerCompat.notify(notificationId, notification)
+    }
+
+    override fun hasNoActiveNotifications(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            context.notificationManager.activeNotifications.isEmpty()
+        } else {
+            true
+        }
     }
 
     private fun createPendingIntent(): PendingIntent {

@@ -1,6 +1,6 @@
 package com.artyomefimov.expensescontrol.domain.interactor.income
 
-import com.artyomefimov.expensescontrol.domain.ext.today
+import com.artyomefimov.expensescontrol.domain.interactor.date.DateInteractor
 import com.artyomefimov.expensescontrol.domain.model.income.Income
 import com.artyomefimov.expensescontrol.domain.repo.income.IncomeRepository
 import kotlinx.datetime.Clock
@@ -10,14 +10,11 @@ import javax.inject.Inject
 class IncomeInteractorImpl @Inject constructor(
     private val incomeRepository: IncomeRepository,
     private val clock: Clock,
+    private val dateInteractor: DateInteractor,
 ) : IncomeInteractor {
 
-    private companion object {
-        const val FIRST_DAY = 1
-    }
-
     override suspend fun getIncomeForCurrentMonth(): Income {
-        return if (isFirstDayOfMonth() || hasNoChangeDate()) {
+        return if (shouldEnterIncome()) {
             Income(
                 value = BigDecimal.ZERO,
                 shouldEnterIncome = true
@@ -35,11 +32,8 @@ class IncomeInteractorImpl @Inject constructor(
         incomeRepository.setLastChangeDate(clock.now())
     }
 
-    private fun isFirstDayOfMonth(): Boolean {
-        return today(clock).dayOfMonth == FIRST_DAY
-    }
-
-    private suspend fun hasNoChangeDate(): Boolean {
-        return incomeRepository.getLastChangeDateString().isEmpty()
+    private suspend fun shouldEnterIncome(): Boolean {
+        val hasNoChangeDate = incomeRepository.getLastChangeDateString().isEmpty()
+        return dateInteractor.isFirstDayOfMonth() || hasNoChangeDate
     }
 }

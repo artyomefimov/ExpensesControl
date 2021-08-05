@@ -1,7 +1,7 @@
 package com.artyomefimov.expensescontrol.domain.interactor.statistics
 
 import com.artyomefimov.expensescontrol.di.IoDispatcher
-import com.artyomefimov.expensescontrol.domain.ext.daysRange
+import com.artyomefimov.expensescontrol.domain.interactor.date.DateInteractor
 import com.artyomefimov.expensescontrol.domain.model.expense.Expense
 import com.artyomefimov.expensescontrol.domain.model.statistics.FilteredExpensesResult
 import com.artyomefimov.expensescontrol.domain.model.statistics.StatisticsFilter
@@ -16,6 +16,7 @@ import javax.inject.Inject
 class StatisticsInteractorImpl @Inject constructor(
     private val repository: ExpenseRepository,
     @IoDispatcher private val dispatcher: CoroutineDispatcher,
+    private val dateInteractor: DateInteractor,
 ) : StatisticsInteractor {
 
     private val expensesFlow = MutableStateFlow(FilteredExpensesResult())
@@ -23,7 +24,9 @@ class StatisticsInteractorImpl @Inject constructor(
     override suspend fun applyFilter(
         filter: StatisticsFilter
     ) = withContext(dispatcher) {
-        val periodRange = filter.periodFilter?.let { daysRange(it.from, it.to) }
+        val periodRange = filter.periodFilter?.let {
+            dateInteractor.daysRange(it.from, it.to)
+        }
         repository.allExpenses().collectLatest { expenses ->
             val resultList = expenses.toMutableList()
             periodRange?.let { range ->

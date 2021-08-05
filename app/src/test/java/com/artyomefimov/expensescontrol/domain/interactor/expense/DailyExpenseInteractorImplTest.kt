@@ -2,6 +2,7 @@ package com.artyomefimov.expensescontrol.domain.interactor.expense
 
 import android.content.Context
 import app.cash.turbine.test
+import com.artyomefimov.expensescontrol.domain.interactor.date.DateInteractor
 import com.artyomefimov.expensescontrol.domain.model.expense.Expense
 import com.artyomefimov.expensescontrol.domain.repo.expense.ExpenseRepository
 import com.artyomefimov.expensescontrol.domain.repo.income.IncomeRepository
@@ -44,11 +45,18 @@ class DailyExpenseInteractorImplTest {
     private val expenseRepository = mockk<ExpenseRepository>()
     private val clock = mockk<Clock>()
     private val context = mockk<Context>()
-    private val interactor = ExpenseInteractorImpl(incomeRepository, expenseRepository, clock, context)
+    private val dateInteractor = mockk<DateInteractor>()
+    private val interactor = ExpenseInteractorImpl(
+        context = context,
+        incomeRepository = incomeRepository,
+        expenseRepository = expenseRepository,
+        clock = clock,
+        dateInteractor = dateInteractor
+    )
 
     @Test
     fun `getAvailableDailySum returns zero if monthly income is zero`() = runBlockingTest {
-        every { clock.now() } returns currentDate
+        every { dateInteractor.availableDaysInThisMonth() } returns availableDays
         coEvery { incomeRepository.getIncomeValue() } returns BigDecimal.ZERO
 
         val result = interactor.getAvailableDailySum()
@@ -61,7 +69,7 @@ class DailyExpenseInteractorImplTest {
         runBlockingTest {
             val expected = 1000
             val incomeValue = (availableDays * expected).toString()
-            every { clock.now() } returns currentDate
+            every { dateInteractor.availableDaysInThisMonth() } returns availableDays
             coEvery { incomeRepository.getIncomeValue() } returns BigDecimal(incomeValue)
 
             val result = interactor.getAvailableDailySum()

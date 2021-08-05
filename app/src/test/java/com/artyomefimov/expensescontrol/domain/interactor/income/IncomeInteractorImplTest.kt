@@ -1,5 +1,6 @@
 package com.artyomefimov.expensescontrol.domain.interactor.income
 
+import com.artyomefimov.expensescontrol.domain.interactor.date.DateInteractor
 import com.artyomefimov.expensescontrol.domain.repo.income.IncomeRepository
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -8,7 +9,6 @@ import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
 import org.junit.Assert.*
 import org.junit.Test
 import java.math.BigDecimal
@@ -17,20 +17,19 @@ import java.math.BigDecimal
 class IncomeInteractorImplTest {
 
     private companion object {
-        val firstDayOfMonth = Instant.parse("2018-08-01T10:00:00Z")
-        val secondDayOfMonth = Instant.parse("2018-08-02T10:00:00Z")
         const val notEmptyString = "some string"
         const val emptyString = ""
     }
 
     private val repository = mockk<IncomeRepository>()
     private val clock = mockk<Clock>()
-    private val interactor = IncomeInteractorImpl(repository, clock)
+    private val dateInteractor = mockk<DateInteractor>()
+    private val interactor = IncomeInteractorImpl(repository, clock, dateInteractor)
 
     @Test
     fun `getIncomeForCurrentMonth returns shouldEnterIncome true for empty change date`() =
         runBlockingTest {
-            every { clock.now() } returns secondDayOfMonth
+            every { dateInteractor.isFirstDayOfMonth() } returns false
             coEvery { repository.getLastChangeDateString() } returns emptyString
 
             val income = interactor.getIncomeForCurrentMonth()
@@ -43,7 +42,7 @@ class IncomeInteractorImplTest {
     @Test
     fun `getIncomeForCurrentMonth returns shouldEnterIncome true for first day of month`() =
         runBlockingTest {
-            every { clock.now() } returns firstDayOfMonth
+            every { dateInteractor.isFirstDayOfMonth() } returns true
             coEvery { repository.getLastChangeDateString() } returns notEmptyString
 
             val income = interactor.getIncomeForCurrentMonth()
@@ -56,7 +55,7 @@ class IncomeInteractorImplTest {
     @Test
     fun `getIncomeForCurrentMonth returns shouldEnterIncome false for another cases`() =
         runBlockingTest {
-            every { clock.now() } returns secondDayOfMonth
+            every { dateInteractor.isFirstDayOfMonth() } returns false
             coEvery { repository.getLastChangeDateString() } returns notEmptyString
             coEvery { repository.getIncomeValue() } returns BigDecimal.TEN
 
