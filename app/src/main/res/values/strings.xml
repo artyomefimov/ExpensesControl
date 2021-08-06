@@ -58,4 +58,5 @@
     <string name="enter_expense_screen_title">Enter expenses</string>
     <string name="statistics_screen_title">Expenses statistics</string>
     <string name="incorrect_sum">Minimal amount is $1.00</string>
+    <string name="chart_title">Expenses chart</string>
 </resources>

@@ -43,4 +43,5 @@
     <string name="enter_expense_screen_title">Добавление трат</string>
     <string name="statistics_screen_title">Статистика расходов</string>
     <string name="incorrect_sum">Минимальная сумма 1.00 ₽</string>
+    <string name="chart_title">График расходов</string>
 </resources>
