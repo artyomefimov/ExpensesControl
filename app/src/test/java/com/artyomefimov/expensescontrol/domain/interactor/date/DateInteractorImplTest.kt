@@ -41,17 +41,19 @@ class DateInteractorImplTest {
     }
 
     @Test
-    fun `isFirstDayOfMonth returns false for not first day`() {
+    fun `isFirstDayOfMonth returns false for day in current month`() {
+        val dateInCurrentMonth = "2018-08-30T00:00:00Z"
         every { clock.now() } returns currentDate
 
-        assertFalse(interactor.isFirstDayOfMonth())
+        assertFalse(interactor.isMonthOfCurrentDateWasEnded(dateInCurrentMonth))
     }
 
     @Test
-    fun `isFirstDayOfMonth returns true for first day`() {
-        every { clock.now() } returns firstDayOfMonth
+    fun `isFirstDayOfMonth returns true for day not in current month`() {
+        val dateInPreviousMonth = "2018-07-20T00:00:00Z"
+        every { clock.now() } returns currentDate
 
-        assertTrue(interactor.isFirstDayOfMonth())
+        assertTrue(interactor.isMonthOfCurrentDateWasEnded(dateInPreviousMonth))
     }
 
     @Test

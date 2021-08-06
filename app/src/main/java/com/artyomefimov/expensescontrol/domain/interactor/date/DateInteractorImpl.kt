@@ -12,10 +12,6 @@ class DateInteractorImpl @Inject constructor(
     private val clock: Clock,
 ): DateInteractor {
 
-    private companion object {
-        const val FIRST_DAY = 1
-    }
-
     private val formatter = DateTimeFormatter
         .ofPattern("MMMM")
         .withLocale(Locale.getDefault())
@@ -45,10 +41,6 @@ class DateInteractorImpl @Inject constructor(
         return getCurrentMonthLength(today) - today.dayOfMonth
     }
 
-    override fun isFirstDayOfMonth(): Boolean {
-        return today().dayOfMonth == FIRST_DAY
-    }
-
     override fun getCurrentMonthNameAndLastDay(): String {
         val today = today()
         val lastDayOfCurrentMonth = getCurrentMonthLength(today)
@@ -59,8 +51,16 @@ class DateInteractorImpl @Inject constructor(
         }
     }
 
+    override fun isMonthOfCurrentDateWasEnded(date: String): Boolean {
+        val passedDate = Instant.parse(date)
+            .toLocalDateTime(TimeZone.currentSystemDefault())
+        val today = today()
+
+        return passedDate.monthNumber != today.monthNumber
+    }
+
     private fun today(
-        timeZone: TimeZone = TimeZone.currentSystemDefault()
+        timeZone: TimeZone = TimeZone.currentSystemDefault(),
     ): LocalDateTime {
         return clock.now().toLocalDateTime(timeZone)
     }

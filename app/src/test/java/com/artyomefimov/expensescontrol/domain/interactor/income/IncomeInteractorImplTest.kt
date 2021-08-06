@@ -29,7 +29,7 @@ class IncomeInteractorImplTest {
     @Test
     fun `getIncomeForCurrentMonth returns shouldEnterIncome true for empty change date`() =
         runBlockingTest {
-            every { dateInteractor.isFirstDayOfMonth() } returns false
+            every { dateInteractor.isMonthOfCurrentDateWasEnded(any()) } returns false
             coEvery { repository.getLastChangeDateString() } returns emptyString
 
             val income = interactor.getIncomeForCurrentMonth()
@@ -42,7 +42,7 @@ class IncomeInteractorImplTest {
     @Test
     fun `getIncomeForCurrentMonth returns shouldEnterIncome true for first day of month`() =
         runBlockingTest {
-            every { dateInteractor.isFirstDayOfMonth() } returns true
+            every { dateInteractor.isMonthOfCurrentDateWasEnded(any()) } returns true
             coEvery { repository.getLastChangeDateString() } returns notEmptyString
 
             val income = interactor.getIncomeForCurrentMonth()
@@ -55,7 +55,7 @@ class IncomeInteractorImplTest {
     @Test
     fun `getIncomeForCurrentMonth returns shouldEnterIncome false for another cases`() =
         runBlockingTest {
-            every { dateInteractor.isFirstDayOfMonth() } returns false
+            every { dateInteractor.isMonthOfCurrentDateWasEnded(any()) } returns false
             coEvery { repository.getLastChangeDateString() } returns notEmptyString
             coEvery { repository.getIncomeValue() } returns BigDecimal.TEN
 

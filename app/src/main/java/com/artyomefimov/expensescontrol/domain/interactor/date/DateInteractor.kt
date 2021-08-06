@@ -17,7 +17,15 @@ interface DateInteractor {
 
     fun availableDaysInThisMonth(): Int
 
-    fun isFirstDayOfMonth(): Boolean
-
+    /**
+     * Возвращает строку с последним днем месяца и названием месяца
+     */
     fun getCurrentMonthNameAndLastDay(): String
+
+    /**
+     * Возвращает true, если с момента даты прошел месяц. False - иначе
+     *
+     * @param date дата в виде строки
+     */
+    fun isMonthOfCurrentDateWasEnded(date: String): Boolean
 }

@@ -33,7 +33,8 @@ class IncomeInteractorImpl @Inject constructor(
     }
 
     private suspend fun shouldEnterIncome(): Boolean {
-        val hasNoChangeDate = incomeRepository.getLastChangeDateString().isEmpty()
-        return dateInteractor.isFirstDayOfMonth() || hasNoChangeDate
+        val lastIncomeEnterDate = incomeRepository.getLastChangeDateString()
+        return lastIncomeEnterDate.isEmpty() ||
+                dateInteractor.isMonthOfCurrentDateWasEnded(lastIncomeEnterDate)
     }
 }
