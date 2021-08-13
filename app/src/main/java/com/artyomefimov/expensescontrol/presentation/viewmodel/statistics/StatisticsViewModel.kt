@@ -42,7 +42,7 @@ class StatisticsViewModel @Inject constructor(
     private val suitableExpensesState = MutableLiveData<List<ExpenseInfo>>()
     private val commonSumState = MutableLiveData<String?>()
     private val chartAvailabilityState = MutableLiveData<Boolean>()
-    private val chartDataState = MutableLiveData<ChartDataUi>()
+    private val showChartViewEvent = MutableLiveData<Event<Unit>>()
     private val showPeriodDialogViewEvent = MutableLiveData<Event<Unit>>()
     private val showCategoryDialogViewEvent = MutableLiveData<Event<Array<String>>>()
 
@@ -51,10 +51,14 @@ class StatisticsViewModel @Inject constructor(
     private var currentFilter = StatisticsFilter()
     private var currentExpenses = emptyList<Expense>()
 
+    var chartData: ChartDataUi? = null
+
     init {
         applyFilter(currentFilter)
         viewModelScope.launch {
             statisticsInteractor.getFilteringResult().collect(::processFilteringResult)
+        }
+        viewModelScope.launch {
             chartInteractor.getChartData().collect(::processChartData)
         }
     }
@@ -64,7 +68,7 @@ class StatisticsViewModel @Inject constructor(
     fun suitableExpensesState(): LiveData<List<ExpenseInfo>> = suitableExpensesState
     fun commonSumState(): LiveData<String?> = commonSumState
     fun chartAvailabilityState(): LiveData<Boolean> = chartAvailabilityState
-    fun chartDataState(): LiveData<ChartDataUi> = chartDataState
+    fun showChartViewEvent(): LiveData<Event<Unit>> = showChartViewEvent
     fun showPeriodDialogViewEvent(): LiveData<Event<Unit>> = showPeriodDialogViewEvent
     fun showCategoryDialogViewEvent(): LiveData<Event<Array<String>>> = showCategoryDialogViewEvent
 
@@ -122,11 +126,13 @@ class StatisticsViewModel @Inject constructor(
             resourcesProvider.getString(R.string.common_sum)
                 .format(fractionFormatter.format(sum))
         }
-        // todo release 1.3
-        chartAvailabilityState.value = false //result.isChartAvailable
+        chartAvailabilityState.value = result.isChartAvailable
     }
 
     private fun processChartData(chartData: ChartData) {
-        chartDataState.value = chartDataMapper.map(chartData)
+        if (chartData.data.isNotEmpty()) {
+            this.chartData = chartDataMapper.map(chartData)
+            showChartViewEvent.toggle()
+        }
     }
 }

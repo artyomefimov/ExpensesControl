@@ -1,6 +1,7 @@
 package com.artyomefimov.expensescontrol.domain.interactor.statistics
 
 import app.cash.turbine.test
+import com.artyomefimov.expensescontrol.domain.interactor.date.DateInteractor
 import com.artyomefimov.expensescontrol.domain.model.expense.Expense
 import com.artyomefimov.expensescontrol.domain.model.statistics.PeriodFilter
 import com.artyomefimov.expensescontrol.domain.model.statistics.StatisticsFilter
@@ -16,7 +17,6 @@ import org.junit.Assert.*
 import org.junit.Test
 import java.math.BigDecimal
 import java.util.concurrent.Executors
-import kotlin.test.assertNull
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
@@ -26,7 +26,9 @@ class StatisticsInteractorImplTest {
     private companion object {
         val currentDate = Instant.parse("2018-08-20T00:00:00Z")
         val alsoCurrentDate = Instant.parse("2018-08-20T10:00:00Z")
+        val endOfCurrentDate = Instant.parse("2018-08-20T23:59:59Z")
         val dateTomorrowBegin = Instant.parse("2018-08-21T00:00:00Z")
+        val dateTomorrowEnd = Instant.parse("2018-08-21T23:59:59Z")
         val dateTomorrow = Instant.parse("2018-08-21T21:00:00Z")
         val expense1 = Expense(
             id = 0,
@@ -54,7 +56,12 @@ class StatisticsInteractorImplTest {
 
     private val expenseRepository = mockk<ExpenseRepository>()
     private val dispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
-    private val interactor = StatisticsInteractorImpl(expenseRepository, dispatcher)
+    private val dateInteractor = mockk<DateInteractor>()
+    private val interactor = StatisticsInteractorImpl(
+        repository = expenseRepository,
+        dispatcher = dispatcher,
+        dateInteractor = dateInteractor,
+    )
 
     @Test
     fun `applyFilter returns all items if no filters were applied`() = runBlocking {
@@ -78,6 +85,7 @@ class StatisticsInteractorImplTest {
     @Test
     fun `applyFilter filters expenses by period for single day`() = runBlocking {
         every { expenseRepository.allExpenses() } returns flowOf(expenses)
+        every { dateInteractor.daysRange(any(), any()) } returns currentDate..endOfCurrentDate
         val filter = StatisticsFilter(
             periodFilter = PeriodFilter(from = currentDate, to = currentDate),
             categoryFilter = null,
@@ -98,6 +106,7 @@ class StatisticsInteractorImplTest {
     @Test
     fun `applyFilter filters expenses by period for two days`() = runBlocking {
         every { expenseRepository.allExpenses() } returns flowOf(expenses)
+        every { dateInteractor.daysRange(any(), any()) } returns currentDate..dateTomorrowEnd
         val filter = StatisticsFilter(
             periodFilter = PeriodFilter(from = currentDate, to = dateTomorrowBegin),
             categoryFilter = null,
@@ -157,6 +166,7 @@ class StatisticsInteractorImplTest {
     @Test
     fun `applyFilter filters expenses by multiple filters`() = runBlocking {
         every { expenseRepository.allExpenses() } returns flowOf(expenses)
+        every { dateInteractor.daysRange(any(), any()) } returns currentDate..dateTomorrowEnd
         val filter = StatisticsFilter(
             periodFilter = PeriodFilter(from = currentDate, to = dateTomorrowBegin),
             categoryFilter = "Развлечения",
@@ -176,6 +186,7 @@ class StatisticsInteractorImplTest {
     @Test
     fun `graphic is available when only period filter is enable`() = runBlocking {
         every { expenseRepository.allExpenses() } returns flowOf(expenses)
+        every { dateInteractor.daysRange(any(), any()) } returns currentDate..dateTomorrowEnd
         val filter = StatisticsFilter(
             periodFilter = PeriodFilter(from = currentDate, to = dateTomorrowBegin),
             categoryFilter = null,
@@ -193,6 +204,7 @@ class StatisticsInteractorImplTest {
     @Test
     fun `graphic is not available when not only period filter is enable`() = runBlocking {
         every { expenseRepository.allExpenses() } returns flowOf(expenses)
+        every { dateInteractor.daysRange(any(), any()) } returns currentDate..dateTomorrowEnd
         val filter = StatisticsFilter(
             periodFilter = PeriodFilter(from = currentDate, to = dateTomorrowBegin),
             categoryFilter = "Развлечения",

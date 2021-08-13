@@ -39,4 +39,10 @@
         android:label="@string/statistics_fragment"
         tools:layout="@layout/fragment_statistics"/>
 
+    <fragment
+        android:id="@+id/chart_dest"
+        android:name="com.artyomefimov.expensescontrol.presentation.view.statistics.ChartFragment"
+        android:label="@string/chart_title"
+        tools:layout="@layout/fragment_chart"/>
+
 </navigation>

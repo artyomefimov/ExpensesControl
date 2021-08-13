@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.artyomefimov.expensescontrol.R
+import com.artyomefimov.expensescontrol.domain.interactor.date.DateInteractor
 import com.artyomefimov.expensescontrol.domain.interactor.expense.ExpenseInteractor
 import com.artyomefimov.expensescontrol.domain.interactor.income.IncomeInteractor
 import com.artyomefimov.expensescontrol.domain.mapper.Mapper
@@ -28,6 +29,7 @@ import javax.inject.Inject
 class EnterExpenseViewModel @Inject constructor(
     private val incomeInteractor: IncomeInteractor,
     private val expenseInteractor: ExpenseInteractor,
+    private val dateInteractor: DateInteractor,
     private val resourcesProvider: ResourcesProvider,
     private val expenseInfoMapper: Mapper<Expense, ExpenseInfo>,
 ): ViewModel() {
@@ -96,7 +98,7 @@ class EnterExpenseViewModel @Inject constructor(
         val availableDailySum = resourcesProvider.getString(R.string.available_money_placeholder)
             .format(dailySum)
         val availableMonthlySum = resourcesProvider.getString(R.string.money_left_label_text)
-            .format(monthlySum)
+            .format(monthlySum, dateInteractor.getCurrentMonthNameAndLastDay())
         availableDailySumState.value = AvailableSumInfo(
             availableDailySum = availableDailySum,
             availableMonthlySum = availableMonthlySum,

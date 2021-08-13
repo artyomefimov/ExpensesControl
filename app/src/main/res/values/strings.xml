@@ -7,7 +7,7 @@
 
     <string name="enter_field_hint">Enter expense</string>
     <string name="comment_field_hint">Enter comment</string>
-    <string name="money_left_label_text">%1$s left this month</string>
+    <string name="money_left_label_text">%1$s left until %2$s</string>
     <string name="apply_text">Apply</string>
     <string name="enter_income_hint">Planned income</string>
     <string name="enter_income_explanation">Enter your planned income for the next month. You enter this sum in the beginning of every month for calculating recommended daily expenses.</string>
@@ -58,4 +58,5 @@
     <string name="enter_expense_screen_title">Enter expenses</string>
     <string name="statistics_screen_title">Expenses statistics</string>
     <string name="incorrect_sum">Minimal amount is $1.00</string>
+    <string name="chart_title">Expenses chart</string>
 </resources>

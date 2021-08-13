@@ -22,6 +22,15 @@ class ToolbarView @JvmOverloads constructor(
     private val binding: ViewToolbarBinding
 
     /**
+     * Видимость иконки "Назад"
+     */
+    var isBackButtonVisible: Boolean = false
+        set(value) {
+            field = value
+            binding.toolbarBackButton.isVisible = value
+        }
+
+    /**
      * Текст тулбара
      */
     var title: String = ""
@@ -40,6 +49,11 @@ class ToolbarView @JvmOverloads constructor(
         }
 
     /**
+     * Действие по нажатию на иконки "Назад"
+     */
+    var onBackPressedListener: (() -> Unit)? = null
+
+    /**
      * Действие по нажатию на иконку
      */
     var onIconPressedListener: (() -> Unit)? = null
@@ -54,13 +68,15 @@ class ToolbarView @JvmOverloads constructor(
                 value?.let { setImageDrawable(it) }
                 isVisible = value != null
             }
-
         }
 
     init {
         inflate(context, R.layout.view_toolbar, this)
         binding = ViewToolbarBinding.bind(this)
         binding.root.background = ContextCompat.getDrawable(context, R.color.colorPrimaryDark)
+        binding.toolbarBackButton.setOnClickListener {
+            onBackPressedListener?.invoke()
+        }
         binding.toolbarIconButton.setOnClickListener {
             onIconPressedListener?.invoke()
         }

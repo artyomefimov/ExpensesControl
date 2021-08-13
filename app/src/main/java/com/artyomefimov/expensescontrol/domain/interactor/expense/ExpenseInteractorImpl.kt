@@ -1,8 +1,8 @@
 package com.artyomefimov.expensescontrol.domain.interactor.expense
 
 import android.content.Context
-import com.artyomefimov.expensescontrol.domain.ext.today
 import com.artyomefimov.expensescontrol.domain.ext.updateWidget
+import com.artyomefimov.expensescontrol.domain.interactor.date.DateInteractor
 import com.artyomefimov.expensescontrol.domain.model.expense.Expense
 import com.artyomefimov.expensescontrol.domain.repo.expense.ExpenseRepository
 import com.artyomefimov.expensescontrol.domain.repo.income.IncomeRepository
@@ -10,16 +10,16 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Clock
-import kotlinx.datetime.toJavaLocalDateTime
 import java.math.BigDecimal
 import java.math.RoundingMode
 import javax.inject.Inject
 
 class ExpenseInteractorImpl @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val incomeRepository: IncomeRepository,
     private val expenseRepository: ExpenseRepository,
     private val clock: Clock,
-    @ApplicationContext private val context: Context,
+    private val dateInteractor: DateInteractor,
 ) : ExpenseInteractor {
 
     private companion object {
@@ -47,7 +47,7 @@ class ExpenseInteractorImpl @Inject constructor(
     override suspend fun getAvailableDailySum(): BigDecimal {
         return incomeRepository.getIncomeValue()
             .divide(
-                BigDecimal(availableDaysInThisMonth()),
+                BigDecimal(dateInteractor.availableDaysInThisMonth()),
                 ROUNDING_SCALE,
                 RoundingMode.HALF_EVEN
             )
@@ -68,12 +68,6 @@ class ExpenseInteractorImpl @Inject constructor(
         incomeRepository.updateIncome(newSum)
         expenseRepository.addExpense(expense)
         context.updateWidget()
-    }
-
-    private fun availableDaysInThisMonth(): Int {
-        val today = today(clock)
-        val isLeap = today.toJavaLocalDateTime().toLocalDate().isLeapYear
-        return today.month.length(isLeap) - today.dayOfMonth
     }
 
     private fun reversed(expenses: List<Expense>): List<Expense> {

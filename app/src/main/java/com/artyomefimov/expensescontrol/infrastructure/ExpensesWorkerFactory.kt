@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class ExpensesWorkerFactory @Inject constructor(
     private val expenseInteractor: ExpenseInteractor,
-    private val notificationBuilder: NotificationBuilder,
+    private val notificationManager: NotificationManager,
     private val clock: Clock,
     private val dataStore: DataStore<Preferences>,
 ) : WorkerFactory() {
@@ -26,7 +26,7 @@ class ExpensesWorkerFactory @Inject constructor(
             workerParameters,
             appContext,
             expenseInteractor,
-            notificationBuilder,
+            notificationManager,
             clock,
             dataStore
         )

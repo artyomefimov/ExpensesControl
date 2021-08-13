@@ -20,7 +20,7 @@ class CheckTodayExpensesWorker(
     parameters: WorkerParameters,
     context: Context,
     private val expenseInteractor: ExpenseInteractor,
-    private val notificationBuilder: NotificationBuilder,
+    private val notificationManager: NotificationManager,
     private val clock: Clock,
     private val dataStore: DataStore<Preferences>,
 ) : CoroutineWorker(context, parameters) {
@@ -42,7 +42,7 @@ class CheckTodayExpensesWorker(
 
     override suspend fun doWork(): Result {
         val expenses = expenseInteractor.getExpensesForCurrentDay().first()
-        if (expenses.isEmpty()) {
+        if (expenses.isEmpty() && notificationManager.hasNoActiveNotifications()) {
             showNotification()
             dataStore.edit { prefs ->
                 prefs[LAST_SHOWN_NOTIFICATION] = clock.now().toString()
@@ -52,7 +52,7 @@ class CheckTodayExpensesWorker(
     }
 
     private fun showNotification() {
-        notificationBuilder.showNotification(
+        notificationManager.showNotification(
             titleResId = R.string.notification_title,
             contentResId = R.string.notification_text,
             iconResId = R.drawable.ic_expenses,

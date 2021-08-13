@@ -11,7 +11,7 @@ import androidx.work.Configuration
 import androidx.work.WorkerFactory
 import com.artyomefimov.expensescontrol.domain.interactor.expense.ExpenseInteractor
 import com.artyomefimov.expensescontrol.infrastructure.ExpensesWorkerFactory
-import com.artyomefimov.expensescontrol.infrastructure.NotificationBuilder
+import com.artyomefimov.expensescontrol.infrastructure.NotificationManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -48,12 +48,12 @@ class ProvidesModule {
     @Singleton
     fun provideWorkerFactory(
         expenseInteractor: ExpenseInteractor,
-        notificationBuilder: NotificationBuilder,
+        notificationManager: NotificationManager,
         clock: Clock,
         dataStore: DataStore<Preferences>,
     ): WorkerFactory = ExpensesWorkerFactory(
         expenseInteractor,
-        notificationBuilder,
+        notificationManager,
         clock,
         dataStore
     )
