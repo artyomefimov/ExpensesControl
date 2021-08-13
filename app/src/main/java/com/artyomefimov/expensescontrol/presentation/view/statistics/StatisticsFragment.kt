@@ -45,6 +45,7 @@ class StatisticsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.toolbar.isBackButtonVisible = false
         binding.toolbar.onIconPressedListener = {
             viewModel.prepareDataForChart()
         }

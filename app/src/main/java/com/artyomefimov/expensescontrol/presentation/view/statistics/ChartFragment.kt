@@ -8,10 +8,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.artyomefimov.expensescontrol.databinding.FragmentChartBinding
-import com.artyomefimov.expensescontrol.presentation.model.ChartDataUi
 import com.artyomefimov.expensescontrol.presentation.viewmodel.statistics.StatisticsViewModel
+import com.github.mikephil.charting.animation.Easing
 
 class ChartFragment : Fragment() {
+
+    private companion object {
+        const val CHART_INITIAL_ANIMATION_DURATION = 1400
+    }
 
     private lateinit var binding: FragmentChartBinding
     private val viewModel: StatisticsViewModel by activityViewModels()
@@ -33,6 +37,16 @@ class ChartFragment : Fragment() {
                 findNavController().navigateUp()
             }
         }
-        binding.chartView.chartData = viewModel.chartData
+        binding.chartView.apply {
+            isDrawHoleEnabled = true
+            description.isEnabled = false
+            setDrawEntryLabels(false)
+            data = viewModel.chartData?.data
+            invalidate()
+            animateY(
+                CHART_INITIAL_ANIMATION_DURATION,
+                Easing.EaseInOutQuad
+            )
+        }
     }
 }

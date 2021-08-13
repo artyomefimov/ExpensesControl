@@ -68,7 +68,6 @@ class ToolbarView @JvmOverloads constructor(
                 value?.let { setImageDrawable(it) }
                 isVisible = value != null
             }
-
         }
 
     init {

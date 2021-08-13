@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription"
-        tools:src="@drawable/ic_arrow_back" />
+        app:srcCompat="@drawable/ic_arrow_left" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/title"
@@ -36,7 +36,7 @@
         app:layout_constraintStart_toEndOf="@id/toolbarBackButton"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_goneMarginEnd="@dimen/margin_16dp"
-        app:layout_goneMarginStart="@dimen/margin_32dp"
+        app:layout_goneMarginStart="@dimen/margin_16dp"
         tools:text="Заголовок" />
 
     <ImageButton

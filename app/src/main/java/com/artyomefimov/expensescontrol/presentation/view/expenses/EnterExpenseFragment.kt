@@ -42,6 +42,7 @@ class EnterExpenseFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.toolbar.isBackButtonVisible = false
         adapter = ExpensesAdapter()
         binding.expensesRecyclerView.adapter = adapter
         binding.toolbar.onIconPressedListener = {

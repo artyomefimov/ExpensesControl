@@ -37,6 +37,7 @@ class EnterIncomeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.toolbar.isBackButtonVisible = false
         binding.toolbar.onIconPressedListener = {
             viewModel.addIncome(
                 stringSum = binding.enterMoneyEditText.text?.toString()?.formatToAmount()
