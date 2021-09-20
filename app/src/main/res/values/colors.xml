@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FF9800</color>
-    <color name="colorPrimaryDark">#F57C00</color>
-    <color name="colorAccent">#9E9E9E</color>
-    <color name="primaryTextColor">#1A1A1A</color>
-    <color name="secondaryTextColor">#A3A6AB</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#448AFF</color>
+    <color name="primaryTextColor">#F9FBFC</color>
     <color name="dividerColor">#BDBDBD</color>
-    <color name="chipColor">#E0E0E0</color>
-    <color name="backgroundColor">#F9FBFC</color>
-    <color name="light_blue_50">#FFE1F5FE</color>
-    <color name="light_blue_200">#FF81D4FA</color>
-    <color name="light_blue_600">#FF039BE5</color>
-    <color name="light_blue_900">#FF01579B</color>
+    <color name="backgroundColor">#FFFFFF</color>
 </resources>

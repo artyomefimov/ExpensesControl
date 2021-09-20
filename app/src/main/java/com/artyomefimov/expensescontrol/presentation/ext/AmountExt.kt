@@ -35,4 +35,4 @@ fun String?.formatToAmount(): String? = this
         }
     }
 
-fun String.isLessThanMinimalSum() = toBigDecimal() < BigDecimal.ONE
+fun String?.isLessThanMinimalSum() = this?.let { toBigDecimal() < BigDecimal.ONE } ?: false

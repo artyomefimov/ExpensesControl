@@ -1,7 +1,7 @@
 package com.artyomefimov.expensescontrol.presentation.viewmodel.statistics
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.artyomefimov.expensescontrol.R
@@ -16,11 +16,12 @@ import com.artyomefimov.expensescontrol.domain.model.statistics.PeriodFilter
 import com.artyomefimov.expensescontrol.domain.model.statistics.StatisticsFilter
 import com.artyomefimov.expensescontrol.domain.model.statistics.chart.ChartData
 import com.artyomefimov.expensescontrol.presentation.ext.fractionFormatter
-import com.artyomefimov.expensescontrol.presentation.ext.toggle
-import com.artyomefimov.expensescontrol.presentation.model.ChartDataUi
 import com.artyomefimov.expensescontrol.presentation.model.Event
 import com.artyomefimov.expensescontrol.presentation.model.ExpenseInfo
-import com.artyomefimov.expensescontrol.presentation.model.FilterType
+import com.artyomefimov.expensescontrol.presentation.model.statistics.ChartDataUi
+import com.artyomefimov.expensescontrol.presentation.model.statistics.FilterType
+import com.artyomefimov.expensescontrol.presentation.model.statistics.StatisticsChipData
+import com.artyomefimov.expensescontrol.presentation.model.statistics.StatisticsEvent
 import com.artyomefimov.expensescontrol.presentation.resources.ResourcesProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
@@ -28,7 +29,6 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-@Suppress("TooManyFunctions")
 class StatisticsViewModel @Inject constructor(
     private val resourcesProvider: ResourcesProvider,
     private val statisticsInteractor: StatisticsInteractor,
@@ -37,19 +37,30 @@ class StatisticsViewModel @Inject constructor(
     private val chartDataMapper: Mapper<ChartData, ChartDataUi>,
 ) : ViewModel() {
 
-    private val currentFiltersState = MutableLiveData<StatisticsFilter>()
-    private val selectedCategoryState = MutableLiveData<String>()
-    private val suitableExpensesState = MutableLiveData<List<ExpenseInfo>>()
-    private val commonSumState = MutableLiveData<String?>()
-    private val chartAvailabilityState = MutableLiveData<Boolean>()
-    private val showChartViewEvent = MutableLiveData<Event<Unit>>()
-    private val showPeriodDialogViewEvent = MutableLiveData<Event<Unit>>()
-    private val showCategoryDialogViewEvent = MutableLiveData<Event<Array<String>>>()
+    val commonSumState = mutableStateOf<String?>(null)
+    val chartAvailabilityState = mutableStateOf(false)
+    val statisticsViewEvent = mutableStateOf<Event<StatisticsEvent>>(Event.initial())
+    val suitableExpensesState = mutableStateListOf<ExpenseInfo>()
+    val selectedFiltersState = mutableStateListOf<StatisticsChipData>()
+    val dialogState = mutableStateOf(false)
 
     private val availableCategories = resourcesProvider.getStringArray(R.array.categories_array)
-    private val defaultCategoryText = resourcesProvider.getString(R.string.chip_category)
     private var currentFilter = StatisticsFilter()
     private var currentExpenses = emptyList<Expense>()
+    private val periodFilterData = StatisticsChipData(
+        title = resourcesProvider.getString(R.string.chip_period),
+        type = FilterType.PERIOD,
+    )
+    private val categoryFilterData = StatisticsChipData(
+        title = resourcesProvider.getString(R.string.chip_category),
+        type = FilterType.CATEGORY
+    )
+    private val maxSumFilterData = StatisticsChipData(
+        title = resourcesProvider.getString(R.string.chip_max_sum),
+        type = FilterType.MAX_SUM
+    )
+
+    val filters = listOf(periodFilterData, maxSumFilterData, categoryFilterData)
 
     var chartData: ChartDataUi? = null
 
@@ -63,14 +74,9 @@ class StatisticsViewModel @Inject constructor(
         }
     }
 
-    fun currentFiltersState(): LiveData<StatisticsFilter> = currentFiltersState
-    fun selectedCategoryState(): LiveData<String> = selectedCategoryState
-    fun suitableExpensesState(): LiveData<List<ExpenseInfo>> = suitableExpensesState
-    fun commonSumState(): LiveData<String?> = commonSumState
-    fun chartAvailabilityState(): LiveData<Boolean> = chartAvailabilityState
-    fun showChartViewEvent(): LiveData<Event<Unit>> = showChartViewEvent
-    fun showPeriodDialogViewEvent(): LiveData<Event<Unit>> = showPeriodDialogViewEvent
-    fun showCategoryDialogViewEvent(): LiveData<Event<Array<String>>> = showCategoryDialogViewEvent
+    fun hideChart() {
+        dialogState.value = false
+    }
 
     fun prepareDataForChart() = viewModelScope.launch {
         chartInteractor.prepareDataForChart(currentExpenses)
@@ -79,37 +85,47 @@ class StatisticsViewModel @Inject constructor(
     fun setPeriodFilter(dateEpochFrom: Long, dateEpochTo: Long) {
         val periodFilter = PeriodFilter(dateEpochFrom.toInstant(), dateEpochTo.toInstant())
         currentFilter = currentFilter.copy(periodFilter = periodFilter)
+        selectedFiltersState.add(periodFilterData)
         applyFilter(currentFilter)
     }
 
     fun setCategoryFilter(category: String) {
         currentFilter = currentFilter.copy(categoryFilter = category)
+        selectedFiltersState.add(categoryFilterData)
         applyFilter(currentFilter)
-        selectedCategoryState.value = category
     }
 
-    fun setFilter(type: FilterType) {
-        when (type) {
+    fun setFilter(data: StatisticsChipData) {
+        // todo сделать единственное место-источник инфы про выделенные чипы
+        when (data.type) {
             FilterType.PERIOD -> {
                 if (currentFilter.periodFilter != null) {
                     currentFilter = currentFilter.copy(periodFilter = null)
+                    selectedFiltersState.remove(data)
                     applyFilter(currentFilter)
                 } else {
-                    showPeriodDialogViewEvent.toggle()
+                    statisticsViewEvent.value = Event.create(StatisticsEvent.OpenPeriodDialog)
                 }
             }
             FilterType.CATEGORY -> {
                 if (currentFilter.categoryFilter != null) {
                     currentFilter = currentFilter.copy(categoryFilter = null)
+                    selectedFiltersState.remove(data)
                     applyFilter(currentFilter)
-                    selectedCategoryState.value = defaultCategoryText
                 } else {
-                    showCategoryDialogViewEvent.value = Event(availableCategories)
+                    statisticsViewEvent.value = Event.create(
+                        StatisticsEvent.OpenCategoryDialog(availableCategories)
+                    )
                 }
             }
             FilterType.MAX_SUM -> {
                 val maxSumFilterValue = currentFilter.isMaxSumFilterEnabled.not()
                 currentFilter = currentFilter.copy(isMaxSumFilterEnabled = maxSumFilterValue)
+                if (maxSumFilterValue) {
+                    selectedFiltersState.add(maxSumFilterData)
+                } else {
+                    selectedFiltersState.remove(maxSumFilterData)
+                }
                 applyFilter(currentFilter)
             }
         }
@@ -121,7 +137,10 @@ class StatisticsViewModel @Inject constructor(
 
     private fun processFilteringResult(result: FilteredExpensesResult) {
         currentExpenses = result.expenses
-        suitableExpensesState.value = result.expenses.mapList(expenseInfoMapper)
+        suitableExpensesState.apply {
+            clear()
+            addAll(result.expenses.mapList(expenseInfoMapper))
+        }
         commonSumState.value = result.commonSum?.let { sum ->
             resourcesProvider.getString(R.string.common_sum)
                 .format(fractionFormatter.format(sum))
@@ -132,7 +151,8 @@ class StatisticsViewModel @Inject constructor(
     private fun processChartData(chartData: ChartData) {
         if (chartData.data.isNotEmpty()) {
             this.chartData = chartDataMapper.map(chartData)
-            showChartViewEvent.toggle()
+            statisticsViewEvent.value = Event.create(StatisticsEvent.OpenChartScreen)
+            dialogState.value = true
         }
     }
 }
