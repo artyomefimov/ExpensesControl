@@ -14,19 +14,26 @@
         android:theme="@style/Theme.ExpensesControl">
 
         <activity
-            android:name=".presentation.view.SplashActivity"
-            android:theme="@style/SplashTheme"
+            android:name=".presentation.view.MainActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="example.com"
+                    android:scheme="https" />
+            </intent-filter>
         </activity>
-        <activity
-            android:name=".presentation.view.MainActivity"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
 
         <provider
             android:name="androidx.work.impl.WorkManagerInitializer"

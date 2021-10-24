@@ -5,6 +5,8 @@ import com.artyomefimov.expensescontrol.data.mapper.ExpenseToEntityMapper
 import com.artyomefimov.expensescontrol.data.model.ExpenseEntity
 import com.artyomefimov.expensescontrol.data.repo.expense.ExpenseRepositoryImpl
 import com.artyomefimov.expensescontrol.data.repo.income.IncomeRepositoryImpl
+import com.artyomefimov.expensescontrol.domain.interactor.category.CategoryInteractor
+import com.artyomefimov.expensescontrol.domain.interactor.category.CategoryInteractorImpl
 import com.artyomefimov.expensescontrol.domain.interactor.date.DateInteractor
 import com.artyomefimov.expensescontrol.domain.interactor.date.DateInteractorImpl
 import com.artyomefimov.expensescontrol.domain.interactor.expense.ExpenseInteractor
@@ -24,7 +26,7 @@ import com.artyomefimov.expensescontrol.infrastructure.NotificationManager
 import com.artyomefimov.expensescontrol.infrastructure.NotificationManagerImpl
 import com.artyomefimov.expensescontrol.presentation.mapper.ChartDataMapper
 import com.artyomefimov.expensescontrol.presentation.mapper.ExpenseInfoMapper
-import com.artyomefimov.expensescontrol.presentation.model.ChartDataUi
+import com.artyomefimov.expensescontrol.presentation.model.statistics.ChartDataUi
 import com.artyomefimov.expensescontrol.presentation.model.ExpenseInfo
 import com.artyomefimov.expensescontrol.presentation.resources.ResourcesProvider
 import com.artyomefimov.expensescontrol.presentation.resources.ResourcesProviderImpl
@@ -80,6 +82,12 @@ abstract class BindsModule {
     abstract fun dateInteractor(
         interactor: DateInteractorImpl
     ): DateInteractor
+
+    @Binds
+    @Singleton
+    abstract fun categoryInteractor(
+        interactor: CategoryInteractorImpl
+    ): CategoryInteractor
 
     @Binds
     @Singleton

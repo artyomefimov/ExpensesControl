@@ -23,4 +23,9 @@ class Event<out T>(
             content
         }
     }
+
+    companion object {
+        fun initial() = Event(null)
+        fun <T> create(content: T) = Event(content)
+    }
 }

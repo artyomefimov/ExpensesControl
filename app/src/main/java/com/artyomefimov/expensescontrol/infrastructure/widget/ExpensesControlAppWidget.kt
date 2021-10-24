@@ -6,15 +6,22 @@ import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
+import androidx.core.app.TaskStackBuilder
+import androidx.core.net.toUri
 import androidx.navigation.NavDeepLinkBuilder
 import com.artyomefimov.expensescontrol.R
 import com.artyomefimov.expensescontrol.domain.ext.appWidgetManager
 import com.artyomefimov.expensescontrol.domain.ext.getAppWidgetIds
+import com.artyomefimov.expensescontrol.presentation.view.compose.common.navigation.Routes
 
 /**
  * [AppWidgetProvider] для виджета расходов на лаунчере
  */
 class ExpensesControlAppWidget : AppWidgetProvider() {
+
+    private companion object {
+        const val REQUEST_CODE = 123455
+    }
 
     override fun onUpdate(
         context: Context,
@@ -43,10 +50,11 @@ class ExpensesControlAppWidget : AppWidgetProvider() {
     }
 
     private fun getDeepLinkToExpensesScreen(context: Context): PendingIntent {
-        return NavDeepLinkBuilder(context)
-            .setGraph(R.navigation.main_navigation)
-            .setDestination(R.id.expenses_dest)
-            .createPendingIntent()
+        val intent = Intent(Intent.ACTION_VIEW, "https://example.com/open_expenses".toUri())
+        return TaskStackBuilder.create(context).run {
+            addNextIntentWithParentStack(intent)
+            getPendingIntent(REQUEST_CODE, PendingIntent.FLAG_UPDATE_CURRENT) ?: error("No pending intent")
+        }
     }
 
     private fun getIntentToRemoteViewsService(context: Context): Intent {

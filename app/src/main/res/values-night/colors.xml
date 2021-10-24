@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6E94A5</color>
-    <color name="colorPrimaryDark">#212121</color>
-    <color name="colorAccent">#9E9E9E</color>
-    <color name="primaryTextColor">#FFFFFF</color>
-    <color name="secondaryTextColor">#C7CBD0</color>
+    <color name="colorPrimary">#34495E</color>
+    <color name="colorPrimaryDark">#2C3E50</color>
+    <color name="colorAccent">#424242</color>
+    <color name="primaryTextColor">#F9FBFC</color>
     <color name="dividerColor">#BDBDBD</color>
-    <color name="chipColor">#5A5A5A</color>
     <color name="backgroundColor">#212121</color>
 </resources>
