@@ -15,6 +15,9 @@ interface DateInteractor {
         instantTo: Instant,
     ): ClosedRange<Instant>
 
+    /**
+     * Возвращает количество дней, оставшихся в данном месяце, включая текущий
+     */
     fun availableDaysInThisMonth(): Int
 
     /**

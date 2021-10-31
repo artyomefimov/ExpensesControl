@@ -36,7 +36,7 @@ fun <T : ChipData> Chip(
     onClick: (T) -> Unit,
 ) {
     Surface(
-        modifier = modifier.animateContentSize(),
+        modifier = modifier,
         elevation = 4.dp,
         shape = RoundedCornerShape(16.dp),
         color = when {
@@ -55,26 +55,25 @@ fun <T : ChipData> Chip(
                     }
                 )
                 .padding(
-                    horizontal = 8.dp,
+                    horizontal = 12.dp,
                     vertical = 6.dp,
                 ),
         ) {
+            if (isSelected) {
+                Icon(
+                    modifier = Modifier.size(14.dp),
+                    imageVector = Icons.Filled.Check,
+                    contentDescription = null,
+                )
+                Spacer(
+                    modifier = Modifier.width(8.dp)
+                )
+            }
             Text(
                 text = data.title,
                 style = MaterialTheme.typography.body2,
                 color = MaterialTheme.colors.onSecondary,
             )
-            Spacer(
-                modifier = Modifier.width(
-                    if (isSelected) 8.dp else 32.dp
-                )
-            )
-            if (isSelected) {
-                Icon(
-                    imageVector = Icons.Filled.Check,
-                    contentDescription = null,
-                )
-            }
         }
     }
 }

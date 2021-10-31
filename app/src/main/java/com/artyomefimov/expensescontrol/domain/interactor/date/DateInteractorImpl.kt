@@ -38,7 +38,7 @@ class DateInteractorImpl @Inject constructor(
 
     override fun availableDaysInThisMonth(): Int {
         val today = today()
-        return getCurrentMonthLength(today) - today.dayOfMonth
+        return getCurrentMonthLength(today) - today.dayOfMonth + 1
     }
 
     override fun getCurrentMonthNameAndLastDay(): String {
