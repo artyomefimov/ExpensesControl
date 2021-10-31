@@ -17,6 +17,7 @@ class DateInteractorImplTest {
         val endOfCurrentDate = Instant.parse("2018-08-20T23:59:59Z")
         val nextDate = Instant.parse("2018-08-21T00:00:00Z")
         val firstDayOfMonth = Instant.parse("2018-08-01T00:00:00Z")
+        val lastDayOfMonth = Instant.parse("2018-08-31T00:00:00Z")
     }
 
     private val clock = mockk<Clock>()
@@ -37,7 +38,25 @@ class DateInteractorImplTest {
 
         val result = interactor.availableDaysInThisMonth()
 
-        assertEquals(11, result)
+        assertEquals(12, result)
+    }
+
+    @Test
+    fun `availableDaysInThisMonth returns 1 for the last day of month`() {
+        every { clock.now() } returns lastDayOfMonth
+
+        val result = interactor.availableDaysInThisMonth()
+
+        assertEquals(1, result)
+    }
+
+    @Test
+    fun `availableDaysInThisMonth returns month length for the first day of month`() {
+        every { clock.now() } returns firstDayOfMonth
+
+        val result = interactor.availableDaysInThisMonth()
+
+        assertEquals(31, result)
     }
 
     @Test
